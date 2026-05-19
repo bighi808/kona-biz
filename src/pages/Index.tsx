@@ -7,6 +7,7 @@ import ServicesGrid from "@/components/sections/ServicesGrid";
 import Methodology from "@/components/sections/Methodology";
 import ValueStats from "@/components/sections/ValueStats";
 import Comparison from "@/components/sections/Comparison";
+import StateMap from "@/components/sections/StateMap";
 
 export default function Index() {
   return (
@@ -24,8 +25,9 @@ export default function Index() {
       <Methodology />
       <ValueStats />
       <Comparison />
+      <StateMap />
 
-      {/* Remaining: State Map, Free Report, Audit Upsell, FAQ, Booking */}
+      {/* Remaining: Free Report, Audit Upsell, FAQ, Booking */}
     </Layout>
   );
 }
