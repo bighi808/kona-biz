@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/SEOHead";
 import Hero from "@/components/sections/Hero";
+import Ticker from "@/components/sections/Ticker";
 import { services } from "@/data/services";
-import { ArrowUpRight } from "lucide-react";
 
 export default function Index() {
   return (
@@ -15,6 +15,7 @@ export default function Index() {
       />
 
       <Hero />
+      <Ticker />
 
       {/* TEMP: services grid teaser — will be replaced by full ported sections in subsequent commits */}
       <section className="section-padding border-t border-border max-w-6xl mx-auto w-full">
