@@ -11,6 +11,7 @@ import StateMap from "@/components/sections/StateMap";
 import FreeReport from "@/components/sections/FreeReport";
 import AuditUpsell from "@/components/sections/AuditUpsell";
 import FAQ from "@/components/sections/FAQ";
+import Booking from "@/components/sections/Booking";
 
 export default function Index() {
   return (
@@ -32,8 +33,7 @@ export default function Index() {
       <FreeReport />
       <AuditUpsell />
       <FAQ />
-
-      {/* Final section: Booking */}
+      <Booking />
     </Layout>
   );
 }
