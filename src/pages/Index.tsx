@@ -4,6 +4,7 @@ import Hero from "@/components/sections/Hero";
 import Ticker from "@/components/sections/Ticker";
 import WhyPillars from "@/components/sections/WhyPillars";
 import ServicesGrid from "@/components/sections/ServicesGrid";
+import ValueStats from "@/components/sections/ValueStats";
 
 export default function Index() {
   return (
@@ -18,9 +19,10 @@ export default function Index() {
       <Ticker />
       <WhyPillars />
       <ServicesGrid />
+      <ValueStats />
 
-      {/* Remaining sections: Value/Math, Methodology diagram, Comparison,
-          State Map, Free Report, Audit Upsell, FAQ, Booking */}
+      {/* Remaining: Methodology diagram, Comparison, State Map, Free Report,
+          Audit Upsell, FAQ, Booking */}
     </Layout>
   );
 }
