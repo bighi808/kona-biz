@@ -10,7 +10,8 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
-      <main className="flex-1 pt-[72px] md:pt-[88px]">{children}</main>
+      {/* Pages handle their own top spacing — hero needs full viewport with no offset */}
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

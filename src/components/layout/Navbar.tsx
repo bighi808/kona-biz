@@ -1,8 +1,23 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-5 md:px-12 flex items-center justify-between bg-background/60 backdrop-blur-md border-b border-border/50">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-5 md:px-12 flex items-center justify-between transition-all duration-400 ${
+        scrolled
+          ? "bg-background/92 backdrop-blur-md border-b border-border"
+          : "bg-transparent"
+      }`}
+    >
       <Link
         to="/"
         className="display-font text-2xl tracking-[0.12em] text-gold no-underline"
