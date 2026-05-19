@@ -8,6 +8,7 @@ import Methodology from "@/components/sections/Methodology";
 import ValueStats from "@/components/sections/ValueStats";
 import Comparison from "@/components/sections/Comparison";
 import StateMap from "@/components/sections/StateMap";
+import FreeReport from "@/components/sections/FreeReport";
 
 export default function Index() {
   return (
@@ -26,8 +27,9 @@ export default function Index() {
       <ValueStats />
       <Comparison />
       <StateMap />
+      <FreeReport />
 
-      {/* Remaining: Free Report, Audit Upsell, FAQ, Booking */}
+      {/* Remaining: Audit Upsell, FAQ, Booking */}
     </Layout>
   );
 }
