@@ -2,10 +2,15 @@
  * Route definitions for vite-react-ssg static site generation.
  * Every URL gets a real HTML file at build time — no SPA blank-div for crawlers.
  *
- * Dev:  npm run dev          → vite (CSR, fast HMR)
+ * Dev:  npm run dev          → vite (CSR via App.tsx with React.lazy code-splitting)
  * Prod: npm run build:ssg    → vite-react-ssg build (static HTML for all 365 routes)
+ *
+ * NOTE: All page components are EAGERLY imported here on purpose. vite-react-ssg's
+ * collectAssets() doesn't handle React.lazy components and would throw
+ * "TypeError: item.route.Component._payload._result.toString is not a function".
+ * Client-side code splitting still happens via App.tsx, which uses React.lazy.
+ * The SSG bundle gets a few extra kB but it's a build-time artifact, never shipped.
  */
-import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import type { RouteRecord } from "vite-react-ssg";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -14,20 +19,19 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { services } from "./data/services";
 import { states } from "./data/states";
 
-// Eagerly load homepage
-import Index from "./pages/Index";
-
-const About             = lazy(() => import("./pages/About"));
-const Contact           = lazy(() => import("./pages/Contact"));
-const ServicesHub       = lazy(() => import("./pages/ServicesHub"));
-const ServicePage       = lazy(() => import("./pages/ServicePage"));
-const StatesHub         = lazy(() => import("./pages/StatesHub"));
-const StatePage         = lazy(() => import("./pages/StatePage"));
-const ServiceStatePage  = lazy(() => import("./pages/ServiceStatePage"));
-const Sitemap           = lazy(() => import("./pages/Sitemap"));
-const PrivacyPolicy     = lazy(() => import("./pages/PrivacyPolicy"));
-const TermsConditions   = lazy(() => import("./pages/TermsConditions"));
-const NotFound          = lazy(() => import("./pages/NotFound"));
+// Eager imports — see note above
+import Index            from "./pages/Index";
+import About            from "./pages/About";
+import Contact          from "./pages/Contact";
+import ServicesHub      from "./pages/ServicesHub";
+import ServicePage      from "./pages/ServicePage";
+import StatesHub        from "./pages/StatesHub";
+import StatePage        from "./pages/StatePage";
+import ServiceStatePage from "./pages/ServiceStatePage";
+import Sitemap          from "./pages/Sitemap";
+import PrivacyPolicy    from "./pages/PrivacyPolicy";
+import TermsConditions  from "./pages/TermsConditions";
+import NotFound         from "./pages/NotFound";
 
 const SERVICE_SLUGS = services.map((s) => s.slug);
 const STATE_SLUGS = states.map((s) => s.slug);
@@ -42,9 +46,7 @@ function AppShell() {
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <TooltipProvider>
-          <Suspense fallback={null}>
-            <Outlet />
-          </Suspense>
+          <Outlet />
         </TooltipProvider>
       </HelmetProvider>
     </QueryClientProvider>
