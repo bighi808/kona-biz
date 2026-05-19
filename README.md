@@ -2,32 +2,75 @@
 
 Marketing site and supporting assets for **Kona.biz** — a personal injury law firm marketing agency. One firm per state. Based in Kona, Hawaii.
 
-## What's in here
+## Tech stack
 
-### Landing page
-- **`konabiz-lander.html`** — Single-file HTML/CSS/JS landing page. Hero video, exclusivity ticker, services grid, six-node methodology diagram, comparison table, 50-state availability map, free-report capture form, $497 audit upsell with 2-step form, FAQ accordion, 30-minute strategy-call booking widget, footer contact form.
+- **Vite** + **React 18** + **TypeScript**
+- **Tailwind CSS** + **shadcn/ui** (slate base, custom Kona.biz tokens)
+- **vite-react-ssg** for static site generation (every route → real HTML at build time)
+- **react-helmet-async** for per-page `<head>` and JSON-LD structured data
+- **react-hook-form** + **zod** for forms
+- **lucide-react** for icons
+- GitHub Actions → GitHub Pages
 
-### Future pages (drafts)
-- **`draft-konabiz-packages-v3.html`** — Pricing / packages page. Per-page build pricing, four worked example builds (Solo / Regional / Foster Law / Dominant), three retainer tiers (Maintain $2,500 / Grow $5,000 / Command $8,500), video add-on tiers, Kona.biz Intelligence Brief newsletter.
-- **`draft-konabiz-site-architecture.html`** — IA and sitemap for the full kona.biz site. 365 pages total: 6 matrix services × 50 state pages = 300 matrix pages, plus state hubs, service hubs, and core pages. Four-state market-status system (Available / Claimed / Exclusively Managed / On Waitlist).
-
-### Deliverables
-- **`konabiz-pi-domination-report.docx`** — The lead magnet promised by the lander's free-report form. Eight chapters covering search landscape, local SEO, GEO, paid ads, AI in practice, and the deployed system. Convert to PDF before wiring it up for auto-delivery.
-- **`konabiz-marketing-arsenal.docx`** — Outbound playbook: value framework, Google + Meta ad copy, three Meta video scripts, cold email and LinkedIn templates, Day 4 / 10 / 21 follow-up sequence, five-section discovery-call pitch.
-
-### Assets
-- **`hero-image1.jpg`** — Static hero fallback (still referenced in the CSS as the original background).
-
-## Excluded from this repo
-
-Video files (`*.mp4`) are gitignored — GitHub blocks files over 100 MB and warns over 50 MB. The lander currently references `Bokeh_City.mp4` as the hero video. Either revert the hero to the static `hero-image1.jpg`, or host the videos on a CDN (Cloudflare R2, Bunny, Vimeo) and update the `<video>` source in the lander.
-
-## Running locally
-
-It's a static site. Open `konabiz-lander.html` directly in a browser, or serve the folder:
+## Project structure
 
 ```
-python3 -m http.server 8000
+src/
+  pages/             # Route components (Index, ServicesHub, ServicePage, etc.)
+  components/
+    layout/          # Layout, Navbar, Footer
+    ui/              # shadcn/ui components
+    SEOHead.tsx      # Per-page meta + JSON-LD schema
+  data/
+    services.ts      # 6 matrix services (typed)
+    states.ts        # 50 states with market status (typed)
+    marketStatus.ts  # Status enum + labels
+  routes.tsx         # vite-react-ssg routes with getStaticPaths
+  App.tsx            # Standard CSR router
+  main.tsx           # CSR entry
+  main.ssg.tsx       # SSG entry
+  index.css          # Tailwind + Kona.biz palette tokens
+scripts/
+  generate-sitemap.js   # Generates public/sitemap.xml for all 365 routes
+public/
+  robots.txt            # STAGING: blocks all crawlers — swap at launch
+  sitemap.xml           # Generated at build time
 ```
 
-Then visit `http://localhost:8000/konabiz-lander.html`.
+## SEO architecture
+
+Data-driven matrix model: **6 services × 50 states = 300 unique landing pages**, plus 6 service hubs, 50 state hubs, and core pages = **~365 routes total**. Every URL is pre-rendered to static HTML by `vite-react-ssg` at build time.
+
+URL patterns:
+
+- `/` — homepage
+- `/services` — services hub
+- `/services/{service-slug}` — individual service page (e.g. `/services/personal-injury-seo`)
+- `/services/{service-slug}/{state-slug}` — matrix page (e.g. `/services/personal-injury-seo/texas`)
+- `/states` — states hub
+- `/states/{state-slug}` — individual state page
+
+Market status system: each state has one of four statuses — `available`, `claimed`, `managed`, `waitlist` — defined in `src/data/marketStatus.ts`. The page templates branch on status for CTA behavior.
+
+## Development
+
+```bash
+npm install        # Install deps
+npm run dev        # Vite dev server with HMR — http://localhost:8080
+npm run build      # Standard CSR build
+npm run build:ssg  # Static site generation (all 365 routes pre-rendered)
+npm run build:production  # Sitemap + SSG build
+npm run preview    # Preview the build locally
+```
+
+## Legacy files
+
+The folder also contains the original single-file lander and supporting documents:
+
+- `konabiz-lander.html` — the original pre-framework lander. Content will be ported into `src/pages/Index.tsx` and split into components over time.
+- `draft-konabiz-packages-v3.html` — pricing/packages page draft (to be migrated into the framework)
+- `draft-konabiz-site-architecture.html` — IA reference document
+- `konabiz-pi-domination-report.docx` — the lead magnet promised by the lander
+- `konabiz-marketing-arsenal.docx` — outbound sales playbook
+- `hero-image1.jpg` — hero asset
+- `*.mp4` — gitignored (host on CDN)
