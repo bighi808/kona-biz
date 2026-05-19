@@ -9,6 +9,7 @@ import ValueStats from "@/components/sections/ValueStats";
 import Comparison from "@/components/sections/Comparison";
 import StateMap from "@/components/sections/StateMap";
 import FreeReport from "@/components/sections/FreeReport";
+import AuditUpsell from "@/components/sections/AuditUpsell";
 
 export default function Index() {
   return (
@@ -28,8 +29,9 @@ export default function Index() {
       <Comparison />
       <StateMap />
       <FreeReport />
+      <AuditUpsell />
 
-      {/* Remaining: Audit Upsell, FAQ, Booking */}
+      {/* Remaining: FAQ, Booking */}
     </Layout>
   );
 }
