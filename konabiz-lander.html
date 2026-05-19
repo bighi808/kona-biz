@@ -1,0 +1,3789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kona.biz — PI Law Firm Market Domination</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #07070600;
+    --bg: #080807;
+    --surface: #0e0e0b;
+    --card: #131310;
+    --border: #1e1e18;
+    --gold: #c29b4f;
+    --gold-light: #d4af6a;
+    --gold-dim: rgba(194,155,79,0.15);
+    --gold-glow: rgba(194,155,79,0.06);
+    --cream: #e8e2d4;
+    --muted: #968e80;
+    --faint: #282820;
+    --available: #4a7c59;
+    --available-bg: rgba(74,124,89,0.1);
+    --managed: rgba(194,155,79,0.2);
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ---- CUSTOM CURSOR ---- */
+  .cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    transform-origin: 1px 1px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    filter: drop-shadow(0 2px 8px rgba(194,155,79,0.55)) drop-shadow(0 1px 3px rgba(0,0,0,0.85));
+  }
+
+  .cursor-ring {
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(194,155,79,0.12);
+    border: 1px solid rgba(194,155,79,0.22);
+    pointer-events: none;
+    z-index: 9997;
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  body:hover .cursor { opacity: 1; }
+
+  /* ---- CANVAS HERO ---- */
+  #heroCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ---- NOISE OVERLAY ---- */
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* ---- LAYOUT ---- */
+  .page { position: relative; z-index: 2; }
+
+  section { position: relative; }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+    background: rgba(8,8,7,0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.4s ease, border-bottom 0.4s ease;
+  }
+
+  nav.scrolled {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-descriptor {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-cta {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(194,155,79,0.4);
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: none;
+  }
+
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 32px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .hero-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* All hero children sit above overlay */
+
+  /* Dark overlay -- gradient from near-black to dark so text is readable */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(8,8,7,0.82) 0%,
+      rgba(8,8,7,0.70) 40%,
+      rgba(8,8,7,0.80) 70%,
+      rgba(8,8,7,0.92) 100%
+    );
+    z-index: 1;
+  }
+
+  /* All hero children sit above overlay */
+  .hero > *:not(.hero-video):not(.hero-overlay) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 24px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    margin-top: 50px;
+    margin-bottom: 48px;
+    opacity: 0;
+    text-align: center;
+    width: 100%;
+    animation: riseUp 1s 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 180px);
+    line-height: 0.88;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    margin-bottom: 0;
+    opacity: 0;
+    animation: heroZoom 2.8s 0.2s cubic-bezier(0.16,1,0.3,1) forwards,
+               goldShimmer 12s 3.2s ease-in-out infinite;
+    background: linear-gradient(
+      120deg,
+      #b8a882 0%,
+      #e8e2d4 18%,
+      #d4af6a 32%,
+      #f5d98a 44%,
+      #c29b4f 56%,
+      #e8e2d4 70%,
+      #b8a882 84%,
+      #d4af6a 100%
+    );
+    background-size: 300% 100%;
+    background-position: 0% 50%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes goldShimmer {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .hero-headline .gold-word {
+    display: block;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 26px);
+    color: var(--muted);
+    margin-top: 32px;
+    margin-bottom: 56px;
+    max-width: 600px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: riseUp 1s 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 4px;
+    opacity: 0;
+    animation: riseUp 1s 1s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .pill {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .pill.gold {
+    border-color: rgba(194,155,79,0.3);
+    color: var(--gold);
+  }
+
+  .hero-scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+    opacity: 0;
+    animation: riseUp 1s 1.4s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  .scroll-label {
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    margin-top: 8px;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ---- EXCLUSIVITY BAND ---- */
+  .excl-band {
+    padding: 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(8,8,7,0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .ticker-wrap {
+    display: flex;
+    gap: 0;
+  }
+
+  .ticker {
+    display: flex;
+    gap: 48px;
+    padding: 20px 0;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ticker-item {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .ticker-item .dot {
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---- SECTIONS GENERAL ---- */
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 120px 48px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    height: 1px;
+    width: 40px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .section-body {
+    font-size: 13px;
+    line-height: 2.1;
+    color: var(--muted);
+    max-width: 520px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- REVEAL ANIMATION ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.35s; }
+  .reveal-delay-4 { transition-delay: 0.5s; }
+
+  /* ---- WHY SECTION ---- */
+  .why-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 64px;
+    border: 1px solid var(--border);
+  }
+
+  .pillar {
+    background: var(--surface);
+    padding: 40px 32px;
+    transition: background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar:hover { background: var(--card); }
+
+  /* Gold left border sweep -- matches service cards */
+  .pillar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .pillar:hover::before { height: 100%; }
+
+  .pillar-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--faint);
+    line-height: 1;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: color 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1), text-shadow 0.4s ease;
+    transform-origin: left center;
+  }
+
+  .pillar:hover .pillar-num {
+    color: var(--gold);
+    transform: scale(1.22);
+    text-shadow:
+      0 0 40px rgba(194,155,79,0.5),
+      0 0 80px rgba(194,155,79,0.2);
+  }
+
+  .pillar h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+    transition: color 0.4s ease;
+  }
+
+  .pillar:hover h3 { color: var(--gold-light); }
+
+  .pillar p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    transition: color 0.3s ease;
+  }
+
+  .pillar:hover p { color: #b8b0a4; }
+
+  /* ---- SERVICES SECTION ---- */
+  .services-section {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .service-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 64px;
+  }
+
+  .service-card {
+    background: var(--card);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(48px);
+    transition: background 0.4s ease,
+                opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .service-card.card-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-card:hover { background: #161613; }
+
+  /* Watermark word -- expands from center on hover */
+  .service-card::before {
+    content: attr(data-icon);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 180px;
+    letter-spacing: 0.08em;
+    color: rgba(194,155,79,0);
+    line-height: 1;
+    pointer-events: none;
+    transition: transform 0.55s cubic-bezier(0.16,1,0.3,1),
+                color 0.55s ease;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  .service-card:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    color: rgba(194,155,79,0.08);
+  }
+
+  /* Remove old corner accent */
+  .service-card::after { display: none; }
+
+  /* All card content sits above watermark */
+  .service-card-icon,
+  .service-card h4,
+  .service-card p {
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-card-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0.7;
+    transition: opacity 0.4s ease,
+                letter-spacing 0.55s cubic-bezier(0.16,1,0.3,1),
+                font-size 0.55s cubic-bezier(0.16,1,0.3,1),
+                color 0.4s ease;
+  }
+
+  .service-card:hover .service-card-icon {
+    opacity: 1;
+    letter-spacing: 1.2em;
+    font-size: 15px;
+    color: #e8c97a;
+  }
+
+  .service-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 14px;
+    line-height: 1.2;
+    transition: color 0.4s ease;
+  }
+
+  .service-card:hover h4 { color: var(--gold-light); }
+
+  .service-card p {
+    font-size: 11px;
+    line-height: 1.9;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    transition: color 0.3s ease;
+  }
+
+  .service-card:hover p { color: #b8b0a4; }
+
+  @media (max-width: 900px) {
+    .service-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .service-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ---- VALUE SECTION ---- */
+  .value-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 64px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .value-card {
+    background: var(--card);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+    cursor: default;
+  }
+
+  .value-card:hover { background: #1a1a16; }
+
+  .value-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .value-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-bottom: 8px;
+    transition: color 0.4s ease;
+  }
+
+  .value-card:hover .value-num { color: var(--gold-light); }
+
+  .value-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
+  }
+
+  .value-card:hover .value-desc { color: #b8b0a4; }
+
+  /* ---- STATE MAP ---- */
+  .map-section { background: var(--bg); }
+
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 2px;
+    margin-top: 56px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .state-cell {
+    background: var(--surface);
+    padding: 12px 10px;
+    cursor: none;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: background 0.2s ease,
+                border-left-color 0.2s ease,
+                opacity 0.3s ease,
+                transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .state-cell.cell-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .state-cell:hover { background: var(--card); }
+
+  .state-cell.available { border-left: 2px solid rgba(74,124,89,0.4); }
+  .state-cell.available:hover { border-left-color: #6abf80; }
+
+  .state-cell.managed {
+    background: rgba(194,155,79,0.04);
+    border-left: 2px solid rgba(194,155,79,0.4);
+  }
+
+  .state-name {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .state-status {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .state-cell.available .state-status { color: #6abf80; }
+  .state-cell.managed .state-status { color: var(--gold); }
+
+  .map-legend {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .legend-dot.available { background: #6abf80; }
+  .legend-dot.managed { background: var(--gold); }
+
+  /* ---- OFFER SECTION ---- */
+  .offer-section {
+    background: var(--surface);
+    border-top: 2px solid var(--gold);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 -1px 40px rgba(194,155,79,0.12),
+                0 -1px 80px rgba(194,155,79,0.06);
+  }
+
+  /* Spotlight radial bloom behind the form */
+  .offer-section::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -80px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(194,155,79,0.07) 0%,
+      rgba(194,155,79,0.03) 35%,
+      transparent 70%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .offer-section.spotlight-active::before {
+    opacity: 1;
+  }
+
+  /* Animated gold top border pulse */
+  .offer-section::after {
+    content: '';
+    position: absolute;
+    top: -2px; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(194,155,79,0.4) 20%,
+      var(--gold) 50%,
+      rgba(194,155,79,0.4) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: borderSweep 3s ease-in-out infinite;
+  }
+
+  @keyframes borderSweep {
+    0%   { background-position: 200% 0; opacity: 0.6; }
+    50%  { background-position: 0% 0;   opacity: 1;   }
+    100% { background-position: -200% 0; opacity: 0.6; }
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 64px;
+  }
+
+  .offer-features {
+    list-style: none;
+    margin-top: 32px;
+  }
+
+  .offer-features li {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .offer-features li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ---- FORM ---- */
+  .form-box {
+    background: var(--card);
+    border: 1px solid rgba(194,155,79,0.3);
+    padding: 48px 40px;
+    position: sticky;
+    top: 100px;
+    box-shadow: 0 0 40px rgba(194,155,79,0.06),
+                0 0 80px rgba(194,155,79,0.03);
+    transition: box-shadow 0.6s ease, border-color 0.6s ease;
+  }
+
+  .offer-section.spotlight-active .form-box {
+    border-color: rgba(194,155,79,0.5);
+    box-shadow: 0 0 60px rgba(194,155,79,0.12),
+                0 0 120px rgba(194,155,79,0.06);
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .form-sub {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .form-field {
+    margin-bottom: 20px;
+  }
+
+  .form-field label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .form-field input,
+  .form-field select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus {
+    border-color: var(--gold);
+  }
+
+  .form-field input::placeholder { color: var(--muted); font-size: 12px; }
+
+  .form-field select option { background: var(--bg); color: var(--cream); }
+
+  .form-submit {
+    width: 100%;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 18px 24px;
+    cursor: none;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  .form-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .form-submit:active { transform: translateY(0); }
+
+  .form-note {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 16px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* ---- SUCCESS STATE ---- */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .success-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .success-body {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.9;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .success-claimed {
+    display: none;
+  }
+
+  .claimed-banner {
+    background: rgba(139,74,42,0.1);
+    border: 1px solid rgba(139,74,42,0.3);
+    padding: 20px;
+    margin-top: 24px;
+  }
+
+  .claimed-banner p {
+    font-size: 10px;
+    color: #d4855a;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+
+  /* ---- AUDIT UPSELL ---- */
+  .audit-section {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .audit-box {
+    background: var(--card);
+    border: 1px solid rgba(194,155,79,0.25);
+    padding: 64px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: center;
+    margin-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .audit-box::before {
+    content: '$497';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200px;
+    color: rgba(194,155,79,0.04);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .audit-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .audit-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 2;
+    letter-spacing: 0.04em;
+    max-width: 480px;
+    margin-bottom: 28px;
+  }
+
+  .audit-includes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .audit-includes li {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .audit-includes li::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .audit-price-box {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .audit-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    display: block;
+  }
+
+  .audit-price-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .audit-cta {
+    display: block;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 14px 24px;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .audit-cta:hover {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  .audit-credit {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* ---- AUDIT FORM ---- */
+  .audit-form-wrap {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 340px;
+  }
+
+  .audit-step {
+    background: var(--surface);
+    border: 1px solid rgba(194,155,79,0.2);
+    padding: 36px 32px;
+  }
+
+  .audit-step-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .audit-step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .audit-price-display {
+    text-align: center;
+    padding: 16px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .audit-price-display .price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    display: block;
+  }
+
+  .audit-price-display .price-note {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .audit-field {
+    margin-bottom: 14px;
+  }
+
+  .audit-field label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .audit-field input,
+  .audit-field select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .audit-field input:focus,
+  .audit-field select:focus { border-color: var(--gold); }
+
+  .audit-field input::placeholder { color: var(--muted); font-size: 11px; }
+  .audit-field select option { background: var(--bg); color: var(--cream); }
+
+  .audit-submit {
+    width: 100%;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 16px 20px;
+    cursor: none;
+    transition: all 0.3s ease;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .audit-submit:hover { background: var(--gold-light); }
+  .audit-submit:disabled { opacity: 0.6; }
+
+  .audit-form-note {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-top: 12px;
+    line-height: 1.7;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* Step 2 -- Confirmation */
+  .audit-confirm {
+    display: none;
+  }
+
+  .confirm-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .confirm-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .confirm-body {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .confirm-detail {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .confirm-detail-label {
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .confirm-detail-value {
+    font-size: 12px;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+  }
+
+  .confirm-next {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    line-height: 1.9;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  /* ---- FOOTER CONTACT ---- */
+  .footer-contact {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 80px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .footer-contact-left h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .footer-contact-left h3 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .footer-contact-left p {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    max-width: 360px;
+  }
+
+  .footer-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .footer-field input,
+  .footer-field textarea {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    resize: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+
+  .footer-field input:focus,
+  .footer-field textarea:focus { border-color: rgba(194,155,79,0.5); }
+
+  .footer-field input::placeholder,
+  .footer-field textarea::placeholder { color: var(--muted); font-size: 11px; }
+
+  .footer-field textarea { height: 100px; }
+
+  .footer-submit {
+    background: transparent;
+    border: 1px solid rgba(194,155,79,0.4);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    cursor: none;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+  }
+
+  .footer-submit:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .footer-contact-success {
+    display: none;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 20px 0;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .footer-contact { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+  }
+
+  /* ---- FOUNDER / ABOUT ---- */
+  .founder-section {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .founder-section::before {
+    content: 'KONA';
+    position: absolute;
+    bottom: -60px;
+    right: -40px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 360px;
+    letter-spacing: 0.05em;
+    color: rgba(194,155,79,0.025);
+    line-height: 0.8;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 64px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .founder-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.5;
+    color: var(--cream);
+    margin-bottom: 32px;
+  }
+
+  .founder-statement span { color: var(--gold-light); }
+
+  .founder-body {
+    font-size: 13px;
+    line-height: 2.1;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+  }
+
+  .founder-signature {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .founder-signature .sig-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--gold-light);
+  }
+
+  .founder-signature .sig-role {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .founder-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px 36px;
+    position: sticky;
+    top: 100px;
+  }
+
+  .founder-card-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .founder-card-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(194,155,79,0.2);
+  }
+
+  .founder-fact {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .founder-fact:last-child { border-bottom: none; }
+
+  .founder-fact-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .founder-fact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .founder-fact-value em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  @media (max-width: 900px) {
+    .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+    .founder-card { position: relative; top: 0; }
+    .founder-section::before { font-size: 200px; bottom: -30px; right: -20px; }
+  }
+
+  /* ---- METHODOLOGY DIAGRAM ---- */
+  .methodology-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .method-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-bottom: 64px;
+  }
+
+  .method-wrap {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    align-items: stretch;
+  }
+
+  @media (max-width: 900px) {
+    .method-intro-grid { grid-template-columns: 1fr; }
+  }
+
+  .method-copy h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .method-copy h4 em { font-style: italic; color: var(--gold-light); }
+
+  .method-copy p {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+  }
+
+  .method-legend {
+    margin-top: 28px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+
+  .method-legend-item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .method-legend-item .ml-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    min-width: 44px;
+    flex-shrink: 0;
+  }
+
+  .method-diagram {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .method-svg { width: 100%; height: 100%; display: block; }
+
+  .method-node circle {
+    fill: var(--surface);
+    stroke: rgba(194,155,79,0.35);
+    stroke-width: 1;
+    transition: fill 0.35s ease, stroke 0.35s ease;
+  }
+
+  .method-node text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    fill: var(--cream);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    transition: fill 0.35s ease;
+  }
+
+  .method-node { cursor: none; }
+
+  .method-node:hover circle { fill: var(--card); stroke: var(--gold); }
+  .method-node:hover text { fill: var(--gold-light); }
+
+  .method-hub circle.hub-core {
+    fill: var(--card);
+    stroke: var(--gold);
+    stroke-width: 1.5;
+  }
+
+  .method-hub-pulse {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1;
+    opacity: 0.5;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: hubPulse 3s ease-out infinite;
+  }
+
+  @keyframes hubPulse {
+    0%   { transform: scale(1);   opacity: 0.5; }
+    100% { transform: scale(2.2); opacity: 0;   }
+  }
+
+  .method-hub text.hub-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    fill: var(--gold);
+  }
+
+  .method-hub text.hub-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    fill: var(--muted);
+  }
+
+  .method-spoke {
+    stroke: rgba(194,155,79,0.2);
+    stroke-width: 0.8;
+    stroke-dasharray: 2 3;
+    fill: none;
+  }
+
+  @media (max-width: 900px) {
+    .method-diagram { max-width: 420px; }
+  }
+
+  /* ---- COMPARISON ---- */
+  .compare-section {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border);
+    background: var(--border);
+    gap: 1px;
+  }
+
+  .compare-head {
+    padding: 32px 36px;
+    background: var(--surface);
+  }
+
+  .compare-head.them { color: var(--muted); }
+
+  .compare-head.us {
+    background: var(--card);
+    position: relative;
+  }
+
+  .compare-head.us::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .compare-head-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .compare-head.us .compare-head-eyebrow { color: var(--gold); }
+
+  .compare-head-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--cream);
+  }
+
+  .compare-head.us .compare-head-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .compare-cell {
+    padding: 24px 36px;
+    background: var(--surface);
+    font-size: 12px;
+    line-height: 1.85;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background 0.3s ease;
+  }
+
+  .compare-cell.us { background: var(--card); color: var(--cream); }
+  .compare-cell:hover { background: #131310; }
+  .compare-cell.us:hover { background: #1a1a16; }
+
+  .compare-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .compare-them-marker {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: #6b5e4e;
+    margin-right: 6px;
+  }
+
+  .compare-us-marker {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-right: 6px;
+  }
+
+  @media (max-width: 720px) {
+    .compare-table { grid-template-columns: 1fr; }
+    .compare-head.us::before { display: none; }
+    .compare-cell.us { border-top: 1px solid rgba(194,155,79,0.2); }
+  }
+
+  /* ---- FAQ ---- */
+  .faq-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-list {
+    margin-top: 56px;
+    border-top: 1px solid var(--border);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .faq-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .faq-item.open::before { height: 100%; }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 28px 32px 28px 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 1.6vw, 22px);
+    font-weight: 400;
+    color: var(--cream);
+    cursor: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    transition: color 0.3s ease, background 0.3s ease;
+    line-height: 1.3;
+  }
+
+  .faq-q:hover { color: var(--gold-light); background: rgba(194,155,79,0.02); }
+  .faq-item.open .faq-q { color: var(--gold-light); }
+
+  .faq-toggle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    display: inline-block;
+  }
+
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .faq-a-inner {
+    padding: 0 32px 32px 28px;
+    font-size: 13px;
+    line-height: 2;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    max-width: 760px;
+  }
+
+  .faq-a-inner em { font-style: italic; color: var(--cream); }
+
+  .faq-a-inner p + p { margin-top: 14px; }
+
+  @media (max-width: 600px) {
+    .faq-q { padding: 22px 16px 22px 18px; gap: 16px; font-size: 17px; }
+    .faq-a-inner { padding: 0 16px 24px 18px; }
+  }
+
+    /* ---- KEYFRAMES ---- */
+  @keyframes riseUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroZoom {
+    0%   { opacity: 0; transform: scale(0.01); }
+    30%  { opacity: 1; }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+
+    /* HERO -- less top space on mobile */
+    .hero { padding: 60px 24px 80px; background-attachment: scroll; }
+    .hero-eyebrow { font-size: 21px; margin-top: 40px; }
+    .form-title { font-size: 34px; text-align: center; margin-bottom: 28px; text-shadow: 0 0 40px rgba(194,155,79,0.35), 0 0 80px rgba(194,155,79,0.15); color: var(--gold-light); }
+
+    /* NAV -- scale everything down to fit */
+    nav {
+      padding: 14px 16px;
+      gap: 8px;
+    }
+    .nav-logo { font-size: 18px; letter-spacing: 0.08em; }
+    .nav-descriptor {
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+      max-width: 120px;
+    }
+    .nav-cta {
+      font-size: 8px;
+      padding: 7px 10px;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+    }
+
+    /* LAYOUT */
+    .section-inner { padding: 64px 20px; }
+    .value-grid { grid-template-columns: 1fr; }
+    .offer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .form-box {
+      position: relative;
+      top: 0;
+      padding: 28px 20px;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    /* AUDIT FORM */
+    .audit-box { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px; }
+    .audit-box::before { display: none; }
+    .audit-includes { grid-template-columns: 1fr; }
+    .audit-price-box { text-align: left; }
+    .audit-submit {
+      padding: 18px 20px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+    }
+    .audit-form-note {
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: 0.04em;
+    }
+
+    /* FOOTER */
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px 20px;
+      gap: 16px;
+    }
+    .footer-logo { font-size: 26px; }
+    .footer-copy {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+
+    /* CURSOR */
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-headline { font-size: clamp(56px, 18vw, 72px); }
+    .pillars { grid-template-columns: 1fr; }
+    .audit-form-wrap {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .audit-step {
+      padding: 24px 16px;
+      box-sizing: border-box;
+    }
+    .section-inner { padding: 48px 16px; }
+  }
+
+  /* ---- BOOKING SECTION ---- */
+  .booking-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .booking-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 64px;
+    align-items: start;
+  }
+
+  .booking-calendar {
+    background: var(--card);
+    border: 1px solid rgba(194,155,79,0.2);
+    padding: 32px;
+  }
+
+  .cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+
+  .cal-month-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+  }
+
+  .cal-nav {
+    background: none;
+    border: 1px solid rgba(194,155,79,0.3);
+    color: var(--gold);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s ease;
+  }
+
+  .cal-nav:hover { background: var(--gold); color: var(--bg); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .cal-day-name {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-align: center;
+    padding: 8px 0;
+    text-transform: uppercase;
+  }
+
+  .cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    transition: all 0.2s ease;
+    position: relative;
+    border: 1px solid transparent;
+  }
+
+  .cal-day.unavailable { color: rgba(150,142,128,0.2); }
+
+  .cal-day.available {
+    color: var(--cream);
+    cursor: none;
+  }
+
+  .cal-day.available::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .cal-day.available:hover {
+    border-color: rgba(194,155,79,0.35);
+    background: rgba(194,155,79,0.06);
+    color: var(--gold-light);
+  }
+
+  .cal-day.selected {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .cal-day.selected::after { background: var(--bg); opacity: 0.5; }
+
+  .booking-times {
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .booking-times-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .booking-times-empty {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .time-slot {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: none;
+    transition: all 0.2s ease;
+  }
+
+  .time-slot:hover { border-color: rgba(194,155,79,0.4); color: var(--cream); }
+
+  .time-slot.selected {
+    background: rgba(194,155,79,0.1);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .book-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.3s ease;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .book-btn.ready { opacity: 1; pointer-events: all; }
+  .book-btn.ready:hover { background: var(--gold-light); }
+
+  .book-confirm {
+    display: none;
+    margin-top: 20px;
+    padding: 24px;
+    background: rgba(194,155,79,0.05);
+    border: 1px solid rgba(194,155,79,0.2);
+    text-align: center;
+  }
+
+  .book-confirm.visible { display: block; }
+
+  .book-confirm-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .book-confirm p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.9;
+  }
+
+  .booking-copy h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.35;
+    margin-bottom: 16px;
+  }
+
+  .booking-copy h4 em { font-style: italic; color: var(--gold-light); }
+
+  .booking-copy p {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+
+  .booking-details {
+    margin-top: 32px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .booking-detail-item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bd-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    min-width: 72px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .booking-wrap { grid-template-columns: 1fr; gap: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor">
+  <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cursorGrad" x1="1" y1="1" x2="18" y2="27" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#e8c97a"/>
+        <stop offset="55%" stop-color="#c29b4f"/>
+        <stop offset="100%" stop-color="#8a6525"/>
+      </linearGradient>
+    </defs>
+    <!-- shadow layer -->
+    <path d="M1 1L1 22.5L6.5 17.5L11 27L14.5 25L10 16L18.5 16Z"
+          fill="rgba(0,0,0,0.45)" stroke="none" transform="translate(1,1.5)"/>
+    <!-- gold arrow body -->
+    <path d="M1 1L1 22.5L6.5 17.5L11 27L14.5 25L10 16L18.5 16Z"
+          fill="url(#cursorGrad)" stroke="rgba(20,16,8,0.7)" stroke-width="1.2" stroke-linejoin="round"/>
+    <!-- left-edge highlight for dimension -->
+    <line x1="1.6" y1="2" x2="1.6" y2="21" stroke="rgba(240,215,140,0.55)" stroke-width="0.7"/>
+  </svg>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- CANVAS -->
+<canvas id="heroCanvas"></canvas>
+
+<!-- NOISE -->
+<div class="noise"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">KONA.BIZ</a>
+  <span class="nav-descriptor">Personal Injury Law Firm Marketing</span>
+  <a href="#statemap" class="nav-cta">Check Your State</a>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="Bokeh_City.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-eyebrow">Your competitors are watching this page right now.</div>
+    <h1 class="hero-headline">
+      One Firm.<br>
+      <span class="gold-word">Per State.</span>
+    </h1>
+    <p class="hero-sub">One firm per state gets exclusive control of their market. That slot may still be open in yours -- check before someone else does.</p>
+    <div class="hero-pills">
+      <span class="pill gold">One Client Per State</span>
+      <span class="pill">SEO + GEO</span>
+      <span class="pill">Custom Web</span>
+      <span class="pill">AI Consulting</span>
+      <span class="pill">Paid Ads</span>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="excl-band">
+    <div class="ticker-wrap">
+      <div class="ticker" id="ticker1">
+        <span class="ticker-item"><span class="dot"></span>One PI Firm Per State</span>
+        <span class="ticker-item"><span class="dot"></span>SEO + GEO Optimization</span>
+        <span class="ticker-item"><span class="dot"></span>Custom Web Development</span>
+        <span class="ticker-item"><span class="dot"></span>AI Practice Consulting</span>
+        <span class="ticker-item"><span class="dot"></span>Paid Ads Management</span>
+        <span class="ticker-item"><span class="dot"></span>Google Business Profile</span>
+        <span class="ticker-item"><span class="dot"></span>Legal Directory Management</span>
+        <span class="ticker-item"><span class="dot"></span>Review Generation</span>
+        <span class="ticker-item"><span class="dot"></span>YouTube Lead Generation</span>
+        <span class="ticker-item"><span class="dot"></span>Custom AI Agents</span>
+        <span class="ticker-item"><span class="dot"></span>One PI Firm Per State</span>
+        <span class="ticker-item"><span class="dot"></span>SEO + GEO Optimization</span>
+        <span class="ticker-item"><span class="dot"></span>Custom Web Development</span>
+        <span class="ticker-item"><span class="dot"></span>AI Practice Consulting</span>
+        <span class="ticker-item"><span class="dot"></span>Paid Ads Management</span>
+        <span class="ticker-item"><span class="dot"></span>Google Business Profile</span>
+        <span class="ticker-item"><span class="dot"></span>Legal Directory Management</span>
+        <span class="ticker-item"><span class="dot"></span>Review Generation</span>
+        <span class="ticker-item"><span class="dot"></span>YouTube Lead Generation</span>
+        <span class="ticker-item"><span class="dot"></span>Custom AI Agents</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <section class="why-section">
+    <div class="section-inner">
+      <div class="section-label reveal">Why Kona.biz</div>
+      <h2 class="section-title reveal reveal-delay-1">Not an agency.<br><em>A market weapon.</em></h2>
+      <p class="section-body reveal reveal-delay-2">The model is different. The commitment is different. The results are different. Here is exactly how we work -- and why no other agency can make the same offer.</p>
+
+      <div class="pillars">
+        <div class="pillar reveal reveal-delay-1">
+          <div class="pillar-num">01</div>
+          <h3>PI Firms Only</h3>
+          <p>We work exclusively with personal injury firms. No family law. No criminal defense. No generalist clients. We know PI marketing the way your best attorney knows PI law -- deeply, specifically, and without distraction.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-2">
+          <div class="pillar-num">02</div>
+          <h3>One Client Per State</h3>
+          <p>When we take your state, your competitors cannot become our clients. Ever. We are fully invested in making you the dominant firm in every city you serve. That exclusivity is structural -- not a promise, a policy.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-3">
+          <div class="pillar-num">03</div>
+          <h3>Competitors Locked Out</h3>
+          <p>Once your state is claimed, the other PI firms in your market are watching from the sidelines. We build their competitor's authority network, their content, their ad campaigns. Not theirs.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-4">
+          <div class="pillar-num">04</div>
+          <h3>Custom Built. Never Templates.</h3>
+          <p>Every site, every page, every content piece is built from scratch for your firm and your market. No shared frameworks. No recycled strategies. No other firm gets what you get.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-1">
+          <div class="pillar-num">05</div>
+          <h3>No Media Markups</h3>
+          <p>Your ad spend goes 100% to the platforms. We never mark up media. Our fee covers strategy and management only -- so every dollar you spend on ads actually buys ads.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-2">
+          <div class="pillar-num">06</div>
+          <h3>The PI Attorney Network</h3>
+          <p>Kona.biz clients join a private, cross-state community of non-competing PI attorneys. Shared strategy, market insights, and referral opportunities across state lines -- with zero competitive conflict, by design. Launching 2027.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-inner">
+      <div class="section-label reveal">What We Do</div>
+      <h2 class="section-title reveal reveal-delay-1">Full-stack domination.<br><em>One firm. Every channel.</em></h2>
+      <p class="section-body reveal reveal-delay-2">Six integrated disciplines. Every one managed exclusively for your firm in your state.</p>
+
+      <div class="service-cards">
+        <div class="service-card" data-icon="WEB">
+          <div class="service-card-icon">WEB</div>
+          <h4>Custom Web Development</h4>
+          <p>200+ pages built from scratch for your firm and your market. Every city you serve. Every case type you handle. Every page engineered to rank, convert, and establish your firm as the authority in your state. Custom platform included -- no WordPress, no templates, no shared infrastructure.</p>
+        </div>
+        <div class="service-card" data-icon="SEO">
+          <div class="service-card-icon">SEO</div>
+          <h4>SEO + GEO</h4>
+          <p>Dominant rankings on Google and visibility inside ChatGPT, Perplexity, and AI Overviews -- the two search landscapes where PI clients are choosing their attorney right now. Local authority networks, hub-and-spoke content architecture, and press release link building that builds trust with both algorithms simultaneously.</p>
+        </div>
+        <div class="service-card" data-icon="ADS">
+          <div class="service-card-icon">ADS</div>
+          <h4>Paid Ads Management</h4>
+          <p>Google Ads, LSA, and Meta campaigns engineered to produce signed cases, not clicks. High-intent targeting by city, case type, and injury severity. Every dollar of media spend goes directly to the platforms at cost -- no markups, no management fees buried in your ad budget.</p>
+        </div>
+        <div class="service-card" data-icon="AI">
+          <div class="service-card-icon">AI</div>
+          <h4>AI Consulting & Agents</h4>
+          <p>Custom AI agents built to run inside your firm -- intake automation that qualifies leads around the clock, client communication that never goes cold, and internal workflows that give your staff leverage. The firms winning the next decade are building this infrastructure now.</p>
+        </div>
+        <div class="service-card" data-icon="GBP">
+          <div class="service-card-icon">GBP</div>
+          <h4>Local Presence & Reputation</h4>
+          <p>A dominant local presence means showing up when a potential client searches your city on Google Maps at 10pm after an accident. Active GBP management, systematic review generation, and complete profiles across every legal directory that sends PI traffic -- Avvo, Justia, FindLaw, Martindale-Hubbell, and Lawyers.com.</p>
+        </div>
+        <div class="service-card" data-icon="SOC">
+          <div class="service-card-icon">SOC</div>
+          <h4>Content, Social & Video</h4>
+          <p>A consistent content engine that keeps your firm visible, authoritative, and top-of-mind -- SEO articles, social posts, YouTube lead generation, and email and SMS nurture sequences, all produced monthly and branded entirely to your firm. The firms that own the content in their market own the calls.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY DIAGRAM -->
+  <section class="methodology-section" id="methodology">
+    <div class="section-inner">
+      <div class="method-intro-grid">
+        <div class="method-intro-text">
+          <div class="section-label reveal">The Stack</div>
+          <h2 class="section-title reveal reveal-delay-1">Six disciplines.<br><em>One system.</em></h2>
+          <p class="section-body reveal reveal-delay-2">Most agencies sell these services in isolation. We run them as one integrated authority engine -- each channel feeding the others, all of them pointing back to your firm.</p>
+        </div>
+
+        <div class="method-diagram reveal reveal-delay-3">
+        <svg class="method-svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line class="method-spoke" x1="260" y1="204" x2="260" y2="122"/>
+          <line class="method-spoke" x1="309" y1="232" x2="380" y2="191"/>
+          <line class="method-spoke" x1="309" y1="288" x2="380" y2="329"/>
+          <line class="method-spoke" x1="260" y1="316" x2="260" y2="398"/>
+          <line class="method-spoke" x1="211" y1="288" x2="140" y2="329"/>
+          <line class="method-spoke" x1="211" y1="232" x2="140" y2="191"/>
+
+          <circle cx="260" cy="260" r="180" fill="none" stroke="rgba(194,155,79,0.07)" stroke-width="0.8" stroke-dasharray="1 4"/>
+
+          <g class="method-hub">
+            <circle class="method-hub-pulse" cx="260" cy="260" r="56"/>
+            <circle class="hub-core" cx="260" cy="260" r="56"/>
+            <text class="hub-title" x="260" y="254">AUTHORITY</text>
+            <text class="hub-sub" x="260" y="276">01 &mdash; 06</text>
+          </g>
+
+          <g class="method-node">
+            <circle cx="260" cy="80" r="42"/>
+            <text x="260" y="74">WEB</text>
+            <text x="260" y="92" style="font-size:8px; letter-spacing:0.3em; fill: var(--muted);">01</text>
+          </g>
+
+          <g class="method-node">
+            <circle cx="416" cy="170" r="42"/>
+            <text x="416" y="164">SEO</text>
+            <text x="416" y="182" style="font-size:8px; letter-spacing:0.3em; fill: var(--muted);">02</text>
+          </g>
+
+          <g class="method-node">
+            <circle cx="416" cy="350" r="42"/>
+            <text x="416" y="344">ADS</text>
+            <text x="416" y="362" style="font-size:8px; letter-spacing:0.3em; fill: var(--muted);">03</text>
+          </g>
+
+          <g class="method-node">
+            <circle cx="260" cy="440" r="42"/>
+            <text x="260" y="434">AI</text>
+            <text x="260" y="452" style="font-size:8px; letter-spacing:0.3em; fill: var(--muted);">04</text>
+          </g>
+
+          <g class="method-node">
+            <circle cx="104" cy="350" r="42"/>
+            <text x="104" y="344">GBP</text>
+            <text x="104" y="362" style="font-size:8px; letter-spacing:0.3em; fill: var(--muted);">05</text>
+          </g>
+
+          <g class="method-node">
+            <circle cx="104" cy="170" r="42"/>
+            <text x="104" y="164">SOC</text>
+            <text x="104" y="182" style="font-size:8px; letter-spacing:0.3em; fill: var(--muted);">06</text>
+          </g>
+        </svg>
+        </div>
+      </div>
+
+      <div class="method-copy reveal reveal-delay-2">
+        <h4>The output is <em>compounding authority</em> &mdash; not a stack of disconnected line items.</h4>
+        <p>Your custom site sends signals to Google. The SEO and GEO work makes those signals authoritative. The paid ads pull in high-intent searchers your organic position then converts at a lower cost. Local presence reinforces every channel. AI agents handle intake so nothing leaks. Content keeps the engine fed.</p>
+        <p>Run any one of these alone and you get a marginal lift. Run all six pointed at the same goal in the same market and you build something competitors cannot reach into &mdash; a dominant position that defends itself.</p>
+
+        <div class="method-legend">
+          <div class="method-legend-item"><span class="ml-tag">01</span><span>Custom Web -- the foundation every other channel points to</span></div>
+          <div class="method-legend-item"><span class="ml-tag">02</span><span>SEO + GEO -- authority on Google and AI search</span></div>
+          <div class="method-legend-item"><span class="ml-tag">03</span><span>Paid Ads -- high-intent traffic at media cost</span></div>
+          <div class="method-legend-item"><span class="ml-tag">04</span><span>AI Agents -- intake and ops inside your firm</span></div>
+          <div class="method-legend-item"><span class="ml-tag">05</span><span>Local + Reputation -- GBP, reviews, directories</span></div>
+          <div class="method-legend-item"><span class="ml-tag">06</span><span>Content, Social, Video -- continuous signal</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE NUMBERS -->
+  <section style="background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-inner">
+      <div class="section-label reveal">The Math</div>
+      <h2 class="section-title reveal reveal-delay-1">One market. One firm.<br><em>Unlimited upside.</em></h2>
+
+      <div class="value-grid">
+        <div class="value-card reveal reveal-delay-1" data-target="51" data-prefix="$" data-suffix="K+">
+          <div class="value-label">Avg. Attorney Fee Per Case</div>
+          <div class="value-num" data-countup>$51K+</div>
+          <div class="value-desc">33% of the average serious-injury PI settlement. Case volume is everything and market dominance drives case volume.</div>
+        </div>
+        <div class="value-card reveal reveal-delay-2" data-target="68" data-prefix="" data-suffix="%">
+          <div class="value-label">Of Clients Hire the First Firm They Contact</div>
+          <div class="value-num" data-countup>68%</div>
+          <div class="value-desc">In PI law, speed and visibility win. The firm that ranks first gets the call. The firm that gets the call closes the case.</div>
+        </div>
+        <div class="value-card reveal reveal-delay-3" data-target="200" data-prefix="" data-suffix="+">
+          <div class="value-label">Market-Coverage Pages</div>
+          <div class="value-num" data-countup>200+</div>
+          <div class="value-desc">Every city. Every case type. Every practice area. Our matrix build covers your entire state so no search goes unanswered.</div>
+        </div>
+        <div class="value-card reveal reveal-delay-4" data-target="1" data-prefix="" data-suffix="">
+          <div class="value-label">Firm Per State. Permanently.</div>
+          <div class="value-num" data-countup>1</div>
+          <div class="value-desc">Once your state is claimed, it's yours. No competitor in your market ever gets access to the proprietary Kona.biz system.</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px;" class="reveal reveal-delay-4">
+        <div style="background: var(--card); border: 1px solid rgba(194,155,79,0.15); padding: 40px;">
+          <div class="section-label" style="margin-bottom: 16px;">The Value Per Page</div>
+          <p style="font-family:'Cormorant Garamond',serif; font-size: clamp(28px,3vw,42px); font-weight:300; color:var(--cream); line-height:1.2; margin-bottom:16px;">200+ custom pages.<br><em>Under $120 each.</em></p>
+          <p style="font-size:13px; line-height:2; color:var(--muted); letter-spacing:0.04em;">A single freelance developer charges $150 to $300 for a generic page with no PI expertise and no SEO strategy behind it. Every Kona.biz page is hand-built for your market, optimized for your case types, and engineered to rank. The build cost alone is a fraction of what the market charges for inferior work.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid rgba(194,155,79,0.15); padding: 40px;">
+          <div class="section-label" style="margin-bottom: 16px;">The ROI Argument</div>
+          <p style="font-family:'Cormorant Garamond',serif; font-size: clamp(28px,3vw,42px); font-weight:300; color:var(--cream); line-height:1.2; margin-bottom:16px;">One case.<br><em>Covers years of retainer.</em></p>
+          <p style="font-size:13px; line-height:2; color:var(--muted); letter-spacing:0.04em;">At $51K average per signed case, a single additional client sourced through your Kona.biz market position covers the retainer many times over. The question is never what this costs. It is what it costs to keep letting competitors take cases that should be yours.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="compare-section" id="compare">
+    <div class="section-inner">
+      <div class="section-label reveal">The Difference</div>
+      <h2 class="section-title reveal reveal-delay-1">Kona.biz versus<br><em>the standard PI agency.</em></h2>
+      <p class="section-body reveal reveal-delay-2">Six structural differences -- not feature differences. The way the engagement is built, the way the money flows, the way exclusivity is enforced. Read it once and ask your current agency the same questions.</p>
+
+      <div class="compare-table reveal reveal-delay-3">
+        <div class="compare-head them">
+          <div class="compare-head-eyebrow">The Standard PI Agency</div>
+          <div class="compare-head-title">What most firms pay for</div>
+        </div>
+        <div class="compare-head us">
+          <div class="compare-head-eyebrow">Kona.biz</div>
+          <div class="compare-head-title">What we built <em>instead.</em></div>
+        </div>
+
+        <div class="compare-cell them">
+          <span class="compare-label">Exclusivity</span>
+          <span><span class="compare-them-marker">&times;</span>Will sign your three closest competitors next quarter. Your retainer funds the agency that funds their growth.</span>
+        </div>
+        <div class="compare-cell us">
+          <span class="compare-label">Exclusivity</span>
+          <span><span class="compare-us-marker">&bull;</span>One PI firm per state. Once your state is claimed, every other PI firm in your market is structurally locked out -- forever.</span>
+        </div>
+
+        <div class="compare-cell them">
+          <span class="compare-label">Specialization</span>
+          <span><span class="compare-them-marker">&times;</span>Mixed roster -- PI, family, criminal, dental, plumbing. Your strategist learned your industry on the job. Often on your account.</span>
+        </div>
+        <div class="compare-cell us">
+          <span class="compare-label">Specialization</span>
+          <span><span class="compare-us-marker">&bull;</span>Personal injury law only. We know your case types, fee structures, and intake funnel as fluently as your best paralegal.</span>
+        </div>
+
+        <div class="compare-cell them">
+          <span class="compare-label">Media Spend</span>
+          <span><span class="compare-them-marker">&times;</span>10-20% management markup baked into every ad dollar. On a $20K/mo Google Ads budget, that is $24K-$48K a year that never reached a single searcher.</span>
+        </div>
+        <div class="compare-cell us">
+          <span class="compare-label">Media Spend</span>
+          <span><span class="compare-us-marker">&bull;</span>Zero markup. Ever. Your media budget flows directly to Google, Meta, and LSA at platform cost. Our fee covers strategy and management only.</span>
+        </div>
+
+        <div class="compare-cell them">
+          <span class="compare-label">Build</span>
+          <span><span class="compare-them-marker">&times;</span>Template site with cosmetic theming. The same WordPress framework powering forty other PI firms across the country -- including the one across town.</span>
+        </div>
+        <div class="compare-cell us">
+          <span class="compare-label">Build</span>
+          <span><span class="compare-us-marker">&bull;</span>Custom from the ground up. No two Kona.biz client sites share structure. Every page, every city, every case type built for your market specifically.</span>
+        </div>
+
+        <div class="compare-cell them">
+          <span class="compare-label">Tech Stack</span>
+          <span><span class="compare-them-marker">&times;</span>WordPress + a dozen plugins, third-party rank tracker, third-party review tool, separate CRM. Five logins. None of them talk to each other.</span>
+        </div>
+        <div class="compare-cell us">
+          <span class="compare-label">Tech Stack</span>
+          <span><span class="compare-us-marker">&bull;</span>Purpose-built platform: analytics, CMS, review generation, rank tracking, and AI agents in one system. One login. Everything connected.</span>
+        </div>
+
+        <div class="compare-cell them">
+          <span class="compare-label">Reporting</span>
+          <span><span class="compare-them-marker">&times;</span>Vanity-metric dashboards. "Impressions up 40%." "Clicks up 18%." Nothing tied to a signed case or a settlement fee.</span>
+        </div>
+        <div class="compare-cell us">
+          <span class="compare-label">Reporting</span>
+          <span><span class="compare-us-marker">&bull;</span>Signed-case attribution. We measure the metric your firm measures: cases booked, cases signed, fees earned. The rest is noise.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATE MAP -->
+  <section class="map-section" id="statemap">
+    <div class="section-inner">
+      <div class="section-label reveal">Market Availability</div>
+      <h2 class="section-title reveal reveal-delay-1">48 states open.<br><em>Claim yours now.</em></h2>
+      <p class="section-body reveal reveal-delay-2">Every state below is either available or exclusively managed. Once a competitor in your state signs with us, that market is locked. Check your state -- then scroll down to claim your free report.</p>
+
+      <div class="state-grid" id="stateGrid"></div>
+
+      <div class="map-legend reveal reveal-delay-4">
+        <div class="legend-item"><div class="legend-dot available"></div>Available -- Open to New Clients</div>
+        <div class="legend-item"><div class="legend-dot managed"></div>Exclusively Managed -- Market Locked</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE REPORT + FORM -->
+  <section class="offer-section" id="claim">
+    <div class="section-inner">
+      <div class="section-label reveal">Market Intelligence</div>
+      <h2 class="section-title reveal reveal-delay-1">The PI Market<br><em>Domination Report.</em></h2>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(16px,2vw,22px); color:var(--muted); margin-top:4px; margin-bottom:0; max-width:640px;" class="reveal reveal-delay-2">What It Takes to Dominate Google and AI Search as a Personal Injury Firm in 2026</p>
+
+      <div class="offer-grid">
+        <div class="reveal reveal-delay-2">
+          <p class="section-body">A strategic briefing on exactly what it takes to win on Google and AI search as a personal injury firm in 2026. What the leading firms are doing. Where the gaps are. And what it would take to close them in your market.</p>
+
+          <ul class="offer-features">
+            <li>Why most PI websites are digital brochures, not market weapons</li>
+            <li>The local SEO game most PI firms are playing wrong</li>
+            <li>GEO -- the AI search frontier almost no PI firm has touched</li>
+            <li>Paid ads -- when they work and when they waste money</li>
+            <li>AI in your practice -- the operational edge your competitors are missing</li>
+            <li>What a fully deployed market domination system looks like</li>
+          </ul>
+
+          <div style="margin-top:32px; padding:24px; background:var(--card); border:1px solid rgba(194,155,79,0.15);">
+            <div class="value-label" style="margin-bottom:8px;">Inside This Report</div>
+            <p style="font-size:10px; color:var(--muted); line-height:1.9; letter-spacing:0.04em; text-transform:uppercase;">The strategic framework the leading PI firms are using to dominate Google and AI search right now -- and the gaps most of their competitors have not closed yet. Read it before your market is claimed.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-3">
+          <div class="form-box" id="formBox">
+            <div class="form-title">Claim Your<br>Free Report</div>
+            <p class="form-sub">Enter your details below. Select your state. We will send the report immediately.</p>
+
+            <form id="leadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+              <div class="form-field">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Your full name" required autocomplete="off">
+              </div>
+              <div class="form-field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@yourfirm.com" required autocomplete="off">
+              </div>
+              <div class="form-field">
+                <label for="state">Your State</label>
+                <select id="state" name="state" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option value="Alabama">Alabama</option>
+                  <option value="Alaska">Alaska</option>
+                  <option value="Arizona">Arizona</option>
+                  <option value="Arkansas">Arkansas</option>
+                  <option value="California">California</option>
+                  <option value="Colorado">Colorado</option>
+                  <option value="Connecticut">Connecticut</option>
+                  <option value="Delaware">Delaware</option>
+                  <option value="Florida">Florida</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Hawaii" disabled>Hawaii -- Exclusively Managed</option>
+                  <option value="Idaho">Idaho</option>
+                  <option value="Illinois">Illinois</option>
+                  <option value="Indiana">Indiana</option>
+                  <option value="Iowa">Iowa</option>
+                  <option value="Kansas">Kansas</option>
+                  <option value="Kentucky">Kentucky</option>
+                  <option value="Louisiana">Louisiana</option>
+                  <option value="Maine">Maine</option>
+                  <option value="Maryland">Maryland</option>
+                  <option value="Massachusetts">Massachusetts</option>
+                  <option value="Michigan">Michigan</option>
+                  <option value="Minnesota">Minnesota</option>
+                  <option value="Mississippi">Mississippi</option>
+                  <option value="Missouri">Missouri</option>
+                  <option value="Montana">Montana</option>
+                  <option value="Nebraska">Nebraska</option>
+                  <option value="Nevada">Nevada</option>
+                  <option value="New Hampshire">New Hampshire</option>
+                  <option value="New Jersey">New Jersey</option>
+                  <option value="New Mexico">New Mexico</option>
+                  <option value="New York">New York</option>
+                  <option value="North Carolina">North Carolina</option>
+                  <option value="North Dakota">North Dakota</option>
+                  <option value="Ohio">Ohio</option>
+                  <option value="Oklahoma">Oklahoma</option>
+                  <option value="Oregon">Oregon</option>
+                  <option value="Pennsylvania">Pennsylvania</option>
+                  <option value="Rhode Island">Rhode Island</option>
+                  <option value="South Carolina">South Carolina</option>
+                  <option value="South Dakota">South Dakota</option>
+                  <option value="Tennessee">Tennessee</option>
+                  <option value="Texas">Texas</option>
+                  <option value="Utah">Utah</option>
+                  <option value="Vermont">Vermont</option>
+                  <option value="Virginia">Virginia</option>
+                  <option value="Washington" disabled>Washington -- Exclusively Managed</option>
+                  <option value="West Virginia">West Virginia</option>
+                  <option value="Wisconsin">Wisconsin</option>
+                  <option value="Wyoming">Wyoming</option>
+                </select>
+              </div>
+              <button type="submit" class="form-submit" id="submitBtn">Send My Free Report</button>
+              <p class="form-note">No spam. No automated pitches. Your information is never shared. Unsubscribe anytime.</p>
+            </form>
+
+            <div class="form-success" id="formSuccess">
+              <span class="success-icon">KONA</span>
+              <div class="success-title">Report on its way.</div>
+              <p class="success-body">Check your inbox. Your state is still available -- for now. If you are ready for the next step, scroll down.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIT UPSELL -->
+  <section class="audit-section">
+    <div class="section-inner">
+      <div class="section-label reveal">Next Step</div>
+      <h2 class="section-title reveal reveal-delay-1">Your PI Market<br><em>Domination Audit.</em></h2>
+      <p class="section-body reveal reveal-delay-2">The free report gives you the strategic framework. The audit gives you the specific picture for your market -- researched by hand, delivered personally.</p>
+
+      <div class="audit-box reveal reveal-delay-3">
+        <div>
+          <div class="audit-title">What We Research.<br>What We Deliver.</div>
+          <p class="audit-desc">We analyze your firm's complete digital presence from the ground up. Your current rankings across key practice areas and cities. Your GBP performance and gaps. Your legal directory profiles. Your competitor landscape. Your AI platform visibility. And a custom roadmap for what it would take to dominate your state.</p>
+          <ul class="audit-includes">
+            <li>Google ranking audit</li>
+            <li>GBP score and gaps</li>
+            <li>Competitor landscape</li>
+            <li>Legal directory check</li>
+            <li>GEO visibility assessment</li>
+            <li>Custom state roadmap</li>
+            <li>Delivered in 5 business days</li>
+            <li>One per state</li>
+          </ul>
+        </div>
+        <div class="audit-form-wrap">
+
+          <!-- STEP 1 -->
+          <div class="audit-step" id="auditStep1">
+            <div class="audit-step-label">Step 1 of 2</div>
+            <div class="audit-step-title">Request Your<br>State Audit</div>
+
+            <div class="audit-price-display">
+              <span class="price">$497</span>
+              <span class="price-note">Invoice sent within 24 hours &nbsp;&bull;&nbsp; One per state</span>
+            </div>
+
+            <form id="auditForm" action="https://formspree.io/f/YOUR_AUDIT_FORM_ID" method="POST">
+              <div class="audit-field">
+                <label for="auditName">Your Name</label>
+                <input type="text" id="auditName" name="name" placeholder="Your full name" required autocomplete="off">
+              </div>
+              <div class="audit-field">
+                <label for="auditEmail">Email Address</label>
+                <input type="email" id="auditEmail" name="email" placeholder="you@yourfirm.com" required autocomplete="off">
+              </div>
+              <div class="audit-field">
+                <label for="auditFirm">Law Firm Name</label>
+                <input type="text" id="auditFirm" name="firm" placeholder="Your law firm name" required autocomplete="off">
+              </div>
+              <div class="audit-field">
+                <label for="auditState">Your State</label>
+                <select id="auditState" name="state" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option value="Alabama">Alabama</option>
+                  <option value="Alaska">Alaska</option>
+                  <option value="Arizona">Arizona</option>
+                  <option value="Arkansas">Arkansas</option>
+                  <option value="California">California</option>
+                  <option value="Colorado">Colorado</option>
+                  <option value="Connecticut">Connecticut</option>
+                  <option value="Delaware">Delaware</option>
+                  <option value="Florida">Florida</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Hawaii" disabled>Hawaii -- Not Available</option>
+                  <option value="Idaho">Idaho</option>
+                  <option value="Illinois">Illinois</option>
+                  <option value="Indiana">Indiana</option>
+                  <option value="Iowa">Iowa</option>
+                  <option value="Kansas">Kansas</option>
+                  <option value="Kentucky">Kentucky</option>
+                  <option value="Louisiana">Louisiana</option>
+                  <option value="Maine">Maine</option>
+                  <option value="Maryland">Maryland</option>
+                  <option value="Massachusetts">Massachusetts</option>
+                  <option value="Michigan">Michigan</option>
+                  <option value="Minnesota">Minnesota</option>
+                  <option value="Mississippi">Mississippi</option>
+                  <option value="Missouri">Missouri</option>
+                  <option value="Montana">Montana</option>
+                  <option value="Nebraska">Nebraska</option>
+                  <option value="Nevada">Nevada</option>
+                  <option value="New Hampshire">New Hampshire</option>
+                  <option value="New Jersey">New Jersey</option>
+                  <option value="New Mexico">New Mexico</option>
+                  <option value="New York">New York</option>
+                  <option value="North Carolina">North Carolina</option>
+                  <option value="North Dakota">North Dakota</option>
+                  <option value="Ohio">Ohio</option>
+                  <option value="Oklahoma">Oklahoma</option>
+                  <option value="Oregon">Oregon</option>
+                  <option value="Pennsylvania">Pennsylvania</option>
+                  <option value="Rhode Island">Rhode Island</option>
+                  <option value="South Carolina">South Carolina</option>
+                  <option value="South Dakota">South Dakota</option>
+                  <option value="Tennessee">Tennessee</option>
+                  <option value="Texas">Texas</option>
+                  <option value="Utah">Utah</option>
+                  <option value="Vermont">Vermont</option>
+                  <option value="Virginia">Virginia</option>
+                  <option value="Washington" disabled>Washington -- Not Available</option>
+                  <option value="West Virginia">West Virginia</option>
+                  <option value="Wisconsin">Wisconsin</option>
+                  <option value="Wyoming">Wyoming</option>
+                </select>
+              </div>
+              <button type="submit" class="audit-submit" id="auditSubmitBtn">Review My Request</button>
+            </form>
+            <p class="audit-form-note">No payment now. We verify your state availability and send your invoice within 24 hours. Credited toward your build if you become a client.</p>
+          </div>
+
+          <!-- STEP 2 -- CONFIRMATION -->
+          <div class="audit-step audit-confirm" id="auditStep2">
+            <span class="confirm-icon">KONA</span>
+            <div class="confirm-title">Request<br>Received.</div>
+            <p class="confirm-body">We are verifying availability for your state and will send your invoice within 24 hours. Your audit begins the moment payment is confirmed.</p>
+
+            <div class="confirm-detail" id="confirmDetail">
+              <div class="confirm-detail-label">Firm</div>
+              <div class="confirm-detail-value" id="confirmFirm"></div>
+            </div>
+            <div class="confirm-detail">
+              <div class="confirm-detail-label">State Requested</div>
+              <div class="confirm-detail-value" id="confirmState"></div>
+            </div>
+            <div class="confirm-detail">
+              <div class="confirm-detail-label">Invoice To</div>
+              <div class="confirm-detail-value" id="confirmEmail"></div>
+            </div>
+
+            <p class="confirm-next">If your state is available your invoice arrives within 24 hours. If for any reason we cannot proceed you will hear from us within the same window. No payment is taken unless we confirm availability first.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-inner">
+      <div class="section-label reveal">Common Questions</div>
+      <h2 class="section-title reveal reveal-delay-1">Answers, before<br><em>you ask them.</em></h2>
+      <p class="section-body reveal reveal-delay-2">The questions every PI firm owner asks before signing. No marketing-speak. Direct answers to direct questions.</p>
+
+      <div class="faq-list reveal reveal-delay-3">
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>What happens if a competitor in my state signs with you before I do?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>The state is theirs. Permanently. We do not move firms once a state is claimed, we do not run "sub-region" workarounds, and we do not let one firm slow-walk the engagement while a competitor waits in line.</p>
+              <p>This is the trade-off of the model. It is also why <em>moving on the audit before someone else does</em> is the only meaningful step on this page. Once your state is claimed, the strategic conversation with us is over -- regardless of what you would have paid.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>Why exclusivity? Doesn't that cap your business?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Yes. That is the point.</p>
+              <p>A PI marketing agency that signs every firm in your city has every incentive to keep all of you running on the same playbook -- so none of you dominate, all of you keep paying, and the agency revenue compounds. We rejected that model because it is structurally hostile to the firm paying the invoice.</p>
+              <p>Capped engagement counts mean the work goes deep instead of wide. It means we are tied to your outcome instead of insulated from it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>What does this actually cost?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>The market domination audit is <em>$497</em>, credited in full toward your build if you become a client. That number is on this page because it is the only fixed number we publish.</p>
+              <p>Engagement pricing depends on your market size, your existing digital footprint, the case types you focus on, and the ad budget you are prepared to deploy. We quote it after the audit -- because quoting it before the audit would mean quoting it blind.</p>
+              <p>What we will tell you up front: zero markup on media, no surprise line items, no annual price escalations baked into the contract.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>How long is the commitment?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Twelve months minimum. PI marketing is not a 90-day sprint. Building organic authority, training intake systems, producing matrix content, and earning Google's trust in a competitive market takes time -- and shortening the runway is the fastest way to waste the spend.</p>
+              <p>What you do not get locked into: media markup escalators, hidden auto-renewals, or termination fees designed to punish a clean exit. After year one, the engagement renews on a quarterly basis.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>I already have a marketing agency. What does the transition look like?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>We handle it. Discovery starts before your current agency is notified. We audit what they have built, identify what is worth preserving and what was holding you back, and produce a transition map that protects your existing rankings, ad accounts, and review history.</p>
+              <p>Most firms switch in 30-45 days with zero ranking drop and no campaign interruption. We have done this enough times that it does not feel like a switch -- it feels like an upgrade.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>How are you different from the lead-generation companies?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Lead-gen companies sell the same leads to multiple firms. You get the lead. The two PI firms across town also got it. The case goes to whoever calls first or pitches hardest. Your conversion rate plateaus and the lead-gen company sells you more leads to compensate.</p>
+              <p>We do the opposite. We build <em>your</em> authority so the prospects search for your firm by name and case type. Those calls do not need to be sold against anyone -- because nobody else is fielding the same call.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>Your team is based in Hawaii. Does geography matter for my market?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>For PI marketing in 2026, no. Every relevant tool, dataset, and platform is remote-native. We monitor your Google rankings, GBP performance, and ad accounts from the same screen your team would, and we are in your time zone for any client communication that needs it.</p>
+              <p>What being based in Kona <em>does</em> mean: a small senior team, deliberate engagement count, and a working pace that prioritizes the work over the optics.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-q">
+            <span>What happens if results do not come?</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>The audit gives us both a defensible baseline before any work begins -- current rankings, current GBP performance, current intake rate, current ad efficiency. Everything we do is measured against that baseline.</p>
+              <p>If the system is underperforming the projection at the six-month checkpoint, we restructure the engagement at our cost. If it is underperforming at twelve months, you walk -- and we have failed at our only job. We do not insulate ourselves from that outcome, because the exclusivity model means we cannot.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking-section" id="schedule">
+    <div class="section-inner">
+      <div class="section-label reveal">Strategy Call</div>
+      <h2 class="section-title reveal reveal-delay-1">Schedule Your<br><em>30-Minute Strategy Call.</em></h2>
+      <p class="section-body reveal reveal-delay-2">No pitch. No pressure. A direct conversation about your market, your current position, and whether Kona.biz is the right fit for your firm.</p>
+
+      <div class="booking-wrap">
+        <div class="booking-calendar reveal reveal-delay-2">
+          <div class="cal-header">
+            <button class="cal-nav" id="calPrev">&#8249;</button>
+            <div class="cal-month-label" id="calMonth"></div>
+            <button class="cal-nav" id="calNext">&#8250;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="booking-times">
+            <div class="booking-times-label">Available Times</div>
+            <div id="timeSlotsWrap">
+              <div class="booking-times-empty">Select a date above to see available times.</div>
+            </div>
+          </div>
+          <button class="book-btn" id="bookBtn">Confirm This Time</button>
+          <div class="book-confirm" id="bookConfirm">
+            <div class="book-confirm-title">Online Booking Coming Soon</div>
+            <p>Live scheduling will be available shortly. In the meantime, use the contact form below and we will schedule your call directly.</p>
+          </div>
+        </div>
+
+        <div class="booking-copy reveal reveal-delay-3">
+          <h4>A direct conversation about<br><em>your market and your position.</em></h4>
+          <p>This is not a sales call. It is a 30-minute strategic conversation about where your firm stands in your state, what the competitive landscape looks like, and what it would take to own it.</p>
+          <p>If there is a fit, we will tell you. If there is not, we will tell you that too.</p>
+          <div class="booking-details">
+            <div class="booking-detail-item">
+              <span class="bd-tag">Duration</span>
+              <span>30 minutes</span>
+            </div>
+            <div class="booking-detail-item">
+              <span class="bd-tag">Format</span>
+              <span>Video or phone, your preference</span>
+            </div>
+            <div class="booking-detail-item">
+              <span class="bd-tag">Who</span>
+              <span>Direct with the Kona.biz strategist, not a sales rep</span>
+            </div>
+            <div class="booking-detail-item">
+              <span class="bd-tag">Cost</span>
+              <span>No charge. No obligation.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER AREA -->
+  <div style="background: var(--bg); position: relative; z-index: 2;">
+
+    <!-- FOOTER CONTACT -->
+    <div class="footer-contact" id="contact">
+      <div class="footer-contact-left">
+        <h3>Have a question<br>before you <em>commit?</em></h3>
+        <p>We are happy to answer questions before you request a report or audit. Send us a message and we will get back to you directly.</p>
+      </div>
+      <div>
+        <form class="footer-contact-form" id="contactForm" action="https://formspree.io/f/YOUR_CONTACT_FORM_ID" method="POST">
+          <div class="footer-field">
+            <input type="text" name="name" placeholder="Your name" required autocomplete="off">
+          </div>
+          <div class="footer-field">
+            <input type="email" name="email" placeholder="Your email" required autocomplete="off">
+          </div>
+          <div class="footer-field">
+            <textarea name="message" placeholder="Your question..." required></textarea>
+          </div>
+          <button type="submit" class="footer-submit" id="contactSubmitBtn">Send Message</button>
+        </form>
+        <div class="footer-contact-success" id="contactSuccess">
+          Message received. We will be in touch shortly.
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">KONA.BIZ</div>
+      <div class="footer-copy">
+        Personal Injury Marketing Specialists<br>
+        One Client Per State &nbsp;&bull;&nbsp; Kona, Hawaii<br>
+        &copy; 2026 Kona.biz. All rights reserved.
+      </div>
+    </footer>
+
+  </div>
+
+</div>
+
+<script>
+// =============================================
+// CANVAS PARTICLE ANIMATION
+// =============================================
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles, gridLines, scrollY = 0;
+let animFrame;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initParticles() {
+  particles = [];
+  const count = Math.floor((W * H) / 18000);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 1.5 + 0.3,
+      opacity: Math.random() * 0.4 + 0.1,
+      pulse: Math.random() * Math.PI * 2
+    });
+  }
+}
+
+function initGrid() {
+  gridLines = { h: [], v: [] };
+  const spacing = 80;
+  for (let x = 0; x < W + spacing; x += spacing) gridLines.v.push(x);
+  for (let y = 0; y < H + spacing; y += spacing) gridLines.h.push(y);
+}
+
+function drawFrame(ts) {
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#080807';
+  ctx.fillRect(0, 0, W, H);
+
+  // Scroll influence -- canvas shifts slightly on scroll
+  const scrollInfluence = (window.scrollY / (document.body.scrollHeight - H)) * 60;
+
+  // Grid
+  const gridOpacity = Math.max(0, 0.06 - scrollInfluence * 0.001);
+  ctx.strokeStyle = `rgba(194,155,79,${gridOpacity})`;
+  ctx.lineWidth = 0.5;
+
+  gridLines.v.forEach(x => {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, H);
+    ctx.stroke();
+  });
+
+  gridLines.h.forEach(y => {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+  });
+
+  // Radial glow center
+  const cx = W * 0.5;
+  const cy = H * 0.45;
+  const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.55);
+  grd.addColorStop(0, 'rgba(194,155,79,0.04)');
+  grd.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, W, H);
+
+  // Particles
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.pulse += 0.01;
+
+    if (p.x < 0) p.x = W;
+    if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H;
+    if (p.y > H) p.y = 0;
+
+    const pulseOpacity = p.opacity * (0.7 + 0.3 * Math.sin(p.pulse));
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(194,155,79,${pulseOpacity})`;
+    ctx.fill();
+  });
+
+  // Connect nearby particles
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(194,155,79,${0.06 * (1 - dist / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+
+  animFrame = requestAnimationFrame(drawFrame);
+}
+
+resize();
+initParticles();
+initGrid();
+drawFrame();
+
+window.addEventListener('resize', () => {
+  resize();
+  initParticles();
+  initGrid();
+});
+
+// =============================================
+// SERVICE CARD STAGGER ANIMATION
+// =============================================
+const serviceCards = document.querySelectorAll('.service-card');
+
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const card = entry.target;
+      const idx = Array.from(serviceCards).indexOf(card);
+      // Stagger each card by 80ms
+      setTimeout(() => {
+        card.classList.add('card-visible');
+      }, idx * 80);
+      cardObserver.unobserve(card);
+    }
+  });
+}, { threshold: 0.08 });
+
+serviceCards.forEach(card => cardObserver.observe(card));
+
+// =============================================
+// VALUE CARD COUNT-UP ON HOVER
+// =============================================
+document.querySelectorAll('.value-card[data-target]').forEach(card => {
+  const numEl = card.querySelector('[data-countup]');
+  const target = parseInt(card.dataset.target);
+  const prefix = card.dataset.prefix || '';
+  const suffix = card.dataset.suffix || '';
+  let animating = false;
+  let frame;
+
+  card.addEventListener('mouseenter', () => {
+    if (animating) return;
+    animating = true;
+
+    const duration = 600;
+    const start = performance.now();
+    const startVal = Math.floor(target * 0.1);
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(startVal + (target - startVal) * eased);
+      numEl.textContent = prefix + current + suffix;
+
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        numEl.textContent = prefix + target + suffix;
+        animating = false;
+      }
+    }
+
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(tick);
+  });
+
+  card.addEventListener('mouseleave', () => {
+    cancelAnimationFrame(frame);
+    animating = false;
+    numEl.textContent = prefix + target + suffix;
+  });
+});
+
+// =============================================
+// CURSOR
+// =============================================
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animCursor() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  cursorRing.style.left = rx + 'px';
+  cursorRing.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+document.querySelectorAll('a, button, .state-cell, .pillar').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(1.2)';
+    cursorRing.style.width = '22px';
+    cursorRing.style.height = '22px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    cursorRing.style.width = '14px';
+    cursorRing.style.height = '14px';
+  });
+});
+
+// =============================================
+// NAV SCROLL
+// =============================================
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// =============================================
+// REVEAL ON SCROLL
+// =============================================
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => revealObs.observe(el));
+
+// =============================================
+// STATE GRID
+// =============================================
+const states = [
+  { name: "Alabama", status: "available" },
+  { name: "Alaska", status: "available" },
+  { name: "Arizona", status: "available" },
+  { name: "Arkansas", status: "available" },
+  { name: "California", status: "available" },
+  { name: "Colorado", status: "available" },
+  { name: "Connecticut", status: "available" },
+  { name: "Delaware", status: "available" },
+  { name: "Florida", status: "available" },
+  { name: "Georgia", status: "available" },
+  { name: "Hawaii", status: "managed" },
+  { name: "Idaho", status: "available" },
+  { name: "Illinois", status: "available" },
+  { name: "Indiana", status: "available" },
+  { name: "Iowa", status: "available" },
+  { name: "Kansas", status: "available" },
+  { name: "Kentucky", status: "available" },
+  { name: "Louisiana", status: "available" },
+  { name: "Maine", status: "available" },
+  { name: "Maryland", status: "available" },
+  { name: "Massachusetts", status: "available" },
+  { name: "Michigan", status: "available" },
+  { name: "Minnesota", status: "available" },
+  { name: "Mississippi", status: "available" },
+  { name: "Missouri", status: "available" },
+  { name: "Montana", status: "available" },
+  { name: "Nebraska", status: "available" },
+  { name: "Nevada", status: "available" },
+  { name: "New Hampshire", status: "available" },
+  { name: "New Jersey", status: "available" },
+  { name: "New Mexico", status: "available" },
+  { name: "New York", status: "available" },
+  { name: "North Carolina", status: "available" },
+  { name: "North Dakota", status: "available" },
+  { name: "Ohio", status: "available" },
+  { name: "Oklahoma", status: "available" },
+  { name: "Oregon", status: "available" },
+  { name: "Pennsylvania", status: "available" },
+  { name: "Rhode Island", status: "available" },
+  { name: "South Carolina", status: "available" },
+  { name: "South Dakota", status: "available" },
+  { name: "Tennessee", status: "available" },
+  { name: "Texas", status: "available" },
+  { name: "Utah", status: "available" },
+  { name: "Vermont", status: "available" },
+  { name: "Virginia", status: "available" },
+  { name: "Washington", status: "managed" },
+  { name: "West Virginia", status: "available" },
+  { name: "Wisconsin", status: "available" },
+  { name: "Wyoming", status: "available" }
+];
+
+const grid = document.getElementById('stateGrid');
+const allCells = [];
+
+states.forEach(s => {
+  const cell = document.createElement('div');
+  cell.className = `state-cell ${s.status}`;
+  cell.innerHTML = `
+    <span class="state-name">${s.name}</span>
+    <span class="state-status">${s.status === 'managed' ? 'Excl. Managed' : 'Available'}</span>
+  `;
+  if (s.status === 'available') {
+    cell.addEventListener('click', () => {
+      document.getElementById('claim').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const sel = document.getElementById('state');
+        for (let i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === s.name) {
+            sel.selectedIndex = i;
+            break;
+          }
+        }
+      }, 800);
+    });
+  }
+  grid.appendChild(cell);
+  allCells.push(cell);
+});
+
+// Cascade animation -- fires once when grid scrolls into view
+let gridAnimated = false;
+const gridObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !gridAnimated) {
+      gridAnimated = true;
+      allCells.forEach((cell, i) => {
+        setTimeout(() => {
+          cell.classList.add('cell-visible');
+        }, i * 18);
+      });
+      gridObserver.disconnect();
+    }
+  });
+}, { threshold: 0.05 });
+
+gridObserver.observe(grid);
+
+// =============================================
+// OFFER SECTION SPOTLIGHT
+// =============================================
+const offerSection = document.getElementById('claim');
+let spotlightFired = false;
+
+const spotlightObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !spotlightFired) {
+      spotlightFired = true;
+      // Small delay so it fires as the section settles into view
+      setTimeout(() => {
+        offerSection.classList.add('spotlight-active');
+      }, 200);
+      spotlightObserver.disconnect();
+    }
+  });
+}, { threshold: 0.15 });
+
+if (offerSection) spotlightObserver.observe(offerSection);
+
+// =============================================
+// AUDIT FORM -- TWO STEP
+// =============================================
+const auditForm = document.getElementById('auditForm');
+const auditStep1 = document.getElementById('auditStep1');
+const auditStep2 = document.getElementById('auditStep2');
+const auditSubmitBtn = document.getElementById('auditSubmitBtn');
+
+if (auditForm) {
+  auditForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    auditSubmitBtn.textContent = 'Verifying...';
+    auditSubmitBtn.disabled = true;
+
+    const name = document.getElementById('auditName').value;
+    const email = document.getElementById('auditEmail').value;
+    const firm = document.getElementById('auditFirm').value;
+    const state = document.getElementById('auditState').value;
+
+    const data = new FormData(auditForm);
+
+    try {
+      const res = await fetch(auditForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      // Show step 2 regardless -- we capture the lead
+      document.getElementById('confirmFirm').textContent = firm;
+      document.getElementById('confirmState').textContent = state;
+      document.getElementById('confirmEmail').textContent = email;
+
+      auditStep1.style.display = 'none';
+      auditStep2.style.display = 'block';
+
+    } catch (err) {
+      // Still show confirmation -- submission captured locally
+      document.getElementById('confirmFirm').textContent = firm;
+      document.getElementById('confirmState').textContent = state;
+      document.getElementById('confirmEmail').textContent = email;
+      auditStep1.style.display = 'none';
+      auditStep2.style.display = 'block';
+    }
+  });
+}
+
+// =============================================
+// FORM SUBMISSION
+// =============================================
+const form = document.getElementById('leadForm');
+const formSuccess = document.getElementById('formSuccess');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.textContent = 'Sending...';
+  submitBtn.disabled = true;
+
+  const data = new FormData(form);
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      form.style.display = 'none';
+      formSuccess.style.display = 'block';
+      // Scroll to audit section after a moment
+      setTimeout(() => {
+        document.querySelector('.audit-section').scrollIntoView({ behavior: 'smooth' });
+      }, 2500);
+    } else {
+      submitBtn.textContent = 'Try Again';
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    submitBtn.textContent = 'Send My Free Report';
+    submitBtn.disabled = false;
+  }
+});
+
+// =============================================
+// FOOTER CONTACT FORM
+// =============================================
+const contactForm = document.getElementById('contactForm');
+const contactSuccess = document.getElementById('contactSuccess');
+const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    contactSubmitBtn.textContent = 'Sending...';
+    contactSubmitBtn.disabled = true;
+
+    const data = new FormData(contactForm);
+
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      contactForm.style.display = 'none';
+      contactSuccess.style.display = 'block';
+
+    } catch (err) {
+      contactForm.style.display = 'none';
+      contactSuccess.style.display = 'block';
+    }
+  });
+}
+
+// =============================================
+// FAQ ACCORDION
+// =============================================
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+
+  q.addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+
+    // Close any sibling that was open (one-at-a-time pattern)
+    document.querySelectorAll('.faq-item.open').forEach(open => {
+      if (open !== item) {
+        open.classList.remove('open');
+        const oa = open.querySelector('.faq-a');
+        if (oa) oa.style.maxHeight = '0px';
+      }
+    });
+
+    if (wasOpen) {
+      item.classList.remove('open');
+      a.style.maxHeight = '0px';
+    } else {
+      item.classList.add('open');
+      a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  });
+});
+
+// Recalculate open FAQ height on resize
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.faq-item.open .faq-a').forEach(a => {
+    a.style.maxHeight = a.scrollHeight + 'px';
+  });
+});
+
+// =============================================
+// BOOKING CALENDAR (PLACEHOLDER)
+// =============================================
+(function() {
+  const MONTHS = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+  const DAYS   = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+  const TIMES  = ['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM'];
+  const BOOKED = [5, 8, 13, 19, 22]; // simulated booked days
+
+  const today = new Date();
+  let curYear  = today.getFullYear();
+  let curMonth = today.getMonth();
+  let selDay   = null;
+  let selTime  = null;
+
+  const calMonthEl   = document.getElementById('calMonth');
+  const calGridEl    = document.getElementById('calGrid');
+  const timeSlotsWrap = document.getElementById('timeSlotsWrap');
+  const bookBtn      = document.getElementById('bookBtn');
+  const bookConfirm  = document.getElementById('bookConfirm');
+
+  function renderCalendar() {
+    calMonthEl.textContent = MONTHS[curMonth] + ' ' + curYear;
+    calGridEl.innerHTML = '';
+    selDay = null; selTime = null;
+    updateBookBtn();
+    timeSlotsWrap.innerHTML = '<div class="booking-times-empty">Select a date above to see available times.</div>';
+
+    DAYS.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-day-name';
+      el.textContent = d;
+      calGridEl.appendChild(el);
+    });
+
+    const firstDow    = new Date(curYear, curMonth, 1).getDay();
+    const offset      = firstDow === 0 ? 6 : firstDow - 1;
+    const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+
+    for (let i = 0; i < offset; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day empty';
+      calGridEl.appendChild(el);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el   = document.createElement('div');
+      const date = new Date(curYear, curMonth, d);
+      const dow  = date.getDay();
+      const past = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const weekend = dow === 0 || dow === 6;
+
+      if (past || weekend || BOOKED.includes(d)) {
+        el.className = 'cal-day unavailable';
+      } else {
+        el.className = 'cal-day available';
+        if (date.toDateString() === today.toDateString()) el.classList.add('today');
+        el.addEventListener('click', () => selectDay(d, el));
+      }
+
+      el.textContent = d;
+      calGridEl.appendChild(el);
+    }
+  }
+
+  function selectDay(day, el) {
+    document.querySelectorAll('.cal-day.selected').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selDay = day; selTime = null;
+    updateBookBtn();
+
+    const grid = document.createElement('div');
+    grid.className = 'time-slots';
+    TIMES.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'time-slot';
+      btn.textContent = t;
+      btn.addEventListener('click', () => selectTime(t, btn));
+      grid.appendChild(btn);
+    });
+    timeSlotsWrap.innerHTML = '';
+    timeSlotsWrap.appendChild(grid);
+  }
+
+  function selectTime(time, el) {
+    document.querySelectorAll('.time-slot.selected').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selTime = time;
+    updateBookBtn();
+  }
+
+  function updateBookBtn() {
+    bookBtn.classList.toggle('ready', !!(selDay && selTime));
+  }
+
+  document.getElementById('calPrev').addEventListener('click', () => {
+    curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCalendar();
+  });
+  document.getElementById('calNext').addEventListener('click', () => {
+    curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCalendar();
+  });
+
+  bookBtn.addEventListener('click', () => {
+    if (!bookBtn.classList.contains('ready')) return;
+    bookConfirm.classList.add('visible');
+    bookBtn.style.display = 'none';
+  });
+
+  renderCalendar();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kona.biz — Site Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080807;
+    --dark: #0f0f0c;
+    --card: #131310;
+    --border: #1e1e18;
+    --border-gold: rgba(194,155,79,0.3);
+    --gold: #c29b4f;
+    --gold-light: #d4af6a;
+    --cream: #e8e2d4;
+    --muted: #6a6458;
+    --faint: #2e2e24;
+    --available: #4a7c59;
+    --available-bg: rgba(74,124,89,0.08);
+    --claimed: #8b4a2a;
+    --claimed-bg: rgba(139,74,42,0.08);
+    --managed: rgba(194,155,79,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    padding: 48px 24px;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    line-height: 0.95;
+    margin-bottom: 8px;
+  }
+
+  .header h1 span { color: var(--gold); }
+
+  .header p {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+    margin: 20px auto;
+  }
+
+  /* ---- STATS BAR ---- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 80px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stat {
+    background: var(--dark);
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ---- SECTION ---- */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 32px;
+    line-height: 1.2;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  /* ---- URL STRUCTURE ---- */
+  .url-structure {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  .url-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 160px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .url-row:hover { background: var(--card); }
+  .url-row:last-child { border-bottom: none; }
+  .url-row.header-row { background: var(--card); }
+
+  .url-row > div {
+    padding: 16px 24px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    border-right: 1px solid var(--border);
+  }
+
+  .url-row > div:last-child { border-right: none; }
+
+  .url-row.header-row > div {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .url-type {
+    color: var(--gold);
+    font-size: 10px;
+  }
+
+  .url-path {
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .url-count {
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ---- SERVICES GRID ---- */
+  .services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .service-card {
+    background: var(--dark);
+    padding: 32px 28px;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover { background: var(--card); }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--faint);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .service-slug {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+
+  .page-count-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+  }
+
+  /* ---- STATUS LEGEND ---- */
+  .status-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .status-item {
+    background: var(--dark);
+    padding: 28px 24px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    margin-bottom: 14px;
+    font-weight: 400;
+  }
+
+  .status-badge.available {
+    background: var(--available-bg);
+    border: 1px solid rgba(74,124,89,0.4);
+    color: #6abf80;
+  }
+
+  .status-badge.claimed {
+    background: var(--claimed-bg);
+    border: 1px solid rgba(139,74,42,0.4);
+    color: #d4855a;
+  }
+
+  .status-badge.managed {
+    background: var(--managed);
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+  }
+
+  .status-badge.waitlist {
+    background: rgba(80,80,120,0.1);
+    border: 1px solid rgba(80,80,160,0.3);
+    color: #8888cc;
+  }
+
+  .status-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .status-item p {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- STATE MAP ---- */
+  .state-grid-wrapper {
+    border: 1px solid var(--border);
+    padding: 32px;
+    background: var(--dark);
+    margin-bottom: 48px;
+  }
+
+  .state-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .state-grid-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--cream);
+  }
+
+  .legend-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .legend-dot.available { background: #6abf80; }
+  .legend-dot.managed { background: var(--gold); }
+
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 2px;
+  }
+
+  .state-cell {
+    padding: 10px 12px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: var(--black);
+    transition: all 0.2s;
+    cursor: default;
+    position: relative;
+  }
+
+  .state-cell:hover {
+    border-color: var(--border-gold);
+    z-index: 1;
+  }
+
+  .state-cell.available {
+    border-color: rgba(74,124,89,0.2);
+  }
+
+  .state-cell.available:hover {
+    background: var(--available-bg);
+    border-color: rgba(74,124,89,0.5);
+  }
+
+  .state-cell.managed {
+    background: rgba(194,155,79,0.04);
+    border-color: var(--border-gold);
+  }
+
+  .state-name {
+    display: block;
+    color: var(--cream);
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .state-status {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+  }
+
+  .state-cell.available .state-status { color: #6abf80; }
+  .state-cell.managed .state-status { color: var(--gold); }
+
+  /* ---- PAGE COUNT BREAKDOWN ---- */
+  .breakdown {
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .breakdown-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 16px;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .breakdown-row:hover { background: var(--card); }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-row.total {
+    background: rgba(194,155,79,0.04);
+    border-top: 1px solid var(--border-gold);
+  }
+
+  .breakdown-row.header {
+    background: var(--card);
+  }
+
+  .breakdown-label {
+    font-size: 11px;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+  }
+
+  .breakdown-label small {
+    display: block;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.08em;
+  }
+
+  .breakdown-row.header .breakdown-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .breakdown-type {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .breakdown-count {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    text-align: right;
+    min-width: 48px;
+  }
+
+  .breakdown-row.total .breakdown-count {
+    color: var(--gold);
+    font-size: 36px;
+  }
+
+  .breakdown-row.matrix-row .breakdown-count { color: var(--gold-light); }
+
+  /* ---- MATRIX PREVIEW ---- */
+  .matrix-preview {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-top: 48px;
+  }
+
+  .matrix-header {
+    background: var(--card);
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .matrix-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--cream);
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .matrix-header p {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .matrix-table {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+  }
+
+  th {
+    background: var(--card);
+    padding: 12px 16px;
+    text-align: left;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  th:first-child {
+    background: var(--dark);
+    color: var(--faint);
+  }
+
+  td {
+    padding: 10px 16px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  td:first-child {
+    color: var(--cream);
+    font-size: 10px;
+    background: var(--card);
+    letter-spacing: 0.06em;
+  }
+
+  td.page-cell {
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: default;
+  }
+
+  td.page-cell:hover {
+    background: rgba(194,155,79,0.06);
+    color: var(--gold);
+  }
+
+  td.managed-cell {
+    background: rgba(194,155,79,0.04);
+    color: var(--gold);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .more-row td {
+    text-align: center;
+    color: var(--faint);
+    padding: 16px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-right: none;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding-top: 60px;
+    border-top: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer .wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin-bottom: 8px;
+  }
+
+  .footer p {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .url-row { grid-template-columns: 1fr 1fr; }
+    .url-row > div:nth-child(2) { display: none; }
+    .breakdown-row { grid-template-columns: 1fr auto; }
+    .breakdown-type { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="eyebrow">Kona.biz — Internal Document</div>
+  <h1>Site <span>Architecture</span></h1>
+  <div class="divider"></div>
+  <p>Full sitemap, matrix structure & state status system — v1.0</p>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num">6</span>
+    <span class="stat-label">Matrix Services</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">50</span>
+    <span class="stat-label">States</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">300</span>
+    <span class="stat-label">Matrix Pages</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">365</span>
+    <span class="stat-label">Total Pages</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">48</span>
+    <span class="stat-label">Available Markets</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">2</span>
+    <span class="stat-label">Managed Markets</span>
+  </div>
+</div>
+
+<!-- URL STRUCTURE -->
+<div class="section">
+  <div class="section-label">URL Architecture</div>
+  <h2 class="section-title">Clean, crawlable,<br><em>SEO-optimized structure.</em></h2>
+
+  <div class="url-structure">
+    <div class="url-row header-row">
+      <div>Page Type</div>
+      <div>URL Pattern / Example</div>
+      <div style="text-align:right">Count</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Homepage</div>
+      <div class="url-path">kona.biz/</div>
+      <div class="url-count">1</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Main Pages</div>
+      <div class="url-path">kona.biz/about &nbsp;·&nbsp; /how-it-works &nbsp;·&nbsp; /pricing &nbsp;·&nbsp; /contact</div>
+      <div class="url-count">7</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Services Hub</div>
+      <div class="url-path">kona.biz/services/</div>
+      <div class="url-count">1</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Service Pages</div>
+      <div class="url-path">kona.biz/services/personal-injury-seo/</div>
+      <div class="url-count">6</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">States Hub</div>
+      <div class="url-path">kona.biz/states/</div>
+      <div class="url-count">1</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">State Pages</div>
+      <div class="url-path">kona.biz/states/texas/</div>
+      <div class="url-count">50</div>
+    </div>
+    <div class="url-row" style="background:rgba(194,155,79,0.03)">
+      <div class="url-type" style="color:var(--gold-light)">Matrix Pages</div>
+      <div class="url-path">kona.biz/services/personal-injury-seo/texas/</div>
+      <div class="url-count" style="color:var(--gold)">300</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Case Studies</div>
+      <div class="url-path">kona.biz/case-studies/foster-law-washington/</div>
+      <div class="url-count">1+</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Blog</div>
+      <div class="url-path">kona.biz/blog/</div>
+      <div class="url-count">Hub + posts</div>
+    </div>
+    <div class="url-row">
+      <div class="url-type">Legal</div>
+      <div class="url-path">kona.biz/privacy &nbsp;·&nbsp; /terms</div>
+      <div class="url-count">2</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section">
+  <div class="section-label">Matrix Services</div>
+  <h2 class="section-title">Six services.<br><em>Fifty states each.</em></h2>
+
+  <div class="services-list">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>PI Law Firm Website Design</h3>
+      <div class="service-slug">/services/personal-injury-website-design/</div>
+      <p>Custom-coded authority sites with local matrix architecture, custom backend platform, and GEO optimization built in from day one.</p>
+      <span class="page-count-badge">50 state pages</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Personal Injury SEO</h3>
+      <div class="service-slug">/services/personal-injury-seo/</div>
+      <p>The highest-searched legal marketing category. Hub-and-spoke content, local authority networks, press release link building, and rank tracking.</p>
+      <span class="page-count-badge">50 state pages</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Personal Injury PPC & Google Ads</h3>
+      <div class="service-slug">/services/personal-injury-ppc/</div>
+      <p>Google Ads, LSA, Meta campaigns managed for case volume. Ad spend billed at cost. No media markup.</p>
+      <span class="page-count-badge">50 state pages</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Google Business Profile Management</h3>
+      <div class="service-slug">/services/google-business-profile-law-firms/</div>
+      <p>Setup, optimization, active management, and posting. The most underutilized tool in PI marketing -- and one of the highest ROI.</p>
+      <span class="page-count-badge">50 state pages</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3>Legal Content Marketing</h3>
+      <div class="service-slug">/services/legal-content-marketing/</div>
+      <p>PI-specific content strategy, ongoing content production, GEO optimization for AI platforms, and press releases for link authority.</p>
+      <span class="page-count-badge">50 state pages</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3>Law Firm AI Consulting</h3>
+      <div class="service-slug">/services/law-firm-ai-consulting/</div>
+      <p>Practice modernization consulting and custom AI agent development for intake, workflows, and client communication. Lowest competition. Highest differentiation.</p>
+      <span class="page-count-badge">50 state pages</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS SYSTEM -->
+<div class="section">
+  <div class="section-label">Market Status System</div>
+  <h2 class="section-title">Every state has a status.<br><em>Exclusivity made visible.</em></h2>
+
+  <div class="status-legend">
+    <div class="status-item">
+      <div class="status-badge available">Available</div>
+      <h4>Open Market</h4>
+      <p>Full service page live and indexed. CTA active. Prospect can claim this state by becoming a client. Drives inbound leads organically.</p>
+    </div>
+    <div class="status-item">
+      <div class="status-badge claimed">Claimed</div>
+      <h4>Exclusively Taken</h4>
+      <p>Page stays live for SEO equity. Content shifts to "This market is exclusively managed." Waitlist CTA captures the lead. If client leaves, status reverts to Available.</p>
+    </div>
+    <div class="status-item">
+      <div class="status-badge managed">Exclusively Managed</div>
+      <h4>Active Kona.biz Client</h4>
+      <p>Used for Hawaii and Washington. Signals active presence without advertising the client. No CTA. Builds credibility by showing existing managed markets.</p>
+    </div>
+    <div class="status-item">
+      <div class="status-badge waitlist">On Waitlist</div>
+      <h4>Interest Captured</h4>
+      <p>Prospects who submitted a waitlist form for a Claimed market. Automatically notified if the market opens. Pipeline built without any outreach effort.</p>
+    </div>
+  </div>
+</div>
+
+<!-- STATE GRID -->
+<div class="section">
+  <div class="section-label">50-State Market Map</div>
+  <h2 class="section-title">Launch day status.<br><em>48 markets open.</em></h2>
+
+  <div class="state-grid-wrapper">
+    <div class="state-grid-header">
+      <h3>All 50 States — Current Availability</h3>
+      <div class="legend-row">
+        <div class="legend-item"><div class="legend-dot available"></div> Available</div>
+        <div class="legend-item"><div class="legend-dot managed"></div> Exclusively Managed</div>
+      </div>
+    </div>
+    <div class="state-grid" id="stateGrid"></div>
+  </div>
+</div>
+
+<!-- PAGE COUNT -->
+<div class="section">
+  <div class="section-label">Full Page Count</div>
+  <h2 class="section-title">365 pages.<br><em>Built to rank.</em></h2>
+
+  <div class="breakdown">
+    <div class="breakdown-row header">
+      <div class="breakdown-label">Page Type</div>
+      <div class="breakdown-type">Type</div>
+      <div class="breakdown-count" style="font-size:9px;letter-spacing:0.3em;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase">Count</div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-label">Homepage<small>Hero, positioning, matrix preview, services, state map, CTA</small></div>
+      <div class="breakdown-type">Core</div>
+      <div class="breakdown-count">1</div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-label">Main Pages<small>About, How It Works, Pricing, Case Study, Blog Hub, Contact, Privacy, Terms</small></div>
+      <div class="breakdown-type">Core</div>
+      <div class="breakdown-count">8</div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-label">Services Hub<small>/services/ — overview of all 6 matrix services</small></div>
+      <div class="breakdown-type">Hub</div>
+      <div class="breakdown-count">1</div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-label">Service Pages<small>One per service — lists all 50 states with status badges</small></div>
+      <div class="breakdown-type">Hub</div>
+      <div class="breakdown-count">6</div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-label">States Hub<small>/states/ — interactive map of all 50 states</small></div>
+      <div class="breakdown-type">Hub</div>
+      <div class="breakdown-count">1</div>
+    </div>
+    <div class="breakdown-row">
+      <div class="breakdown-label">State Pages<small>One per state — lists all 6 services + market status</small></div>
+      <div class="breakdown-type">Hub</div>
+      <div class="breakdown-count">50</div>
+    </div>
+    <div class="breakdown-row matrix-row">
+      <div class="breakdown-label">Matrix Pages<small>6 services x 50 states = 300 unique landing pages</small></div>
+      <div class="breakdown-type">Matrix</div>
+      <div class="breakdown-count">300</div>
+    </div>
+    <div class="breakdown-row total">
+      <div class="breakdown-label" style="font-family:'Playfair Display',serif;font-size:18px;color:var(--cream)">Total Pages</div>
+      <div class="breakdown-type"></div>
+      <div class="breakdown-count">367</div>
+    </div>
+  </div>
+
+  <!-- MATRIX PREVIEW -->
+  <div class="matrix-preview">
+    <div class="matrix-header">
+      <h3>Matrix Sample — First 8 States x All 6 Services</h3>
+      <p>Each cell = one indexed landing page. Hover to see the page concept.</p>
+    </div>
+    <div class="matrix-table">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Website Design</th>
+            <th>SEO</th>
+            <th>PPC & Ads</th>
+            <th>GBP Mgmt</th>
+            <th>Content Mktg</th>
+            <th>AI Consulting</th>
+          </tr>
+        </thead>
+        <tbody id="matrixBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="wordmark">KONA.BIZ</div>
+  <p>Site Architecture Document &nbsp;&bull;&nbsp; Internal Use &nbsp;&bull;&nbsp; 2026</p>
+</div>
+
+<script>
+  const states = [
+    { name: "Alabama", slug: "alabama", status: "available" },
+    { name: "Alaska", slug: "alaska", status: "available" },
+    { name: "Arizona", slug: "arizona", status: "available" },
+    { name: "Arkansas", slug: "arkansas", status: "available" },
+    { name: "California", slug: "california", status: "available" },
+    { name: "Colorado", slug: "colorado", status: "available" },
+    { name: "Connecticut", slug: "connecticut", status: "available" },
+    { name: "Delaware", slug: "delaware", status: "available" },
+    { name: "Florida", slug: "florida", status: "available" },
+    { name: "Georgia", slug: "georgia", status: "available" },
+    { name: "Hawaii", slug: "hawaii", status: "managed" },
+    { name: "Idaho", slug: "idaho", status: "available" },
+    { name: "Illinois", slug: "illinois", status: "available" },
+    { name: "Indiana", slug: "indiana", status: "available" },
+    { name: "Iowa", slug: "iowa", status: "available" },
+    { name: "Kansas", slug: "kansas", status: "available" },
+    { name: "Kentucky", slug: "kentucky", status: "available" },
+    { name: "Louisiana", slug: "louisiana", status: "available" },
+    { name: "Maine", slug: "maine", status: "available" },
+    { name: "Maryland", slug: "maryland", status: "available" },
+    { name: "Massachusetts", slug: "massachusetts", status: "available" },
+    { name: "Michigan", slug: "michigan", status: "available" },
+    { name: "Minnesota", slug: "minnesota", status: "available" },
+    { name: "Mississippi", slug: "mississippi", status: "available" },
+    { name: "Missouri", slug: "missouri", status: "available" },
+    { name: "Montana", slug: "montana", status: "available" },
+    { name: "Nebraska", slug: "nebraska", status: "available" },
+    { name: "Nevada", slug: "nevada", status: "available" },
+    { name: "New Hampshire", slug: "new-hampshire", status: "available" },
+    { name: "New Jersey", slug: "new-jersey", status: "available" },
+    { name: "New Mexico", slug: "new-mexico", status: "available" },
+    { name: "New York", slug: "new-york", status: "available" },
+    { name: "North Carolina", slug: "north-carolina", status: "available" },
+    { name: "North Dakota", slug: "north-dakota", status: "available" },
+    { name: "Ohio", slug: "ohio", status: "available" },
+    { name: "Oklahoma", slug: "oklahoma", status: "available" },
+    { name: "Oregon", slug: "oregon", status: "available" },
+    { name: "Pennsylvania", slug: "pennsylvania", status: "available" },
+    { name: "Rhode Island", slug: "rhode-island", status: "available" },
+    { name: "South Carolina", slug: "south-carolina", status: "available" },
+    { name: "South Dakota", slug: "south-dakota", status: "available" },
+    { name: "Tennessee", slug: "tennessee", status: "available" },
+    { name: "Texas", slug: "texas", status: "available" },
+    { name: "Utah", slug: "utah", status: "available" },
+    { name: "Vermont", slug: "vermont", status: "available" },
+    { name: "Virginia", slug: "virginia", status: "available" },
+    { name: "Washington", slug: "washington", status: "managed" },
+    { name: "West Virginia", slug: "west-virginia", status: "available" },
+    { name: "Wisconsin", slug: "wisconsin", status: "available" },
+    { name: "Wyoming", slug: "wyoming", status: "available" }
+  ];
+
+  const services = [
+    { name: "Website Design", slug: "personal-injury-website-design" },
+    { name: "SEO", slug: "personal-injury-seo" },
+    { name: "PPC & Ads", slug: "personal-injury-ppc" },
+    { name: "GBP Mgmt", slug: "google-business-profile-law-firms" },
+    { name: "Content Mktg", slug: "legal-content-marketing" },
+    { name: "AI Consulting", slug: "law-firm-ai-consulting" }
+  ];
+
+  // Build state grid
+  const grid = document.getElementById('stateGrid');
+  states.forEach(state => {
+    const cell = document.createElement('div');
+    cell.className = `state-cell ${state.status}`;
+    cell.innerHTML = `
+      <span class="state-name">${state.name}</span>
+      <span class="state-status">${state.status === 'managed' ? 'Excl. Managed' : 'Available'}</span>
+    `;
+    grid.appendChild(cell);
+  });
+
+  // Build matrix preview (first 8 available states)
+  const previewStates = states.filter(s => s.status === 'available').slice(0, 8);
+  const tbody = document.getElementById('matrixBody');
+
+  previewStates.forEach(state => {
+    const tr = document.createElement('tr');
+    let cells = `<td>${state.name}</td>`;
+    services.forEach(svc => {
+      cells += `<td class="page-cell" title="/services/${svc.slug}/${state.slug}/">${svc.name}</td>`;
+    });
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+  });
+
+  // More row
+  const moreRow = document.createElement('tr');
+  moreRow.className = 'more-row';
+  moreRow.innerHTML = `<td colspan="7">+ 42 more states &nbsp;&bull;&nbsp; 300 matrix pages total</td>`;
+  tbody.appendChild(moreRow);
+</script>
+
+</body>
+</html>

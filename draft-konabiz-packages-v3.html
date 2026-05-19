@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kona.biz — Law Firm Marketing & Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080807;
+    --dark: #0f0f0c;
+    --card: #131310;
+    --border: #1e1e18;
+    --border-gold: rgba(194, 155, 79, 0.3);
+    --gold: #c29b4f;
+    --gold-light: #d4af6a;
+    --cream: #e8e2d4;
+    --muted: #6a6458;
+    --faint: #2e2e24;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(194,155,79,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 12vw, 140px);
+    letter-spacing: 0.05em;
+    line-height: 0.9;
+    color: var(--cream);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--muted);
+    margin-top: 24px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-pill {
+    display: inline-block;
+    border: 1px solid var(--border-gold);
+    padding: 12px 28px;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--faint);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- SECTIONS ---- */
+  section {
+    padding: 100px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .section-body {
+    font-size: 12px;
+    line-height: 2;
+    color: var(--muted);
+    max-width: 560px;
+    letter-spacing: 0.05em;
+  }
+
+  .full-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- PILLARS ---- */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    margin-top: 64px;
+    border: 1px solid var(--border);
+  }
+
+  .pillar {
+    background: var(--dark);
+    padding: 40px 32px;
+    transition: background 0.3s;
+  }
+
+  .pillar:hover { background: var(--card); }
+
+  .pillar-num {
+    font-size: 48px;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--faint);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .pillar h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .pillar p {
+    font-size: 11px;
+    line-height: 1.9;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- SERVICES ---- */
+  .services-group {
+    margin-top: 48px;
+  }
+
+  .services-group-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-gold);
+    margin-bottom: 2px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+    margin-top: 2px;
+  }
+
+  .service-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    transition: border-color 0.3s;
+  }
+
+  .service-item:hover { border-color: var(--border-gold); }
+
+  .service-item.featured {
+    border-color: rgba(194,155,79,0.2);
+    background: rgba(194,155,79,0.03);
+  }
+
+  .service-icon {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .service-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .service-item p {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .service-tag {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-top: 12px;
+    border: 1px solid var(--faint);
+    color: var(--muted);
+  }
+
+  .service-tag.retainer {
+    border-color: rgba(194,155,79,0.2);
+    color: var(--gold);
+  }
+
+  /* ---- BACKEND FEATURE ---- */
+  .backend-feature {
+    margin-top: 48px;
+    border: 1px solid var(--border-gold);
+    background: rgba(194,155,79,0.03);
+    padding: 48px;
+  }
+
+  .backend-feature-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .backend-feature h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .backend-feature p {
+    font-size: 11px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 600px;
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+  }
+
+  .backend-modules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .backend-module {
+    background: var(--dark);
+    padding: 24px 20px;
+    border: 1px solid var(--border);
+  }
+
+  .backend-module h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--cream);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .backend-module p {
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 0;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- RATE CARD ---- */
+  .rate-card {
+    margin-top: 64px;
+    border: 1px solid var(--border);
+  }
+
+  .rate-header {
+    background: var(--card);
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .rate-header span {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .rate-row {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .rate-row:last-child { border-bottom: none; }
+  .rate-row:hover { background: var(--card); }
+  .rate-row.featured {
+    background: rgba(194,155,79,0.04);
+    border-color: rgba(194,155,79,0.15);
+  }
+
+  .rate-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--cream);
+  }
+
+  .rate-name small {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: normal;
+  }
+
+  .rate-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .rate-note {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+  }
+
+  /* ---- CALCULATOR ---- */
+  .calculator {
+    margin-top: 64px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 48px;
+  }
+
+  .calc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .calc-sub {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .calc-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .calc-field label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .calc-field input, .calc-field select {
+    width: 100%;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  .calc-field input::-webkit-outer-spin-button,
+  .calc-field input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .calc-field input:focus { border-color: var(--border-gold); }
+  .calc-field select { font-size: 18px; cursor: pointer; }
+  .calc-field select option { background: var(--dark); }
+
+  .calc-results {
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 32px;
+  }
+
+  .calc-result-item label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .calc-result-item .value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .calc-result-item.total .value {
+    color: var(--gold);
+    font-size: 48px;
+  }
+
+  /* ---- BUILDS ---- */
+  .builds {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    margin-top: 64px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .build { background: var(--dark); padding: 36px 28px; }
+  .build.featured { background: rgba(194,155,79,0.04); }
+
+  .build-tag {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .build h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .build-matrix {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .build-breakdown { list-style: none; margin-bottom: 24px; }
+
+  .build-breakdown li {
+    font-size: 10px;
+    color: var(--muted);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .build-breakdown li span { color: var(--cream); }
+
+  .build-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 16px;
+  }
+
+  .build-total label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .build-total .price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- RETAINER PACKAGES ---- */
+  .retainer-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    margin-top: 64px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .retainer-card {
+    background: var(--dark);
+    padding: 40px 32px;
+    position: relative;
+  }
+
+  .retainer-card.featured {
+    background: rgba(194,155,79,0.04);
+    border: 1px solid rgba(194,155,79,0.2);
+  }
+
+  .retainer-card.command {
+    background: var(--card);
+  }
+
+  .retainer-badge {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .retainer-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .retainer-card.featured h3 { color: var(--gold); }
+
+  .retainer-tagline {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .retainer-price {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .retainer-price .amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .retainer-price .per {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .retainer-includes {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .retainer-includes li {
+    font-size: 10px;
+    color: var(--muted);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .retainer-includes li::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+    opacity: 0.5;
+  }
+
+  .retainer-card.featured .retainer-includes li::before { opacity: 1; }
+
+  .retainer-highlight {
+    background: rgba(194,155,79,0.08);
+    border: 1px solid rgba(194,155,79,0.2);
+    padding: 14px 16px;
+    margin-top: 8px;
+  }
+
+  .retainer-highlight p {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  /* ---- VIDEO ADD-ON ---- */
+  .video-addons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .video-tier { background: var(--dark); padding: 32px 28px; transition: background 0.3s; }
+  .video-tier:hover { background: var(--card); }
+  .video-tier.featured { background: rgba(194,155,79,0.04); border: 1px solid rgba(194,155,79,0.2); }
+
+  .video-tier-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .video-tier h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .video-tier-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+
+  .video-tier-price small {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .video-tier ul { list-style: none; }
+
+  .video-tier ul li {
+    font-size: 10px;
+    color: var(--muted);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .video-tier ul li::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  /* ---- NEWSLETTER BANNER ---- */
+  .newsletter-banner {
+    margin-top: 64px;
+    border: 1px solid var(--border-gold);
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+    background: rgba(194,155,79,0.03);
+  }
+
+  .newsletter-banner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .newsletter-banner p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .newsletter-format {
+    list-style: none;
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .newsletter-format li {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .newsletter-format li::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .newsletter-badge {
+    background: var(--dark);
+    border: 1px solid var(--border-gold);
+    padding: 20px 28px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .newsletter-badge .cadence {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: block;
+    line-height: 1;
+  }
+
+  .newsletter-badge .label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 6px;
+  }
+
+  .newsletter-badge .sublabel {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--faint);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* ---- TERMS ---- */
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .term { background: var(--dark); padding: 28px 24px; }
+
+  .term-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .term p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 32px;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer .wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    margin-bottom: 12px;
+  }
+
+  footer p {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .calc-inputs { grid-template-columns: 1fr; }
+    .rate-header, .rate-row { grid-template-columns: 1fr 1fr; }
+    .rate-header span:last-child, .rate-row .rate-note { display: none; }
+    .calculator { padding: 28px 20px; }
+    .backend-feature { padding: 28px 20px; }
+    .newsletter-banner { grid-template-columns: 1fr; }
+    .newsletter-format { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Kona.biz — Law Firm Marketing & Design</div>
+  <h1>Built To<span>Dominate.</span></h1>
+  <p class="hero-sub">Personal injury firms — one client per market, full-stack digital authority</p>
+  <div class="hero-pill">Service Packages & Pricing — 2026</div>
+  <div class="scroll-hint">Scroll to explore</div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- POSITIONING -->
+<section>
+  <div class="section-label">Why Kona.biz</div>
+  <h2 class="section-title">Not an agency.<br><em>A market weapon.</em></h2>
+  <p class="section-body">Most agencies build websites. We build local authority networks -- custom-architected to make your firm the dominant result in every city and community you serve. One client per market. No exceptions.</p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <h3>PI Specialization</h3>
+      <p>We work exclusively with personal injury firms. We know the content, the voice, the search behavior, and the competitive landscape -- from car crash to wrongful death, Everett to Mill Creek.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <h3>One Client Per Market</h3>
+      <p>Your competitors cannot be our clients. When we take your market, we are fully committed to making you the dominant firm in every city you serve. That exclusivity is non-negotiable.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <h3>SEO + GEO</h3>
+      <p>We optimize for both traditional search and AI platforms -- ChatGPT, Perplexity, Google AI Overviews. As people increasingly find lawyers through AI, your firm will be the answer.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">04</div>
+      <h3>AI Practice Consulting</h3>
+      <p>We help forward-thinking firms modernize how they operate -- custom AI agents for intake, client communication, case workflows, and internal automation. Not a buzzword. Actual tools.</p>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- SERVICES -->
+<section>
+  <div class="section-label">Full Service Stack</div>
+  <h2 class="section-title">Every discipline your firm<br><em>needs to own its market.</em></h2>
+  <p class="section-body">Sixteen integrated services across five disciplines. Delivered by one team that knows personal injury law inside and out.</p>
+
+  <!-- Core Digital -->
+  <div class="services-group">
+    <div class="services-group-label">Core Digital</div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-icon">01</div>
+        <h4>Custom Web Development</h4>
+        <p>Authority-grade websites built for Google and GEO. Custom coded, technically excellent, structured to rank and convert. Every build includes a custom backend platform.</p>
+        <span class="service-tag">Setup</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">02</div>
+        <h4>Local Authority Networks</h4>
+        <p>Practice area x city matrix architecture. Every community you serve gets its own optimized page. Systematic, measurable market domination.</p>
+        <span class="service-tag">Setup</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">03</div>
+        <h4>SEO & Content</h4>
+        <p>Hub-and-spoke content strategy, local SEO, press release link building, and ongoing content production. Written for humans, structured for search.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">04</div>
+        <h4>GEO Optimization</h4>
+        <p>Visibility in ChatGPT, Perplexity, and Google AI Overviews. Built for how the next generation of clients finds a lawyer.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">05</div>
+        <h4>Paid Ads Management</h4>
+        <p>Google and Meta campaigns managed for case volume, not clicks. Ad spend billed at cost -- no agency markup on media.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">06</div>
+        <h4>Email & SMS Nurture</h4>
+        <p>Automated follow-up sequences that keep your firm top-of-mind during the prospect decision window. Leads that don't convert immediately still convert.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local Presence -->
+  <div class="services-group">
+    <div class="services-group-label">Local Presence & Reputation</div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-icon">07</div>
+        <h4>Google Business Profile</h4>
+        <p>Setup and initial optimization included in every build. Active management, posting, and monitoring as part of your retainer.</p>
+        <span class="service-tag">Setup + </span><span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">08</div>
+        <h4>Review Generation & Reputation</h4>
+        <p>Automated review request sequences using your built-in review tool, monitoring across platforms, and response management. PI firms live and die by their review profile.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">09</div>
+        <h4>Legal Directory Management</h4>
+        <p>Complete, optimized profiles across Avvo, Justia, FindLaw, Martindale-Hubbell, and Lawyers.com. Critical for local SEO and direct referral traffic.</p>
+        <span class="service-tag">Setup + </span><span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">10</div>
+        <h4>AI Professional Headshots</h4>
+        <p>Send us your selfies. We produce polished, professional attorney headshots using AI -- indistinguishable from a studio shoot, without the photographer or the bill.</p>
+        <span class="service-tag">Setup</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Media -->
+  <div class="services-group">
+    <div class="services-group-label">Social Media</div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-icon">11</div>
+        <h4>Content Creation & Scheduling</h4>
+        <p>Monthly social content calendar, branded graphics, caption copywriting, and scheduled posting across your active platforms. Consistent, on-brand presence without lifting a finger.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">12</div>
+        <h4>Monitoring & Engagement</h4>
+        <p>We monitor all activity across your social platforms. Comments and direct messages are flagged and forwarded to your team -- keeping you in control of client-sensitive responses.</p>
+        <span class="service-tag retainer">Retainer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI & Consulting -->
+  <div class="services-group">
+    <div class="services-group-label">AI & Consulting</div>
+    <div class="services-grid">
+      <div class="service-item featured">
+        <div class="service-icon">13</div>
+        <h4>AI Practice Consulting</h4>
+        <p>Strategic consulting on how AI can improve your firm's operations -- intake, client communication, research, and internal workflows. Practical guidance, not theory.</p>
+        <span class="service-tag retainer">Command Retainer</span>
+      </div>
+      <div class="service-item featured">
+        <div class="service-icon">14</div>
+        <h4>Custom AI Agent Development</h4>
+        <p>Design and deployment of custom AI agents built specifically for your firm's processes. Intake bots, scheduling agents, document automation -- actual tools that work.</p>
+        <span class="service-tag retainer">Command Retainer</span>
+      </div>
+      <div class="service-item featured">
+        <div class="service-icon">15</div>
+        <h4>Intake Optimization Playbook</h4>
+        <p>A proprietary SOP covering the proven steps to convert more incoming leads into signed clients. Delivered at onboarding -- your team implements it independently.</p>
+        <span class="service-tag">Setup</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video & Social -->
+  <div class="services-group">
+    <div class="services-group-label">Video & Social — Lead Generation System (Add-On)</div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-icon">16</div>
+        <h4>YouTube Channel Management</h4>
+        <p>Channel setup, branded PI video series from proven templates, video SEO, thumbnail design, upload scheduling, and performance reporting. YouTube is the second largest search engine -- your firm should own it.</p>
+        <span class="service-tag retainer">Add-On</span>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">17</div>
+        <h4>Multi-Platform Distribution</h4>
+        <p>Every video repurposed across Instagram Reels, Facebook, and TikTok. One production, five assets. Embedded on matrix pages to boost time-on-page and conversion.</p>
+        <span class="service-tag retainer">Add-On</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Backend -->
+  <div class="backend-feature">
+    <div class="backend-feature-label">Included In Every Build</div>
+    <h3>Your Private Backend Platform</h3>
+    <p>Every site we build includes a custom, password-protected backend designed specifically for your firm. No third-party dashboards. No learning curve. Just a clean, private platform that tells you whether your site is doing its job -- and gives you the tools to keep it growing.</p>
+    <div class="backend-modules">
+      <div class="backend-module">
+        <h5>Analytics Dashboard</h5>
+        <p>Traffic, leads, rankings, and city-level performance at a glance. Plain English. Built for attorneys, not marketers.</p>
+      </div>
+      <div class="backend-module">
+        <h5>Blog & Content Editor</h5>
+        <p>Write and publish SEO content without touching code. Tags by practice area and city. Draft, schedule, or publish instantly.</p>
+      </div>
+      <div class="backend-module">
+        <h5>Review Request System</h5>
+        <p>Enter a client name and email. They receive a personalized message with a direct link to leave a Google review. Automated, effortless, consistent.</p>
+      </div>
+      <div class="backend-module">
+        <h5>Keyword Rank Tracker</h5>
+        <p>Weekly automated tracking across every city and practice area combination. Rankings over time -- visible, measurable, actionable.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="full-divider"></div>
+
+<!-- PRICING MODEL -->
+<section>
+  <div class="section-label">Website Pricing Model</div>
+  <h2 class="section-title">Transparent pricing.<br><em>No black boxes.</em></h2>
+  <p class="section-body">Website builds are priced by page complexity. Every quote is built line by line -- you always know exactly what you are paying for and why.</p>
+
+  <div class="rate-card">
+    <div class="rate-header">
+      <span>Page Type</span>
+      <span>Rate</span>
+      <span>Notes</span>
+    </div>
+    <div class="rate-row">
+      <div class="rate-name">
+        Homepage
+        <small>Hero, CTAs, trust signals, attorney intro, practice grid, service area coverage</small>
+      </div>
+      <div class="rate-price">$2,000<br><span style="font-size:16px;color:var(--muted)">$3,000</span></div>
+      <div class="rate-note">$2,000 single location<br>$3,000 multi-location firm</div>
+    </div>
+    <div class="rate-row featured">
+      <div class="rate-name">
+        Main Menu Pages
+        <small>Practice area hubs, service area hubs, attorney bios, about, contact, reviews</small>
+      </div>
+      <div class="rate-price">$400</div>
+      <div class="rate-note">Per page. Pillar content, custom layout, optimized structure.</div>
+    </div>
+    <div class="rate-row">
+      <div class="rate-name">
+        Matrix Pages
+        <small>Practice area x city intersection pages -- the authority network engine</small>
+      </div>
+      <div class="rate-price">$125</div>
+      <div class="rate-note">Per page. Locally customized, SEO + GEO optimized, consistent structure.</div>
+    </div>
+    <div class="rate-row">
+      <div class="rate-name">
+        Custom Backend Platform
+        <small>Analytics dashboard, blog editor, review system, rank tracker -- included in every build</small>
+      </div>
+      <div class="rate-price" style="color:var(--cream)">Included</div>
+      <div class="rate-note">No additional charge. Standard on every build.</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- CALCULATOR -->
+<section>
+  <div class="section-label">Build Estimator</div>
+  <h2 class="section-title">Your market.<br><em>Your quote.</em></h2>
+  <p class="section-body">Enter your firm's practice areas and service cities. Your build cost is calculated instantly.</p>
+
+  <div class="calculator">
+    <div class="calc-title">Website Build Calculator</div>
+    <div class="calc-sub">Adjust inputs to generate your estimate</div>
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label>Practice Areas</label>
+        <input type="number" id="practiceAreas" value="11" min="1" max="30" oninput="calculate()">
+      </div>
+      <div class="calc-field">
+        <label>Service Cities / Towns</label>
+        <input type="number" id="cities" value="12" min="1" max="50" oninput="calculate()">
+      </div>
+      <div class="calc-field">
+        <label>Homepage Type</label>
+        <select id="homepage" onchange="calculate()">
+          <option value="2000">Single Location -- $2,000</option>
+          <option value="3000" selected>Multi-Location -- $3,000</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Est. Main Menu Pages</label>
+        <input type="number" id="mainPages" value="41" min="5" max="100" oninput="calculate()">
+      </div>
+    </div>
+    <div class="calc-results">
+      <div class="calc-result-item">
+        <label>Matrix Pages</label>
+        <div class="value" id="matrixCount">180</div>
+      </div>
+      <div class="calc-result-item">
+        <label>Matrix Cost</label>
+        <div class="value" id="matrixCost">$22,500</div>
+      </div>
+      <div class="calc-result-item">
+        <label>Main Pages Cost</label>
+        <div class="value" id="mainCost">$16,400</div>
+      </div>
+      <div class="calc-result-item">
+        <label>Homepage</label>
+        <div class="value" id="homeCost">$3,000</div>
+      </div>
+      <div class="calc-result-item total">
+        <label>Total Build</label>
+        <div class="value" id="totalCost">$41,900</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- EXAMPLE BUILDS -->
+<section>
+  <div class="section-label">Example Builds</div>
+  <h2 class="section-title">Real numbers for<br><em>real firm sizes.</em></h2>
+
+  <div class="builds">
+    <div class="build">
+      <div class="build-tag">Solo / Small Market</div>
+      <h3>Solo Practitioner</h3>
+      <div class="build-matrix">5 Practice Areas x 5 Cities</div>
+      <ul class="build-breakdown">
+        <li>Homepage (single location) <span>$2,000</span></li>
+        <li>Main menu pages (15) <span>$6,000</span></li>
+        <li>Matrix pages (25) <span>$3,125</span></li>
+        <li>Custom backend platform <span>Included</span></li>
+      </ul>
+      <div class="build-total">
+        <label>Build Total</label>
+        <div class="price">$11,125</div>
+      </div>
+    </div>
+    <div class="build">
+      <div class="build-tag">Mid-Size Firm</div>
+      <h3>Regional PI Firm</h3>
+      <div class="build-matrix">8 Practice Areas x 8 Cities</div>
+      <ul class="build-breakdown">
+        <li>Homepage (single location) <span>$2,000</span></li>
+        <li>Main menu pages (22) <span>$8,800</span></li>
+        <li>Matrix pages (64) <span>$8,000</span></li>
+        <li>Custom backend platform <span>Included</span></li>
+      </ul>
+      <div class="build-total">
+        <label>Build Total</label>
+        <div class="price">$18,800</div>
+      </div>
+    </div>
+    <div class="build featured">
+      <div class="build-tag">Enterprise -- Live Example</div>
+      <h3>Foster Law Offices</h3>
+      <div class="build-matrix">15 Practice Areas x 12 Cities -- 221 Pages</div>
+      <ul class="build-breakdown">
+        <li>Homepage (multi-location) <span>$3,000</span></li>
+        <li>Main menu pages (41) <span>$16,400</span></li>
+        <li>Matrix pages (180) <span>$22,500</span></li>
+        <li>Custom backend platform <span>Included</span></li>
+      </ul>
+      <div class="build-total">
+        <label>Build Total</label>
+        <div class="price">$41,900</div>
+      </div>
+    </div>
+    <div class="build">
+      <div class="build-tag">Large Multi-Location</div>
+      <h3>Dominant Market Player</h3>
+      <div class="build-matrix">15 Practice Areas x 20 Cities</div>
+      <ul class="build-breakdown">
+        <li>Homepage (multi-location) <span>$3,000</span></li>
+        <li>Main menu pages (50) <span>$20,000</span></li>
+        <li>Matrix pages (300) <span>$37,500</span></li>
+        <li>Custom backend platform <span>Included</span></li>
+      </ul>
+      <div class="build-total">
+        <label>Build Total</label>
+        <div class="price">$60,500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- RETAINER PACKAGES -->
+<section>
+  <div class="section-label">Monthly Retainers</div>
+  <h2 class="section-title">Ongoing market<br><em>ownership.</em></h2>
+  <p class="section-body">After your site launches, retainer packages keep you ahead -- ranking, converting, and growing. All retainers begin after site delivery. No long-term contracts after month 3.</p>
+
+  <div class="retainer-cards">
+
+    <div class="retainer-card">
+      <div class="retainer-badge">Tier 01</div>
+      <h3>Maintain</h3>
+      <div class="retainer-tagline">Steady presence, active monitoring</div>
+      <div class="retainer-price">
+        <div class="amount">$2,500</div>
+        <div class="per">per month</div>
+      </div>
+      <ul class="retainer-includes">
+        <li>GBP active management & posting</li>
+        <li>Review generation & monitoring</li>
+        <li>Legal directory upkeep</li>
+        <li>SEO monitoring & reporting</li>
+        <li>3 content pages per month</li>
+        <li>Social media content & scheduling</li>
+        <li>Social monitoring & forwarding</li>
+        <li>Monthly performance report</li>
+      </ul>
+      <div class="retainer-highlight">
+        <p>Kona.biz Intelligence Brief -- private biweekly newsletter included</p>
+      </div>
+    </div>
+
+    <div class="retainer-card featured">
+      <div class="retainer-badge">Tier 02 -- Core Offer</div>
+      <h3>Grow</h3>
+      <div class="retainer-tagline">Full-stack market ownership</div>
+      <div class="retainer-price">
+        <div class="amount">$5,000</div>
+        <div class="per">per month</div>
+      </div>
+      <ul class="retainer-includes">
+        <li>Everything in Maintain</li>
+        <li>Advanced local & regional SEO</li>
+        <li>GEO optimization (ChatGPT, Perplexity, Google AIO)</li>
+        <li>Paid ads management (Google & Meta)</li>
+        <li>Email & SMS nurture sequences</li>
+        <li>Conversion rate optimization</li>
+        <li>8 content pages per month</li>
+        <li>Monthly strategy call</li>
+      </ul>
+      <div class="retainer-highlight">
+        <p>Kona.biz Intelligence Brief -- private biweekly newsletter included</p>
+      </div>
+    </div>
+
+    <div class="retainer-card command">
+      <div class="retainer-badge">Tier 03</div>
+      <h3>Command</h3>
+      <div class="retainer-tagline">Full-stack + AI consulting & agents</div>
+      <div class="retainer-price">
+        <div class="amount">$8,500</div>
+        <div class="per">per month</div>
+      </div>
+      <ul class="retainer-includes">
+        <li>Everything in Grow</li>
+        <li>AI practice consulting & strategy</li>
+        <li>Custom AI agent design & deployment</li>
+        <li>12 content pages per month</li>
+        <li>Bi-weekly strategy calls</li>
+        <li>Quarterly competitive market audit</li>
+        <li>Priority support</li>
+      </ul>
+      <div class="retainer-highlight">
+        <p>Kona.biz Intelligence Brief included + early access to the PI Attorney Network -- a private cross-state community for non-competing member firms, launching 2027</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- NEWSLETTER -->
+<section>
+  <div class="section-label">Client Intelligence</div>
+  <h2 class="section-title">The Kona.biz<br><em>Intelligence Brief.</em></h2>
+  <p class="section-body">A private, members-only briefing delivered to every retainer client. What is working in PI marketing right now -- and what is changing.</p>
+
+  <div class="newsletter-banner">
+    <div>
+      <h3>Private. Exclusive. Actionable.</h3>
+      <p>Every issue covers what is actually moving the needle for PI firms across our client portfolio -- AI developments worth knowing, Google shifts that affect your rankings, and the tactics producing results right now. No fluff. Written for busy attorneys who want the signal without the noise.</p>
+      <ul class="newsletter-format">
+        <li>This Week in AI</li>
+        <li>What Google is Doing</li>
+        <li>What's Working Now</li>
+        <li>From the Portfolio</li>
+      </ul>
+    </div>
+    <div class="newsletter-badge">
+      <span class="cadence">Biweekly</span>
+      <span class="label">All Retainer Tiers</span>
+      <span class="sublabel">Private -- Clients Only</span>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- VIDEO ADD-ON -->
+<section>
+  <div class="section-label">Optional Add-On</div>
+  <h2 class="section-title">YouTube-anchored<br><em>lead generation.</em></h2>
+  <p class="section-body">A branded PI video series produced from proven templates, customized to your firm and market. YouTube as the production engine -- every video repurposed across Instagram, Facebook, and TikTok, and embedded on your matrix pages. One production. Every platform.</p>
+
+  <div class="video-addons">
+    <div class="video-tier">
+      <div class="video-tier-label">Essential</div>
+      <h4>Starter</h4>
+      <div class="video-tier-price">+$500<small>/mo</small></div>
+      <ul>
+        <li>2 branded videos per month</li>
+        <li>YouTube upload & SEO</li>
+        <li>Repurposed to 2 social platforms</li>
+        <li>Custom thumbnails</li>
+        <li>Monthly performance report</li>
+      </ul>
+    </div>
+    <div class="video-tier featured">
+      <div class="video-tier-label">Standard -- Most Popular</div>
+      <h4>Growth</h4>
+      <div class="video-tier-price">+$900<small>/mo</small></div>
+      <ul>
+        <li>4 branded videos per month</li>
+        <li>YouTube upload & SEO</li>
+        <li>Repurposed to all 3 social platforms</li>
+        <li>Custom thumbnails</li>
+        <li>Matrix page video embeds</li>
+        <li>Monthly performance report</li>
+      </ul>
+    </div>
+    <div class="video-tier">
+      <div class="video-tier-label">Premium</div>
+      <h4>Dominate</h4>
+      <div class="video-tier-price">+$1,500<small>/mo</small></div>
+      <ul>
+        <li>8 branded videos per month</li>
+        <li>YouTube upload & SEO</li>
+        <li>Repurposed to all 3 social platforms</li>
+        <li>Custom thumbnails</li>
+        <li>Matrix page video embeds</li>
+        <li>Social caption copywriting</li>
+        <li>Monthly performance report</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- TERMS -->
+<section>
+  <div class="section-label">Terms & Standards</div>
+  <h2 class="section-title">How we<br><em>work together.</em></h2>
+
+  <div class="terms-grid">
+    <div class="term">
+      <div class="term-label">Market Exclusivity</div>
+      <p>One PI firm per market. Once we take your geography, your competitors cannot become our clients.</p>
+    </div>
+    <div class="term">
+      <div class="term-label">No Long-Term Lock-In</div>
+      <p>Month-to-month after the initial 3-month onboarding period. We keep clients by delivering results, not contracts.</p>
+    </div>
+    <div class="term">
+      <div class="term-label">Ad Spend at Cost</div>
+      <p>We never mark up media. Your Google and Meta ad spend goes 100% to the platforms. We charge only for management.</p>
+    </div>
+    <div class="term">
+      <div class="term-label">Setup Fee Structure</div>
+      <p>50% due at project start, 50% due at launch. Retainer begins the month after site delivery.</p>
+    </div>
+    <div class="term">
+      <div class="term-label">Transparent Reporting</div>
+      <p>Monthly reports covering rankings, traffic, GBP performance, ad spend, and conversion data. No vanity metrics.</p>
+    </div>
+    <div class="term">
+      <div class="term-label">You Own Everything</div>
+      <p>All code, content, and assets are yours. No proprietary CMS lock-in. Full transfer on exit.</p>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<footer>
+  <div class="wordmark">KONA.BIZ</div>
+  <p>Law Firm Marketing & Design &nbsp;&mdash;&nbsp; Personal Injury Specialists &nbsp;&mdash;&nbsp; One Client Per Market</p>
+  <p style="margin-top:12px; font-size:9px;">Kona, Hawaii &nbsp;&bull;&nbsp; 2026</p>
+</footer>
+
+<script>
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function calculate() {
+    const pa = parseInt(document.getElementById('practiceAreas').value) || 0;
+    const ci = parseInt(document.getElementById('cities').value) || 0;
+    const hp = parseInt(document.getElementById('homepage').value) || 2000;
+    const mp = parseInt(document.getElementById('mainPages').value) || 0;
+
+    const matrix = pa * ci;
+    const matrixCost = matrix * 125;
+    const mainCost = mp * 400;
+    const total = matrixCost + mainCost + hp;
+
+    document.getElementById('matrixCount').textContent = matrix;
+    document.getElementById('matrixCost').textContent = fmt(matrixCost);
+    document.getElementById('mainCost').textContent = fmt(mainCost);
+    document.getElementById('homeCost').textContent = fmt(hp);
+    document.getElementById('totalCost').textContent = fmt(total);
+  }
+
+  calculate();
+</script>
+
+</body>
+</html>
