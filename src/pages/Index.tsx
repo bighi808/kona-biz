@@ -12,6 +12,7 @@ import FreeReport from "@/components/sections/FreeReport";
 import AuditUpsell from "@/components/sections/AuditUpsell";
 import FAQ from "@/components/sections/FAQ";
 import Booking from "@/components/sections/Booking";
+import FooterContact from "@/components/sections/FooterContact";
 
 export default function Index() {
   return (
@@ -34,6 +35,7 @@ export default function Index() {
       <AuditUpsell />
       <FAQ />
       <Booking />
+      <FooterContact />
     </Layout>
   );
 }
