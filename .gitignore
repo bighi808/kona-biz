@@ -1,4 +1,17 @@
-# ---- Heavy media (host externally instead) ----
+# ---- Node / dependencies ----
+node_modules/
+.npm/
+.pnp/
+.pnp.js
+
+# ---- Vite / build output ----
+dist/
+dist-ssg/
+.vite/
+.vite-react-ssg-temp/
+*.local
+
+# ---- Heavy media (host externally) ----
 *.mp4
 *.mov
 *.avi
@@ -18,38 +31,14 @@ Desktop.ini
 *.swo
 *~
 
-# ---- Claude local config (per-user, not project source) ----
+# ---- Claude local config ----
 .claude/settings.local.json
-
-# ---- Dependencies (if you ever add a build step) ----
-node_modules/
-.pnp/
-.pnp.js
-
-# ---- Build output ----
-dist/
-build/
-*.log
-
-# ---- Env / secrets ----
-.env
-.env.local
-.env.*.local
-
-# ---- Node ----
-node_modules/
-.npm/
-.pnp/
-.pnp.js
-
-# ---- Vite / build output ----
-dist/
-dist-ssg/
-.vite/
-*.local
 
 # ---- Environment ----
 .env
 .env.local
 .env.*.local
 !.env.example
+
+# ---- Logs ----
+*.log
