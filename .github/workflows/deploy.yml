@@ -24,7 +24,11 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm ci
+      # Use `npm install` (not `npm ci`) to work around the known Rollup/npm bug
+      # where a lockfile generated on one OS is missing the optional native binary
+      # for another OS (e.g. lockfile from Windows lacks @rollup/rollup-linux-x64-gnu).
+      # See: https://github.com/npm/cli/issues/4828
+      - run: npm install --no-audit --no-fund
 
       - run: npm run build:production
         env:
