@@ -10,6 +10,7 @@ import Comparison from "@/components/sections/Comparison";
 import StateMap from "@/components/sections/StateMap";
 import FreeReport from "@/components/sections/FreeReport";
 import AuditUpsell from "@/components/sections/AuditUpsell";
+import FAQ from "@/components/sections/FAQ";
 
 export default function Index() {
   return (
@@ -30,8 +31,9 @@ export default function Index() {
       <StateMap />
       <FreeReport />
       <AuditUpsell />
+      <FAQ />
 
-      {/* Remaining: FAQ, Booking */}
+      {/* Final section: Booking */}
     </Layout>
   );
 }
