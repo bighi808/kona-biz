@@ -3,6 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import Hero from "@/components/sections/Hero";
 import Ticker from "@/components/sections/Ticker";
 import WhyPillars from "@/components/sections/WhyPillars";
+import ServicesGrid from "@/components/sections/ServicesGrid";
 
 export default function Index() {
   return (
@@ -16,9 +17,9 @@ export default function Index() {
       <Hero />
       <Ticker />
       <WhyPillars />
+      <ServicesGrid />
 
-      {/* More sections coming in subsequent commits:
-          Services grid, Value/Math, Methodology diagram, Comparison,
+      {/* Remaining sections: Value/Math, Methodology diagram, Comparison,
           State Map, Free Report, Audit Upsell, FAQ, Booking */}
     </Layout>
   );
