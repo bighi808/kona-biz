@@ -5,6 +5,7 @@ import Ticker from "@/components/sections/Ticker";
 import WhyPillars from "@/components/sections/WhyPillars";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import ValueStats from "@/components/sections/ValueStats";
+import Methodology from "@/components/sections/Methodology";
 
 export default function Index() {
   return (
@@ -19,10 +20,10 @@ export default function Index() {
       <Ticker />
       <WhyPillars />
       <ServicesGrid />
+      <Methodology />
       <ValueStats />
 
-      {/* Remaining: Methodology diagram, Comparison, State Map, Free Report,
-          Audit Upsell, FAQ, Booking */}
+      {/* Remaining: Comparison, State Map, Free Report, Audit Upsell, FAQ, Booking */}
     </Layout>
   );
 }
