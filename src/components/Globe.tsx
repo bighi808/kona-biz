@@ -1,21 +1,25 @@
 /**
- * Globe — gold-on-near-black Three.js globe for the hero backdrop.
+ * Globe — static, Americas-facing globe with real country + US-state outlines.
  *
- * Adapted from the data-globe skill (fresnel rim, floating arcs, tiny endpoint
- * dots) but recolored to the Kona.biz palette. Arcs radiate from Kona, Hawaii
- * to every state in src/data/states.ts; managed states glow brighter.
+ * - Composition is LOCKED (no spin). Faces North + South America.
+ * - Faint gold country borders (110m) as a quiet geographic baseline.
+ * - Brighter gold US state borders (10m) — the subject.
+ * - Managed states (status === "managed") get a gold node + slow expanding
+ *   pulse ring. Available states are passive (just their outline).
+ * - Mouse-parallax: the globe leans a few degrees toward the cursor, eases back.
+ * - Soft gold atmosphere rim.
  *
- * SSG-safe: three.js is loaded via dynamic import() inside useEffect, so it
- * never enters the synchronous SSG/Node bundle and never touches window at
- * build time. The component renders an empty container during SSG; the canvas
- * mounts and fades in client-side only. Honors prefers-reduced-motion.
- *
- * pointer-events:none — this is a background, not an interactive object, so it
- * never steals scroll or clicks from the hero text/CTAs.
+ * Border geometry is fetched from /geo/borders.json at runtime (async, ~80KB
+ * gzipped) so it never bloats the JS bundle. three.js is dynamically imported
+ * inside useEffect — SSG-safe, never touches window at build, never blocks
+ * first paint. pointer-events:none so it never steals scroll/clicks.
+ * Honors prefers-reduced-motion (no parallax, static rings).
  */
 import { useEffect, useRef } from "react";
 import { states } from "@/data/states";
-import { STATE_COORDS, KONA_ORIGIN } from "@/data/stateCoords";
+import { STATE_COORDS } from "@/data/stateCoords";
+
+type Borders = { countries: [number, number][][]; states: [number, number][][] };
 
 export default function Globe() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,14 +33,16 @@ export default function Globe() {
     let cleanup = () => {};
 
     (async () => {
-      const THREE = await import("three");
+      const [THREE, bordersRes] = await Promise.all([
+        import("three"),
+        fetch(`${import.meta.env.BASE_URL}geo/borders.json`).then((r) => r.json() as Promise<Borders>).catch(() => null),
+      ]);
       if (cancelled || !container) return;
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const RADIUS = 1;
+      const R = 1;
 
-      // lat/lng -> sphere vector (skill's canonical conversion)
-      const toVec = (lat: number, lng: number, r = RADIUS) => {
+      const toVec = (lat: number, lng: number, r = R) => {
         const phi = (90 - lat) * (Math.PI / 180);
         const theta = (lng + 180) * (Math.PI / 180);
         return new THREE.Vector3(
@@ -46,18 +52,31 @@ export default function Globe() {
         );
       };
 
+      // Convert arrays of [lng,lat] linestrings → LineSegments position buffer
+      const linesToSegments = (lines: [number, number][][], r: number) => {
+        const verts: number[] = [];
+        for (const line of lines) {
+          for (let i = 0; i < line.length - 1; i++) {
+            const a = toVec(line[i][1], line[i][0], r);
+            const b = toVec(line[i + 1][1], line[i + 1][0], r);
+            verts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+          }
+        }
+        const g = new THREE.BufferGeometry();
+        g.setAttribute("position", new THREE.Float32BufferAttribute(verts, 3));
+        return g;
+      };
+
       // ---- Renderer / scene / camera ----
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      camera.position.set(0, 0, 3.05);
+      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+      camera.position.set(0, 0, 2.7);
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       container.appendChild(renderer.domElement);
-      renderer.domElement.style.width = "100%";
-      renderer.domElement.style.height = "100%";
-      renderer.domElement.style.display = "block";
+      Object.assign(renderer.domElement.style, { width: "100%", height: "100%", display: "block" });
 
       const resize = () => {
         const w = container.clientWidth || window.innerWidth;
@@ -69,157 +88,108 @@ export default function Globe() {
       resize();
       window.addEventListener("resize", resize);
 
-      // ---- World group (everything that should rotate together) ----
+      // ---- Pivot (parallax tilt) → world (locked Americas orientation) ----
+      const pivot = new THREE.Group();
+      scene.add(pivot);
       const world = new THREE.Group();
-      scene.add(world);
+      // Face North + South America: lng -90 sits front at y=0; tilt up to center ~lat 23
+      world.rotation.x = 0.42;
+      world.rotation.y = 0.0;
+      pivot.add(world);
 
-      // ---- Globe surface: dark shader with warm gold rim ----
+      // ---- Globe surface: dark shader, subtle warm rim ----
       const globeMat = new THREE.ShaderMaterial({
-        uniforms: {},
-        vertexShader: `
-          varying vec3 vNormal;
-          void main() {
-            vNormal = normalize(normalMatrix * normal);
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
+        vertexShader: `varying vec3 vN; void main(){ vN = normalize(normalMatrix*normal); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
         fragmentShader: `
-          varying vec3 vNormal;
-          void main() {
-            float rim = 1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0)));
-            vec3 base = mix(vec3(0.035,0.032,0.028), vec3(0.07,0.06,0.045), rim);
-            vec3 edge = vec3(0.76,0.61,0.31) * pow(rim, 3.0) * 0.5;
+          varying vec3 vN;
+          void main(){
+            float rim = 1.0 - abs(dot(vN, vec3(0.0,0.0,1.0)));
+            vec3 base = mix(vec3(0.028,0.026,0.022), vec3(0.05,0.044,0.032), rim);
+            vec3 edge = vec3(0.76,0.61,0.31) * pow(rim, 3.5) * 0.35;
             gl_FragColor = vec4(base + edge, 1.0);
-          }
-        `,
+          }`,
       });
-      const globe = new THREE.Mesh(new THREE.SphereGeometry(RADIUS, 64, 64), globeMat);
-      world.add(globe);
+      world.add(new THREE.Mesh(new THREE.SphereGeometry(R, 64, 64), globeMat));
 
-      // ---- Faint fibonacci point cloud for engineered texture ----
-      const N = 1400;
-      const positions = new Float32Array(N * 3);
-      const golden = Math.PI * (3 - Math.sqrt(5));
-      for (let i = 0; i < N; i++) {
-        const y = 1 - (i / (N - 1)) * 2;
-        const r = Math.sqrt(1 - y * y);
-        const t = golden * i;
-        positions.set(
-          [Math.cos(t) * r * 1.004, y * 1.004, Math.sin(t) * r * 1.004],
-          i * 3
-        );
+      // ---- Border outlines ----
+      let countryGeo: any, stateGeo: any, countryMat: any, stateMat: any;
+      if (bordersRes) {
+        countryGeo = linesToSegments(bordersRes.countries, R * 1.001);
+        countryMat = new THREE.LineBasicMaterial({ color: 0xc29b4f, transparent: true, opacity: 0.16 });
+        world.add(new THREE.LineSegments(countryGeo, countryMat));
+
+        stateGeo = linesToSegments(bordersRes.states, R * 1.0016);
+        stateMat = new THREE.LineBasicMaterial({ color: 0xd4af6a, transparent: true, opacity: 0.5 });
+        world.add(new THREE.LineSegments(stateGeo, stateMat));
       }
-      const pointsGeo = new THREE.BufferGeometry();
-      pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      const pointsMat = new THREE.PointsMaterial({
-        size: 0.006,
-        color: 0xc29b4f,
-        transparent: true,
-        opacity: 0.22,
-      });
-      world.add(new THREE.Points(pointsGeo, pointsMat));
 
-      // ---- Atmosphere shell (gold fresnel glow), outside world group ----
+      // ---- Atmosphere rim (symmetric → lives in scene) ----
       const atmoMat = new THREE.ShaderMaterial({
-        side: THREE.BackSide,
-        transparent: true,
-        depthWrite: false,
-        vertexShader: `
-          varying vec3 vNormal;
-          void main() {
-            vNormal = normalize(normalMatrix * normal);
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          varying vec3 vNormal;
-          void main() {
-            float intensity = pow(0.62 - dot(vNormal, vec3(0,0,1.0)), 2.2);
-            gl_FragColor = vec4(0.82, 0.66, 0.36, intensity * 0.55);
-          }
-        `,
+        side: THREE.BackSide, transparent: true, depthWrite: false,
+        vertexShader: `varying vec3 vN; void main(){ vN = normalize(normalMatrix*normal); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
+        fragmentShader: `varying vec3 vN; void main(){ float i = pow(0.62 - dot(vN, vec3(0,0,1.0)), 2.4); gl_FragColor = vec4(0.82,0.66,0.36, i*0.5);} `,
       });
-      const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(RADIUS * 1.18, 64, 64), atmoMat);
+      const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(R * 1.16, 64, 64), atmoMat);
       scene.add(atmosphere);
 
-      // ---- Arcs from Kona to each state + endpoint dots ----
-      const origin = toVec(KONA_ORIGIN.lat, KONA_ORIGIN.lng);
-      type ArcRec = { line: THREE.Line; pulse: THREE.Mesh; curve: THREE.QuadraticBezierCurve3; offset: number };
-      const arcs: ArcRec[] = [];
+      // ---- Managed states: node + pulse ring ----
+      const dotGeo = new THREE.SphereGeometry(1, 12, 12);
+      const ringGeo = new THREE.RingGeometry(0.012, 0.02, 40);
+      const managed = states.filter((s) => s.status === "managed");
+      type Ping = { ring: THREE.Mesh; offset: number };
+      const pings: Ping[] = [];
+      const zAxis = new THREE.Vector3(0, 0, 1);
 
-      const dotGeo = new THREE.SphereGeometry(1, 8, 8);
-      const goldDot = new THREE.MeshBasicMaterial({ color: 0xd4af6a, transparent: true, opacity: 0.9 });
-      const brightDot = new THREE.MeshBasicMaterial({ color: 0xf5d98a, transparent: true, opacity: 1 });
-      const pulseMat = new THREE.MeshBasicMaterial({ color: 0xf5d98a, transparent: true, opacity: 0.9 });
-
-      states.forEach((s, i) => {
+      managed.forEach((s, i) => {
         const c = STATE_COORDS[s.slug];
         if (!c) return;
-        const end = toVec(c.lat, c.lng);
-        const managed = s.status === "managed";
+        const p = toVec(c.lat, c.lng);
 
-        // Elevated control point at the midpoint, pushed out from the sphere
-        const mid = origin.clone().add(end).multiplyScalar(0.5);
-        const dist = origin.distanceTo(end);
-        mid.normalize().multiplyScalar(RADIUS + dist * 0.42 + 0.06);
-        const curve = new THREE.QuadraticBezierCurve3(origin.clone(), mid, end.clone());
+        const node = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: 0xfff0c8 }));
+        node.position.copy(p.clone().multiplyScalar(1.004));
+        node.scale.setScalar(0.013);
+        world.add(node);
 
-        const pts = curve.getPoints(48);
-        const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
-        const lineMat = new THREE.LineBasicMaterial({
-          color: managed ? 0xf5d98a : 0xc29b4f,
-          transparent: true,
-          opacity: managed ? 0.5 : 0.32,
-        });
-        const line = new THREE.Line(lineGeo, lineMat);
-        world.add(line);
-
-        // tiny endpoint dot
-        const dot = new THREE.Mesh(dotGeo, managed ? brightDot : goldDot);
-        dot.position.copy(end);
-        dot.scale.setScalar(managed ? 0.012 : 0.008);
-        world.add(dot);
-
-        // traveling pulse along the arc
-        const pulse = new THREE.Mesh(dotGeo, pulseMat.clone());
-        pulse.scale.setScalar(0.007);
-        world.add(pulse);
-
-        arcs.push({ line, pulse, curve, offset: i / states.length });
+        const ring = new THREE.Mesh(
+          ringGeo,
+          new THREE.MeshBasicMaterial({ color: 0xf5d98a, transparent: true, opacity: 0.6, side: THREE.DoubleSide, depthWrite: false })
+        );
+        ring.position.copy(p.clone().multiplyScalar(1.006));
+        ring.quaternion.setFromUnitVectors(zAxis, p.clone().normalize());
+        world.add(ring);
+        pings.push({ ring, offset: i * 0.5 });
       });
 
-      // Kona origin marker (brighter, larger)
-      const konaDot = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: 0xfff0c8 }));
-      konaDot.position.copy(origin);
-      konaDot.scale.setScalar(0.016);
-      world.add(konaDot);
+      // ---- Mouse parallax ----
+      let targetY = 0, targetX = 0;
+      const onMove = (e: PointerEvent) => {
+        if (reduceMotion) return;
+        targetY = (e.clientX / window.innerWidth - 0.5) * 0.22;
+        targetX = (e.clientY / window.innerHeight - 0.5) * 0.14;
+      };
+      window.addEventListener("pointermove", onMove);
 
-      // ---- Orient so North America faces the camera ----
-      // Rotate world so longitude ~-100 sits toward +Z.
-      world.rotation.y = Math.PI * 0.15;
-      world.rotation.x = 0.18;
-
-      // ---- Animate ----
+      // ---- Render loop ----
       let raf = 0;
       const clock = new THREE.Clock();
       const animate = () => {
         const t = clock.getElapsedTime();
-        if (!reduceMotion) {
-          world.rotation.y += 0.0016;
-          // traveling pulses
-          for (const a of arcs) {
-            const p = (t * 0.18 + a.offset) % 1;
-            const pos = a.curve.getPoint(p);
-            a.pulse.position.copy(pos);
-            (a.pulse.material as THREE.MeshBasicMaterial).opacity = Math.sin(p * Math.PI) * 0.9;
-          }
+        // ease pivot toward parallax target
+        pivot.rotation.y += (targetY - pivot.rotation.y) * 0.05;
+        pivot.rotation.x += (targetX - pivot.rotation.x) * 0.05;
+        // pulse rings
+        for (const p of pings) {
+          const prog = reduceMotion ? 0.35 : ((t * 0.45 + p.offset) % 1);
+          const scale = 1 + prog * 2.6;
+          p.ring.scale.setScalar(scale);
+          (p.ring.material as any).opacity = reduceMotion ? 0.45 : (1 - prog) * 0.6;
         }
         renderer.render(scene, camera);
         raf = requestAnimationFrame(animate);
       };
       animate();
 
-      // Fade the canvas in once it's painting
+      // fade in
       renderer.domElement.style.opacity = "0";
       renderer.domElement.style.transition = "opacity 1.4s ease";
       requestAnimationFrame(() => { renderer.domElement.style.opacity = "1"; });
@@ -227,13 +197,10 @@ export default function Globe() {
       cleanup = () => {
         cancelAnimationFrame(raf);
         window.removeEventListener("resize", resize);
+        window.removeEventListener("pointermove", onMove);
         renderer.dispose();
-        globeMat.dispose();
-        atmoMat.dispose();
-        pointsGeo.dispose();
-        pointsMat.dispose();
-        dotGeo.dispose();
-        arcs.forEach((a) => { a.line.geometry.dispose(); (a.line.material as THREE.Material).dispose(); });
+        globeMat.dispose(); atmoMat.dispose(); dotGeo.dispose(); ringGeo.dispose();
+        countryGeo?.dispose(); stateGeo?.dispose(); countryMat?.dispose(); stateMat?.dispose();
         if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
       };
     })();
