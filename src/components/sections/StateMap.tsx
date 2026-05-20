@@ -50,7 +50,7 @@ export default function StateMap() {
           {available} states open.<br />
           <em className="text-gold-light not-italic font-normal italic">Claim yours now.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           Every state below is either available or exclusively managed. Once a competitor
           in your state signs with us, that market is locked. Check your state — then scroll
           down to claim your free report.
@@ -92,11 +92,11 @@ export default function StateMap() {
         </div>
 
         <div className="flex flex-wrap gap-8 mt-6">
-          <div className="flex items-center gap-2 text-[11px] tracking-wider uppercase text-muted-foreground">
+          <div className="flex items-center gap-2 text-[14px] tracking-wider uppercase text-muted-foreground">
             <span className="w-2 h-2 rounded-full bg-[#6abf80]" />
             Available — Open to New Clients
           </div>
-          <div className="flex items-center gap-2 text-[11px] tracking-wider uppercase text-muted-foreground">
+          <div className="flex items-center gap-2 text-[14px] tracking-wider uppercase text-muted-foreground">
             <span className="w-2 h-2 rounded-full bg-gold" />
             Exclusively Managed — Market Locked
           </div>

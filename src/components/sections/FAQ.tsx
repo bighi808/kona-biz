@@ -169,7 +169,7 @@ export default function FAQ() {
           Answers, before<br />
           <em className="text-gold-light not-italic font-normal italic">you ask them.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           The questions every PI firm owner asks before signing. No marketing-speak.
           Direct answers to direct questions.
         </p>
@@ -200,7 +200,7 @@ export default function FAQ() {
                   className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
                   style={{ maxHeight: open ? "1000px" : "0px" }}
                 >
-                  <div className="px-7 pb-8 max-w-3xl text-[13px] leading-loose tracking-wide text-muted-foreground [&_em]:not-italic [&_em]:text-cream [&_p+p]:mt-3.5">
+                  <div className="px-7 pb-8 max-w-3xl text-[16px] leading-loose tracking-wide text-muted-foreground [&_em]:not-italic [&_em]:text-cream [&_p+p]:mt-3.5">
                     {item.a}
                   </div>
                 </div>

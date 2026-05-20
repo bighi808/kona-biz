@@ -75,7 +75,7 @@ export default function FreeReport() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start mt-16">
           {/* Left: copy + features */}
           <div>
-            <p className="text-[13px] tracking-wide text-muted-foreground leading-loose max-w-lg">
+            <p className="text-[16px] tracking-wide text-muted-foreground leading-loose max-w-lg">
               A strategic briefing on exactly what it takes to win on Google and AI search as a
               personal injury firm in 2026. What the leading firms are doing. Where the gaps are.
               And what it would take to close them in your market.
@@ -83,7 +83,7 @@ export default function FreeReport() {
 
             <ul className="mt-8 list-none">
               {features.map((f) => (
-                <li key={f} className="text-[12px] tracking-wider uppercase text-muted-foreground py-3.5 border-b border-border flex items-center gap-3">
+                <li key={f} className="text-[15px] tracking-wider uppercase text-muted-foreground py-3.5 border-b border-border flex items-center gap-3">
                   <span className="w-1 h-1 rounded-full bg-gold flex-shrink-0" />
                   {f}
                 </li>
@@ -118,7 +118,7 @@ export default function FreeReport() {
             ) : (
               <>
                 <div className="font-serif text-2xl text-cream mb-2 leading-tight">Claim Your<br />Free Report</div>
-                <p className="text-[12px] tracking-wider uppercase text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-[15px] tracking-wider uppercase text-muted-foreground mb-8 leading-relaxed">
                   Enter your details below. Select your state. We will send the report immediately.
                 </p>
 
@@ -131,7 +131,7 @@ export default function FreeReport() {
                       Your State
                     </label>
                     <select id="lead-state" name="state" required defaultValue=""
-                            className="w-full bg-background border border-border text-cream font-mono text-[13px] px-4 py-3.5 outline-none focus:border-gold transition-colors">
+                            className="w-full bg-background border border-border text-cream font-mono text-[16px] px-4 py-3.5 outline-none focus:border-gold transition-colors">
                       <option value="" disabled>Select your state</option>
                       {states.map((s) => (
                         <option key={s.slug} value={s.name} disabled={s.status === "managed"}>
@@ -169,7 +169,7 @@ function FormField({ id, name, label, placeholder, type = "text" }: {
     <div className="mb-5">
       <label htmlFor={id} className="block text-[9px] tracking-[0.3em] uppercase text-gold mb-2.5">{label}</label>
       <input id={id} name={name} type={type} placeholder={placeholder} required autoComplete="off"
-             className="w-full bg-background border border-border text-cream font-mono text-[13px] px-4 py-3.5 outline-none focus:border-gold transition-colors placeholder:text-muted-foreground placeholder:text-[12px]" />
+             className="w-full bg-background border border-border text-cream font-mono text-[16px] px-4 py-3.5 outline-none focus:border-gold transition-colors placeholder:text-muted-foreground placeholder:text-[15px]" />
     </div>
   );
 }

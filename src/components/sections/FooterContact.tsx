@@ -34,7 +34,7 @@ export default function FooterContact() {
             Have a question<br />
             before you <em className="text-gold-light not-italic font-normal italic">commit?</em>
           </h3>
-          <p className="text-[11px] tracking-wide text-muted-foreground leading-loose max-w-sm">
+          <p className="text-[14px] tracking-wide text-muted-foreground leading-loose max-w-sm">
             We are happy to answer questions before you request a report or audit.
             Send us a message and we will get back to you directly.
           </p>
@@ -42,17 +42,17 @@ export default function FooterContact() {
 
         <div>
           {submitted ? (
-            <div className="text-[11px] tracking-wider uppercase text-gold py-5 leading-loose">
+            <div className="text-[14px] tracking-wider uppercase text-gold py-5 leading-loose">
               Message received. We will be in touch shortly.
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
               <input type="text" name="name" placeholder="Your name" required autoComplete="off"
-                     className="w-full bg-card border border-border text-cream font-mono text-[12px] px-4 py-3.5 outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground placeholder:text-[11px]" />
+                     className="w-full bg-card border border-border text-cream font-mono text-[15px] px-4 py-3.5 outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground placeholder:text-[11px]" />
               <input type="email" name="email" placeholder="Your email" required autoComplete="off"
-                     className="w-full bg-card border border-border text-cream font-mono text-[12px] px-4 py-3.5 outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground placeholder:text-[11px]" />
+                     className="w-full bg-card border border-border text-cream font-mono text-[15px] px-4 py-3.5 outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground placeholder:text-[11px]" />
               <textarea name="message" placeholder="Your question..." required
-                        className="w-full bg-card border border-border text-cream font-mono text-[12px] px-4 py-3.5 outline-none focus:border-gold/50 transition-colors resize-none h-24 placeholder:text-muted-foreground placeholder:text-[11px]" />
+                        className="w-full bg-card border border-border text-cream font-mono text-[15px] px-4 py-3.5 outline-none focus:border-gold/50 transition-colors resize-none h-24 placeholder:text-muted-foreground placeholder:text-[11px]" />
               <button type="submit" disabled={submitting}
                       className="self-start bg-transparent border border-gold/40 text-gold font-mono text-[9px] tracking-[0.3em] uppercase px-5 py-3.5 hover:bg-gold hover:text-background hover:border-gold transition-colors disabled:opacity-60">
                 {submitting ? "Sending..." : "Send Message"}

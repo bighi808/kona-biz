@@ -20,7 +20,7 @@ export default function ServicesGrid() {
           Full-stack domination.<br />
           <em className="text-gold-light not-italic font-normal italic">One firm. Every channel.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           Six integrated disciplines. Every one managed exclusively for your firm in your state.
         </p>
 
@@ -62,7 +62,7 @@ export default function ServicesGrid() {
                   {svc.name}
                 </h4>
 
-                <p className="relative z-10 text-[11px] leading-loose tracking-wide text-muted-foreground
+                <p className="relative z-10 text-[14px] leading-loose tracking-wide text-muted-foreground
                               transition-colors duration-300 group-hover:text-[#b8b0a4]">
                   {cardDesc}
                 </p>

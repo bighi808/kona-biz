@@ -36,7 +36,7 @@ export default function Methodology() {
           Six disciplines.<br />
           <em className="text-gold-light not-italic font-normal italic">One system.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           Most agencies sell these services in isolation. We run them as one integrated
           authority engine — each channel feeding the others, all of them pointing back to your firm.
         </p>
@@ -47,14 +47,14 @@ export default function Methodology() {
             <h4 className="font-serif text-2xl text-cream leading-snug mb-4">
               The output is <em className="text-gold-light">compounding authority</em> — not a stack of disconnected line items.
             </h4>
-            <p className="text-[13px] leading-loose text-muted-foreground mb-4">
+            <p className="text-[16px] leading-loose text-muted-foreground mb-4">
               Your custom site sends signals to Google. The SEO and GEO work makes those
               signals authoritative. The paid ads pull in high-intent searchers your
               organic position then converts at a lower cost. Local presence reinforces
               every channel. AI agents handle intake so nothing leaks. Content keeps the
               engine fed.
             </p>
-            <p className="text-[13px] leading-loose text-muted-foreground">
+            <p className="text-[16px] leading-loose text-muted-foreground">
               Run any one of these alone and you get a marginal lift. Run all six pointed
               at the same goal in the same market and you build something competitors
               cannot reach into — a dominant position that defends itself.
@@ -62,7 +62,7 @@ export default function Methodology() {
 
             <div className="mt-7 pt-6 border-t border-border space-y-2">
               {legend.map((l) => (
-                <div key={l.tag} className="flex items-baseline gap-4 py-1 text-[11px] leading-relaxed text-muted-foreground">
+                <div key={l.tag} className="flex items-baseline gap-4 py-1 text-[14px] leading-relaxed text-muted-foreground">
                   <span className="display-font text-gold tracking-[0.25em] min-w-[44px] flex-shrink-0">{l.tag}</span>
                   <span>{l.text}</span>
                 </div>

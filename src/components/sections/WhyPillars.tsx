@@ -47,7 +47,7 @@ export default function WhyPillars() {
           Not an agency.<br />
           <em className="text-gold-light not-italic font-normal italic">A market weapon.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           The model is different. The commitment is different. The results are different.
           Here is exactly how we work — and why no other agency can make the same offer.
         </p>
@@ -74,7 +74,7 @@ export default function WhyPillars() {
               <h3 className="font-serif text-2xl text-cream mb-3 transition-colors duration-400 group-hover:text-gold-light">
                 {p.title}
               </h3>
-              <p className="text-xs leading-loose tracking-wide text-muted-foreground transition-colors duration-300 group-hover:text-[#b8b0a4]">
+              <p className="text-[15px] leading-loose tracking-wide text-muted-foreground transition-colors duration-300 group-hover:text-[#b8b0a4]">
                 {p.body}
               </p>
             </div>

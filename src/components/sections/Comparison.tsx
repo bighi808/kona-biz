@@ -54,7 +54,7 @@ export default function Comparison() {
           Kona.biz versus<br />
           <em className="text-gold-light not-italic font-normal italic">the standard PI agency.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           Six structural differences — not feature differences. The way the engagement is built,
           the way the money flows, the way exclusivity is enforced. Read it once and ask your
           current agency the same questions.
@@ -79,14 +79,14 @@ export default function Comparison() {
           {rows.flatMap((row) => [
             <div key={`them-${row.label}`} className="p-8 bg-card transition-colors duration-300 hover:bg-[#131310]">
               <div className="text-[9px] tracking-[0.35em] uppercase text-gold mb-2">{row.label}</div>
-              <p className="text-[12px] leading-[1.85] tracking-wide text-muted-foreground">
+              <p className="text-[15px] leading-[1.85] tracking-wide text-muted-foreground">
                 <span className="display-font text-[11px] tracking-[0.25em] text-[#6b5e4e] mr-2">&times;</span>
                 {row.them}
               </p>
             </div>,
             <div key={`us-${row.label}`} className="p-8 bg-card transition-colors duration-300 hover:bg-[#1a1a16]" style={{ backgroundColor: "hsl(var(--card))" }}>
               <div className="text-[9px] tracking-[0.35em] uppercase text-gold mb-2">{row.label}</div>
-              <p className="text-[12px] leading-[1.85] tracking-wide text-cream">
+              <p className="text-[15px] leading-[1.85] tracking-wide text-cream">
                 <span className="display-font text-[11px] tracking-[0.25em] text-gold mr-2">•</span>
                 {row.us}
               </p>

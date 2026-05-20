@@ -59,7 +59,7 @@ export default function AuditUpsell() {
           Your PI Market<br />
           <em className="text-gold-light not-italic font-normal italic">Domination Audit.</em>
         </h2>
-        <p className="text-[13px] tracking-wide text-muted-foreground max-w-lg leading-loose">
+        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           The free report gives you the strategic framework. The audit gives you the specific
           picture for your market — researched by hand, delivered personally.
         </p>
@@ -78,7 +78,7 @@ export default function AuditUpsell() {
             <div className="font-serif text-3xl text-cream mb-4 leading-tight">
               What We Research.<br />What We Deliver.
             </div>
-            <p className="text-[13px] tracking-wide text-muted-foreground leading-loose max-w-lg mb-7">
+            <p className="text-[16px] tracking-wide text-muted-foreground leading-loose max-w-lg mb-7">
               We analyze your firm's complete digital presence from the ground up. Your current
               rankings across key practice areas and cities. Your GBP performance and gaps.
               Your legal directory profiles. Your competitor landscape. Your AI platform
@@ -86,7 +86,7 @@ export default function AuditUpsell() {
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-none">
               {includes.map((item) => (
-                <li key={item} className="text-[11px] tracking-wider uppercase text-muted-foreground flex items-center gap-2">
+                <li key={item} className="text-[14px] tracking-wider uppercase text-muted-foreground flex items-center gap-2">
                   <span className="w-0.5 h-0.5 rounded-full bg-gold" style={{width: "3px", height: "3px"}} />
                   {item}
                 </li>
@@ -117,7 +117,7 @@ export default function AuditUpsell() {
                     <div className="mb-3.5">
                       <label htmlFor="audit-state" className="block text-[9px] tracking-[0.3em] uppercase text-gold mb-2">Your State</label>
                       <select id="audit-state" name="state" required defaultValue=""
-                              className="w-full bg-background border border-border text-cream font-mono text-[12px] px-3.5 py-3 outline-none focus:border-gold transition-colors">
+                              className="w-full bg-background border border-border text-cream font-mono text-[15px] px-3.5 py-3 outline-none focus:border-gold transition-colors">
                         <option value="" disabled>Select your state</option>
                         {states.map((s) => (
                           <option key={s.slug} value={s.name} disabled={s.status === "managed"}>
@@ -141,7 +141,7 @@ export default function AuditUpsell() {
                 <>
                   <span className="display-font text-gold mb-3 block" style={{ fontSize: "48px", letterSpacing: "0.05em" }}>KONA</span>
                   <div className="font-serif text-xl text-cream mb-3 leading-tight">Request<br />Received.</div>
-                  <p className="text-[11px] tracking-wide text-muted-foreground leading-loose mb-5">
+                  <p className="text-[14px] tracking-wide text-muted-foreground leading-loose mb-5">
                     We are verifying availability for your state and will send your invoice within
                     24 hours. Your audit begins the moment payment is confirmed.
                   </p>
@@ -172,7 +172,7 @@ function AuditField({ id, name, label, placeholder, type = "text" }: {
     <div className="mb-3.5">
       <label htmlFor={id} className="block text-[9px] tracking-[0.3em] uppercase text-gold mb-2">{label}</label>
       <input id={id} name={name} type={type} placeholder={placeholder} required autoComplete="off"
-             className="w-full bg-background border border-border text-cream font-mono text-[12px] px-3.5 py-3 outline-none focus:border-gold transition-colors placeholder:text-muted-foreground placeholder:text-[11px]" />
+             className="w-full bg-background border border-border text-cream font-mono text-[15px] px-3.5 py-3 outline-none focus:border-gold transition-colors placeholder:text-muted-foreground placeholder:text-[11px]" />
     </div>
   );
 }
@@ -181,7 +181,7 @@ function ConfirmDetail({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-background border border-border p-4 mb-3">
       <div className="text-[8px] tracking-[0.3em] uppercase text-gold mb-1">{label}</div>
-      <div className="text-[12px] tracking-wider text-cream">{value}</div>
+      <div className="text-[15px] tracking-wider text-cream">{value}</div>
     </div>
   );
 }
