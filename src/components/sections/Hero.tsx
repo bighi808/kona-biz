@@ -61,7 +61,7 @@ export default function Hero() {
           className="font-mono text-gold rise-up"
           style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "20px" }}
         >
-          Personal Injury Law Firm Marketing
+          Exclusive Personal Injury Law Firm Marketing
         </p>
 
         <h1
