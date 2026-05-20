@@ -19,7 +19,7 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
     const onScroll = () => {
-      video.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+      video.style.transform = `translateY(${window.scrollY * 0.92}px)`;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
