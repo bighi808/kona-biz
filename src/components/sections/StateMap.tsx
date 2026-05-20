@@ -58,6 +58,7 @@ export default function StateMap() {
 
         <div
           ref={gridRef}
+          data-reveal-skip
           className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-px bg-border border border-border mt-14"
         >
           {states.map((s, i) => {

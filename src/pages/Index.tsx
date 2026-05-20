@@ -13,8 +13,11 @@ import AuditUpsell from "@/components/sections/AuditUpsell";
 import FAQ from "@/components/sections/FAQ";
 import Booking from "@/components/sections/Booking";
 import FooterContact from "@/components/sections/FooterContact";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function Index() {
+  const scope = useScrollReveal<HTMLDivElement>();
+
   return (
     <Layout>
       <SEOHead
@@ -23,19 +26,21 @@ export default function Index() {
         canonicalPath="/"
       />
 
-      <Hero />
-      <Ticker />
-      <WhyPillars />
-      <ServicesGrid />
-      <Methodology />
-      <ValueStats />
-      <Comparison />
-      <StateMap />
-      <FreeReport />
-      <AuditUpsell />
-      <FAQ />
-      <Booking />
-      <FooterContact />
+      <div ref={scope}>
+        <Hero />
+        <Ticker />
+        <WhyPillars />
+        <ServicesGrid />
+        <Methodology />
+        <ValueStats />
+        <Comparison />
+        <StateMap />
+        <FreeReport />
+        <AuditUpsell />
+        <FAQ />
+        <Booking />
+        <FooterContact />
+      </div>
     </Layout>
   );
 }
