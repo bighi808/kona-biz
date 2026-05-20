@@ -7,7 +7,7 @@ export default function ServicesHub() {
   return (
     <Layout>
       <SEOHead
-        title="Services — PI Law Firm Marketing | Kona.biz"
+        title="Services — PI Law Firm Marketing | Plaintiff Growth"
         description="Six integrated services — custom web, SEO + GEO, paid ads, GBP management, content marketing, AI consulting. One firm per state."
         canonicalPath="/services"
         breadcrumbs={[{ name: "Services", path: "/services" }]}

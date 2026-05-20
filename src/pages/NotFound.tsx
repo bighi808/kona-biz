@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <Layout>
       <SEOHead
-        title="Not Found | Kona.biz"
+        title="Not Found | Plaintiff Growth"
         description="The page you're looking for doesn't exist."
         canonicalPath="/404"
         noIndex

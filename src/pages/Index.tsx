@@ -21,7 +21,7 @@ export default function Index() {
   return (
     <Layout>
       <SEOHead
-        title="Kona.biz — Personal Injury Law Firm Marketing | One Firm Per State"
+        title="Plaintiff Growth — Personal Injury Law Firm Marketing | One Firm Per State"
         description="Full-stack digital authority for personal injury law firms. One firm per state — exclusivity is structural. SEO, GEO, paid ads, AI agents, local presence."
         canonicalPath="/"
       />

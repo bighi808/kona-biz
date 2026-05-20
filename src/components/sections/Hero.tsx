@@ -1,37 +1,38 @@
 /**
- * Hero — full-viewport intro with the 3D globe as backdrop.
- * Globe arcs radiate from Kona, Hawaii to every state served.
+ * Hero — full-viewport intro with Hero-Video.mp4 as the background.
  *
  * Layering (back to front):
- *   1. instant near-black radial gradient (paints immediately — protects LCP)
- *   2. Globe canvas (mounts client-side, fades in; never blocks first paint)
- *   3. legibility gradient overlay (keeps the headline readable over the globe)
- *   4. content (eyebrow, headline, sub, pills)
- *   5. scroll indicator
+ *   1. Instant near-black background (paints before video loads)
+ *   2. Video element (autoplay, muted, loop)
+ *   3. Dark overlay for headline legibility
+ *   4. Content (eyebrow, headline, sub, pills, scroll indicator)
  */
-import Globe from "@/components/Globe";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-8 py-32 overflow-hidden">
-      {/* 1. Instant background — deep warm-black radial, paints before JS */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 45%, #14110c 0%, #0b0a07 55%, #050505 100%)",
-        }}
-      />
+      {/* 1. Instant background */}
+      <div className="absolute inset-0" style={{ background: "#080807" }} />
 
-      {/* 2. Globe backdrop (client-only, fades in) */}
-      <Globe />
+      {/* 2. Background video */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
+      </video>
 
-      {/* 3. Legibility overlay — darker top/bottom, lets globe glow at center */}
+      {/* 3. Legibility overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(8,8,7,0.72) 0%, rgba(8,8,7,0.35) 38%, rgba(8,8,7,0.45) 62%, rgba(8,8,7,0.86) 100%)",
+            "linear-gradient(to bottom, rgba(8,8,7,0.68) 0%, rgba(8,8,7,0.38) 40%, rgba(8,8,7,0.48) 62%, rgba(8,8,7,0.82) 100%)",
         }}
       />
 

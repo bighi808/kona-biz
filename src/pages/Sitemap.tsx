@@ -8,8 +8,8 @@ export default function Sitemap() {
   return (
     <Layout>
       <SEOHead
-        title="Sitemap | Kona.biz"
-        description="Browse every page on Kona.biz."
+        title="Sitemap | Plaintiff Growth"
+        description="Browse every page on Plaintiff Growth."
         canonicalPath="/sitemap"
       />
       <section className="section-padding max-w-5xl mx-auto">

@@ -108,7 +108,7 @@ export default function FreeReport() {
                }}>
             {submitted ? (
               <div className="text-center py-10">
-                <span className="display-font text-gold tracking-wider block mb-4" style={{ fontSize: "56px" }}>KONA</span>
+                <span className="display-font text-gold tracking-wider block mb-4" style={{ fontSize: "56px" }}>PG</span>
                 <div className="font-serif text-2xl text-cream mb-3">Report on its way.</div>
                 <p className="text-[10px] tracking-wider uppercase text-muted-foreground leading-loose">
                   Check your inbox. Your state is still available — for now.

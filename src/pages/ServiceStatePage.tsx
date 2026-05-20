@@ -18,7 +18,7 @@ export default function ServiceStatePage() {
 
   if (!service || !state) return <NotFound />;
 
-  const pageTitle = `${state.name} ${service.name} | Kona.biz`;
+  const pageTitle = `${state.name} ${service.name} | Plaintiff Growth`;
   const metaDescription = `${service.name} for personal injury law firms in ${state.name}. ${MARKET_STATUS_LABELS[state.status]} market. ${service.intro}`;
   const canonicalPath = `/services/${service.slug}/${state.slug}`;
 

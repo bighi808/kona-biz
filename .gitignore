@@ -17,6 +17,8 @@ dist-ssg/
 *.avi
 *.mkv
 *.webm
+# Small hero video is tracked (944 KB)
+!public/Hero-Video.mp4
 
 # ---- OS junk ----
 .DS_Store

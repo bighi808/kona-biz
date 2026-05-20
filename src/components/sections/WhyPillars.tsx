@@ -1,5 +1,5 @@
 /**
- * Why Kona.biz — 6 numbered pillars in a grid.
+ * Why Plaintiff Growth — 6 numbered pillars in a grid.
  * Ported from konabiz-lander.html lines 1616-1656.
  */
 const pillars = [
@@ -31,7 +31,7 @@ const pillars = [
   {
     num: "06",
     title: "The PI Attorney Network",
-    body: "Kona.biz clients join a private, cross-state community of non-competing PI attorneys. Shared strategy, market insights, and referral opportunities. Launching 2027 — Command tier clients get early access.",
+    body: "Plaintiff Growth clients join a private, cross-state community of non-competing PI attorneys. Shared strategy, market insights, and referral opportunities. Launching 2027 — Command tier clients get early access.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function WhyPillars() {
     <section className="bg-card border-t border-b border-border">
       <div className="max-w-6xl mx-auto px-12 py-28">
         <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
-          Why Kona.biz
+          Why Plaintiff Growth
           <span className="h-px w-10 bg-gold opacity-40" />
         </p>
         <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>

@@ -5,8 +5,8 @@ export default function Contact() {
   return (
     <Layout>
       <SEOHead
-        title="Contact Kona.biz | Personal Injury Marketing"
-        description="Reach Kona.biz directly. Strategy call, audit request, or general questions."
+        title="Contact Plaintiff Growth | Personal Injury Marketing"
+        description="Reach Plaintiff Growth directly. Strategy call, audit request, or general questions."
         canonicalPath="/contact"
         breadcrumbs={[{ name: "Contact", path: "/contact" }]}
       />

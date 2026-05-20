@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = import.meta.env.VITE_SITE_URL || "https://kona.biz";
-const SITE_NAME = "Kona.biz";
+const SITE_URL = import.meta.env.VITE_SITE_URL || "https://plaintiffgrowth.com";
+const SITE_NAME = "Plaintiff Growth";
 
 // Baseline ProfessionalService schema — emitted on every page
 const FIRM_SCHEMA = {
@@ -9,7 +9,7 @@ const FIRM_SCHEMA = {
   "@type": ["ProfessionalService", "LocalBusiness"],
   "@id": `${SITE_URL}/#organization`,
   name: SITE_NAME,
-  alternateName: "Kona.biz Personal Injury Marketing",
+  alternateName: "Plaintiff Growth Personal Injury Marketing",
   description:
     "Personal injury law firm marketing agency. One firm per state — exclusivity is structural. Custom websites, SEO, GEO, paid ads, AI agents, local presence, and content. Based in Kona, Hawaii.",
   url: SITE_URL,

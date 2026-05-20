@@ -139,7 +139,7 @@ export default function AuditUpsell() {
                 </>
               ) : (
                 <>
-                  <span className="display-font text-gold mb-3 block" style={{ fontSize: "48px", letterSpacing: "0.05em" }}>KONA</span>
+                  <span className="display-font text-gold mb-3 block" style={{ fontSize: "48px", letterSpacing: "0.05em" }}>PG</span>
                   <div className="font-serif text-xl text-cream mb-3 leading-tight">Request<br />Received.</div>
                   <p className="text-[14px] tracking-wide text-muted-foreground leading-loose mb-5">
                     We are verifying availability for your state and will send your invoice within

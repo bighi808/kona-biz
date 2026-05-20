@@ -18,7 +18,7 @@ export default function Booking() {
         </h2>
         <p className="text-[16px] tracking-wide text-muted-foreground max-w-xl leading-loose">
           No pitch. No pressure. A direct conversation about your market, your current position,
-          and whether Kona.biz is the right fit for your firm.
+          and whether Plaintiff Growth is the right fit for your firm.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 mt-16 items-start">
@@ -71,7 +71,7 @@ export default function Booking() {
             <div className="border-t border-border pt-6 space-y-5">
               <BookingDetail label="Duration" value="30 minutes" />
               <BookingDetail label="Format" value="Video or phone, your preference" />
-              <BookingDetail label="Who" value="Direct with the Kona.biz strategist, not a sales rep" />
+              <BookingDetail label="Who" value="Direct with the Plaintiff Growth strategist, not a sales rep" />
               <BookingDetail label="Cost" value="No charge. No obligation." />
             </div>
           </div>

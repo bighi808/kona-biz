@@ -5,13 +5,13 @@ export default function Footer() {
     <footer className="border-t border-border px-6 md:px-12 py-12 max-w-7xl mx-auto w-full">
       <div className="flex flex-wrap items-start justify-between gap-8">
         <div>
-          <p className="display-font text-2xl tracking-[0.1em] text-muted-foreground">KONA.BIZ</p>
+          <p className="display-font text-2xl tracking-[0.1em] text-muted-foreground">PLAINTIFF GROWTH</p>
           <p className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground mt-3 leading-relaxed">
             Personal Injury Marketing Specialists
             <br />
             One Client Per State &nbsp;&bull;&nbsp; Kona, Hawaii
             <br />
-            &copy; 2026 Kona.biz. All rights reserved.
+            &copy; 2026 Plaintiff Growth. All rights reserved.
           </p>
         </div>
 

@@ -22,7 +22,7 @@ export default function Navbar() {
         to="/"
         className="display-font text-2xl tracking-[0.12em] text-gold no-underline"
       >
-        KONA.BIZ
+        PLAINTIFF GROWTH
       </Link>
 
       <span className="hidden md:inline text-[10px] tracking-[0.25em] uppercase text-muted-foreground">

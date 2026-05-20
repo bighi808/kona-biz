@@ -21,7 +21,7 @@ export const services: Service[] = [
     name: "PI Law Firm Website Design",
     shortName: "Web",
     navLabel: "Website Design",
-    metaTitle: "Personal Injury Law Firm Website Design | Kona.biz",
+    metaTitle: "Personal Injury Law Firm Website Design | Plaintiff Growth",
     metaDescription:
       "Custom-coded personal injury law firm websites with local matrix architecture and built-in backend. One firm per state. No templates.",
     intro:
@@ -47,7 +47,7 @@ export const services: Service[] = [
     name: "Personal Injury SEO",
     shortName: "SEO",
     navLabel: "SEO",
-    metaTitle: "Personal Injury SEO | Kona.biz",
+    metaTitle: "Personal Injury SEO | Plaintiff Growth",
     metaDescription:
       "Local authority networks, hub-and-spoke content, and press release link building for personal injury law firms. One firm per state.",
     intro:
@@ -67,7 +67,7 @@ export const services: Service[] = [
     name: "Personal Injury PPC & Google Ads",
     shortName: "Ads",
     navLabel: "Paid Ads",
-    metaTitle: "Personal Injury PPC & Google Ads Management | Kona.biz",
+    metaTitle: "Personal Injury PPC & Google Ads Management | Plaintiff Growth",
     metaDescription:
       "Google Ads, LSA, and Meta campaigns for personal injury firms. Ad spend billed at cost — zero media markup.",
     intro:
@@ -87,7 +87,7 @@ export const services: Service[] = [
     name: "Google Business Profile Management",
     shortName: "GBP",
     navLabel: "Google Business",
-    metaTitle: "Google Business Profile Management for Law Firms | Kona.biz",
+    metaTitle: "Google Business Profile Management for Law Firms | Plaintiff Growth",
     metaDescription:
       "Setup, optimization, active management, and posting for your law firm Google Business Profile. One of the highest-ROI channels in PI marketing.",
     intro:
@@ -107,7 +107,7 @@ export const services: Service[] = [
     name: "Legal Content Marketing",
     shortName: "Content",
     navLabel: "Content",
-    metaTitle: "Legal Content Marketing for Personal Injury Firms | Kona.biz",
+    metaTitle: "Legal Content Marketing for Personal Injury Firms | Plaintiff Growth",
     metaDescription:
       "PI-specific content strategy, ongoing production, GEO optimization for AI platforms, and press releases for link authority.",
     intro:
@@ -127,7 +127,7 @@ export const services: Service[] = [
     name: "Law Firm AI Consulting",
     shortName: "AI",
     navLabel: "AI",
-    metaTitle: "Law Firm AI Consulting & Custom Agents | Kona.biz",
+    metaTitle: "Law Firm AI Consulting & Custom Agents | Plaintiff Growth",
     metaDescription:
       "Practice modernization consulting and custom AI agent development for intake, workflows, and client communication.",
     intro:

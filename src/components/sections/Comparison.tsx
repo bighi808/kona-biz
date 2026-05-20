@@ -1,5 +1,5 @@
 /**
- * Comparison — "Kona.biz versus the standard PI agency."
+ * Comparison — "Plaintiff Growth versus the standard PI agency."
  * 6 structural differences in a side-by-side 2-column table.
  * Ported from konabiz-lander.html lines 2378-2459.
  */
@@ -28,7 +28,7 @@ const rows: Row[] = [
   {
     label: "Build",
     them: "Template site with cosmetic theming. The same WordPress framework powering forty other PI firms across the country — including the one across town.",
-    us:   "Custom from the ground up. No two Kona.biz client sites share structure. Every page, every city, every case type built for your market specifically.",
+    us:   "Custom from the ground up. No two Plaintiff Growth client sites share structure. Every page, every city, every case type built for your market specifically.",
   },
   {
     label: "Tech Stack",
@@ -51,7 +51,7 @@ export default function Comparison() {
           <span className="h-px w-10 bg-gold opacity-40" />
         </p>
         <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
-          Kona.biz versus<br />
+          Plaintiff Growth versus<br />
           <em className="text-gold-light not-italic font-normal italic">the standard PI agency.</em>
         </h2>
         <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
@@ -69,7 +69,7 @@ export default function Comparison() {
             <div className="font-serif text-2xl text-cream leading-tight">What most firms pay for</div>
           </div>
           <div className="p-8 bg-card relative border-t-2 border-t-gold md:border-t-2">
-            <div className="text-[9px] tracking-[0.4em] uppercase text-gold mb-3">Kona.biz</div>
+            <div className="text-[9px] tracking-[0.4em] uppercase text-gold mb-3">Plaintiff Growth</div>
             <div className="font-serif text-2xl text-cream leading-tight">
               What we built <em className="text-gold-light not-italic font-normal italic">instead.</em>
             </div>

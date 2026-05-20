@@ -5,7 +5,7 @@ export default function About() {
   return (
     <Layout>
       <SEOHead
-        title="About Kona.biz | Personal Injury Marketing Specialists"
+        title="About Plaintiff Growth | Personal Injury Marketing Specialists"
         description="Built from Kona, Hawaii. One PI firm per state. Zero media markups. Why we built it this way and who's behind it."
         canonicalPath="/about"
         breadcrumbs={[{ name: "About", path: "/about" }]}
