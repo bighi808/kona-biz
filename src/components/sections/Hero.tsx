@@ -21,9 +21,9 @@ export default function Hero() {
 
       {/* 2. Background video — shifted down so map sits at vertical midpoint */}
       <video
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute w-full h-full object-cover pointer-events-none"
         autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-        style={{ objectPosition: "center 62%" }}
+        style={{ top: "75px", right: 0, bottom: 0, left: 0, objectPosition: "center 62%" }}
       >
         <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
       </video>
