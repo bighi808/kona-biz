@@ -1,10 +1,9 @@
 /**
  * Methodology — "The Stack" hub-and-spoke SVG diagram.
- * Ported from konabiz-lander.html lines 2256-2347.
  *
- * Six service nodes (WEB, SEO, ADS, AI, GBP, SOC) orbit a central
- * AUTHORITY hub connected by dashed lines. The hub has an animated
- * pulse ring. Hover any node to highlight its stroke and text in gold.
+ * Layout:
+ *   TOP — two equal columns: intro text left, SVG diagram right
+ *   BOTTOM — full-width centered: body copy + legend
  */
 const nodes = [
   { id: "WEB",  num: "01", x: 260, y: 80  },
@@ -28,52 +27,29 @@ export default function Methodology() {
   return (
     <section className="bg-card border-t border-b border-border" id="methodology">
       <div className="max-w-6xl mx-auto px-12 py-28">
-        <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
-          The Stack
-          <span className="h-px w-10 bg-gold opacity-40" />
-        </p>
-        <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
-          Six disciplines.<br />
-          <em className="text-gold-light not-italic font-normal italic">One system.</em>
-        </h2>
-        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
-          Most agencies sell these services in isolation. We run them as one integrated
-          authority engine — each channel feeding the others, all of them pointing back to your firm.
-        </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-16 items-center mt-16">
-          {/* Left: copy + legend */}
+        {/* ── TOP: two equal columns ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+          {/* Left — intro text */}
           <div>
-            <h4 className="font-serif text-2xl text-cream leading-snug mb-4">
-              The output is <em className="text-gold-light">compounding authority</em> — not a stack of disconnected line items.
-            </h4>
-            <p className="text-[16px] leading-loose text-muted-foreground mb-4">
-              Your custom site sends signals to Google. The SEO and GEO work makes those
-              signals authoritative. The paid ads pull in high-intent searchers your
-              organic position then converts at a lower cost. Local presence reinforces
-              every channel. AI agents handle intake so nothing leaks. Content keeps the
-              engine fed.
+            <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
+              The Stack
+              <span className="h-px w-10 bg-gold opacity-40" />
             </p>
-            <p className="text-[16px] leading-loose text-muted-foreground">
-              Run any one of these alone and you get a marginal lift. Run all six pointed
-              at the same goal in the same market and you build something competitors
-              cannot reach into — a dominant position that defends itself.
+            <h2 className="font-serif text-cream leading-tight mb-6" style={{ fontSize: "clamp(32px, 4.5vw, 58px)" }}>
+              Six disciplines.<br />
+              <em className="text-gold-light not-italic font-normal italic">One system.</em>
+            </h2>
+            <p className="text-[16px] tracking-wide text-muted-foreground leading-loose">
+              Most agencies sell these services in isolation. We run them as one integrated
+              authority engine — each channel feeding the others, all of them pointing back to your firm.
             </p>
-
-            <div className="mt-7 pt-6 border-t border-border space-y-2">
-              {legend.map((l) => (
-                <div key={l.tag} className="flex items-baseline gap-4 py-1 text-[14px] leading-relaxed text-muted-foreground">
-                  <span className="display-font text-gold tracking-[0.25em] min-w-[44px] flex-shrink-0">{l.tag}</span>
-                  <span>{l.text}</span>
-                </div>
-              ))}
-            </div>
           </div>
 
-          {/* Right: SVG diagram */}
-          <div className="w-full max-w-[520px] aspect-square mx-auto">
+          {/* Right — SVG diagram */}
+          <div className="w-full max-w-[420px] aspect-square mx-auto">
             <svg viewBox="0 0 520 520" className="w-full h-full block" aria-hidden>
-              {/* Spokes — dashed gold lines from hub to each node */}
               <line x1="260" y1="204" x2="260" y2="122" className="method-spoke" />
               <line x1="309" y1="232" x2="380" y2="191" className="method-spoke" />
               <line x1="309" y1="288" x2="380" y2="329" className="method-spoke" />
@@ -81,25 +57,19 @@ export default function Methodology() {
               <line x1="211" y1="288" x2="140" y2="329" className="method-spoke" />
               <line x1="211" y1="232" x2="140" y2="191" className="method-spoke" />
 
-              {/* Subtle outer orbit ring */}
               <circle cx="260" cy="260" r="180" fill="none" stroke="rgba(194,155,79,0.07)" strokeWidth="0.8" strokeDasharray="1 4" />
 
-              {/* Hub */}
               <g>
                 <circle cx="260" cy="260" r="56" className="method-hub-pulse" />
-                <circle cx="260" cy="260" r="56"
-                        fill="hsl(var(--card))" stroke="hsl(var(--gold))" strokeWidth="1.5" />
+                <circle cx="260" cy="260" r="56" fill="hsl(var(--card))" stroke="hsl(var(--gold))" strokeWidth="1.5" />
                 <text x="260" y="254" textAnchor="middle" dominantBaseline="middle"
-                      className="display-font" fill="hsl(var(--gold))"
-                      fontSize="13" letterSpacing="0.25em">AUTHORITY</text>
+                      className="display-font" fill="hsl(var(--gold))" fontSize="13" letterSpacing="0.25em">AUTHORITY</text>
                 <text x="260" y="276" textAnchor="middle" dominantBaseline="middle"
-                      fill="hsl(var(--muted-foreground))"
-                      fontSize="8" letterSpacing="0.3em" fontFamily="DM Mono, monospace">
+                      fill="hsl(var(--muted-foreground))" fontSize="8" letterSpacing="0.3em" fontFamily="DM Mono, monospace">
                   01 &mdash; 06
                 </text>
               </g>
 
-              {/* Service nodes */}
               {nodes.map((n) => (
                 <g key={n.id} className="method-node">
                   <circle cx={n.x} cy={n.y} r="42" />
@@ -116,6 +86,35 @@ export default function Methodology() {
             </svg>
           </div>
         </div>
+
+        {/* ── BOTTOM: full-width centered ── */}
+        <div className="mt-20 pt-16 border-t border-border text-center max-w-3xl mx-auto">
+          <h4 className="font-serif text-2xl text-cream leading-snug mb-6">
+            The output is <em className="text-gold-light">compounding authority</em> — not a stack of disconnected line items.
+          </h4>
+          <p className="text-[16px] leading-loose text-muted-foreground mb-4">
+            Your custom site sends signals to Google. The SEO and GEO work makes those
+            signals authoritative. The paid ads pull in high-intent searchers your
+            organic position then converts at a lower cost. Local presence reinforces
+            every channel. AI agents handle intake so nothing leaks. Content keeps the
+            engine fed.
+          </p>
+          <p className="text-[16px] leading-loose text-muted-foreground">
+            Run any one of these alone and you get a marginal lift. Run all six pointed
+            at the same goal in the same market and you build something competitors
+            cannot reach into — a dominant position that defends itself.
+          </p>
+
+          <div className="mt-10 pt-8 border-t border-border text-left inline-block w-full space-y-2">
+            {legend.map((l) => (
+              <div key={l.tag} className="flex items-baseline gap-4 py-1 text-[14px] leading-relaxed text-muted-foreground">
+                <span className="display-font text-gold tracking-[0.25em] min-w-[44px] flex-shrink-0">{l.tag}</span>
+                <span>{l.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );
