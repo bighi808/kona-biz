@@ -74,8 +74,8 @@ export default function Hero() {
             marginBottom: 0,
           }}
         >
-          <span className="block">One Firm.</span>
-          <span className="block gold-shimmer">Per State.</span>
+          <span className="block text-white">One Firm.</span>
+          <span className="block text-gold">Per State.</span>
         </h1>
 
         <div
