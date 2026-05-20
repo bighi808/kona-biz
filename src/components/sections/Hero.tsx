@@ -19,7 +19,7 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
     const onScroll = () => {
-      video.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+      video.style.transform = `translateY(${window.scrollY * 0.08}px)`;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -44,24 +44,6 @@ export default function Hero() {
       >
         <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
       </video>
-
-      {/* 3. Left-to-right gradient */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(8,8,7,0.93) 0%, rgba(8,8,7,0.84) 32%, rgba(8,8,7,0.42) 58%, rgba(8,8,7,0.06) 100%)",
-        }}
-      />
-
-      {/* 4. Top/bottom vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(8,8,7,0.5) 0%, transparent 15%, transparent 78%, rgba(8,8,7,0.55) 100%)",
-        }}
-      />
 
       {/* 5. Content */}
       <div className="relative z-10 max-w-2xl">
