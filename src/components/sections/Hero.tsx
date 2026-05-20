@@ -1,19 +1,29 @@
 /**
- * Hero — fits in one viewport. Text left, video right.
- * Gradient: opaque left → transparent right so video shows through.
+ * Hero — full viewport. Text left, video right.
+ * Glassmorphism ticker bar docked to the bottom.
+ * Scroll indicator removed.
  */
 
+const tickerItems = [
+  "One PI Firm Per State","SEO + GEO Optimization","Custom Web Development",
+  "AI Practice Consulting","Paid Ads Management","Google Business Profile",
+  "Legal Directory Management","Review Generation","YouTube Lead Generation","Custom AI Agents",
+];
+
 export default function Hero() {
+  const loop = [...tickerItems, ...tickerItems];
+
   return (
     <section className="relative h-screen flex flex-col justify-center overflow-hidden px-10 md:px-20">
 
       {/* 1. Instant dark background */}
       <div className="absolute inset-0" style={{ background: "#080807" }} />
 
-      {/* 2. Background video */}
+      {/* 2. Background video — shifted down so map sits at vertical midpoint */}
       <video
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         autoPlay muted loop playsInline preload="auto" aria-hidden="true"
+        style={{ objectPosition: "center 62%" }}
       >
         <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
       </video>
@@ -32,13 +42,12 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(8,8,7,0.5) 0%, transparent 15%, transparent 82%, rgba(8,8,7,0.6) 100%)",
+            "linear-gradient(to bottom, rgba(8,8,7,0.5) 0%, transparent 15%, transparent 78%, rgba(8,8,7,0.55) 100%)",
         }}
       />
 
       {/* 5. Content */}
       <div className="relative z-10 max-w-2xl">
-
         <p
           className="font-mono text-gold rise-up"
           style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "20px" }}
@@ -60,7 +69,6 @@ export default function Hero() {
           <span className="block gold-shimmer">Per State.</span>
         </h1>
 
-        {/* Gold rule */}
         <div
           className="rise-up rise-up-delay-2"
           style={{ width: "48px", height: "1px", background: "hsl(var(--gold))", margin: "22px 0" }}
@@ -79,7 +87,6 @@ export default function Hero() {
           Your competitors cannot be our clients.
         </p>
 
-        {/* CTAs */}
         <div className="flex flex-wrap items-center gap-4 rise-up rise-up-delay-3">
           <a
             href="#statemap"
@@ -96,10 +103,27 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-10 md:left-20 flex flex-col items-center gap-2 rise-up rise-up-delay-4 z-10">
-        <div className="w-px h-10 scroll-pulse" style={{ background: "linear-gradient(to bottom, hsl(var(--gold)), transparent)" }} />
-        <span className="text-[8px] tracking-[0.3em] text-muted-foreground uppercase [writing-mode:vertical-rl] mt-1">Scroll</span>
+      {/* 6. Glassmorphism ticker — docked to bottom of hero */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden"
+        style={{
+          background: "rgba(8, 8, 7, 0.35)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          borderTop: "1px solid rgba(232, 226, 212, 0.09)",
+        }}
+      >
+        <div className="flex animate-ticker py-4 gap-12 w-max">
+          {loop.map((text, i) => (
+            <span
+              key={i}
+              className="flex items-center gap-6 text-[11px] tracking-[0.3em] uppercase text-muted-foreground whitespace-nowrap"
+            >
+              <span className="w-1 h-1 rounded-full bg-gold flex-shrink-0" />
+              {text}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );

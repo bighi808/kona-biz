@@ -1,7 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import SEOHead from "@/components/SEOHead";
 import Hero from "@/components/sections/Hero";
-import Ticker from "@/components/sections/Ticker";
 import WhyPillars from "@/components/sections/WhyPillars";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import Methodology from "@/components/sections/Methodology";
@@ -28,7 +27,6 @@ export default function Index() {
 
       <div ref={scope}>
         <Hero />
-        <Ticker />
         <WhyPillars />
         <ServicesGrid />
         <Methodology />
