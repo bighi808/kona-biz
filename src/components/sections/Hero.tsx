@@ -1,8 +1,9 @@
 /**
  * Hero — full viewport. Text left, video right.
- * Glassmorphism ticker bar docked to the bottom.
- * Scroll indicator removed.
+ * Video has a subtle parallax: moves up at ~15% of scroll speed so it
+ * feels almost fixed but has depth. Section overflow:hidden keeps it clipped.
  */
+import { useEffect, useRef } from "react";
 
 const tickerItems = [
   "One PI Firm Per State","SEO + GEO Optimization","Custom Web Development",
@@ -11,7 +12,18 @@ const tickerItems = [
 ];
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const loop = [...tickerItems, ...tickerItems];
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onScroll = () => {
+      video.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <section className="relative h-screen flex flex-col justify-center overflow-hidden px-10 md:px-20">
@@ -19,11 +31,16 @@ export default function Hero() {
       {/* 1. Instant dark background */}
       <div className="absolute inset-0" style={{ background: "#080807" }} />
 
-      {/* 2. Background video — shifted down so map sits at vertical midpoint */}
+      {/* 2. Background video — parallax via scroll-driven translateY */}
       <video
+        ref={videoRef}
         className="absolute w-full h-full object-cover pointer-events-none"
         autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-        style={{ top: "75px", right: 0, bottom: 0, left: 0, objectPosition: "center 62%" }}
+        style={{
+          top: "75px", right: 0, bottom: 0, left: 0,
+          objectPosition: "center 62%",
+          willChange: "transform",
+        }}
       >
         <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
       </video>
@@ -103,14 +120,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 6. Glassmorphism ticker — docked to bottom of hero */}
+      {/* 6. Glassmorphism ticker — docked to bottom */}
       <div
         className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden"
         style={{
-          background: "rgba(8, 8, 7, 0.35)",
+          background: "rgba(8,8,7,0.35)",
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
-          borderTop: "1px solid rgba(232, 226, 212, 0.09)",
+          borderTop: "1px solid rgba(232,226,212,0.09)",
         }}
       >
         <div className="flex animate-ticker py-4 gap-12 w-max">
