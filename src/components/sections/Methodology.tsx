@@ -91,11 +91,32 @@ export default function Methodology() {
         <div className="mt-20 pt-16 border-t border-border grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
           {/* Left — numbered legend */}
-          <div className="space-y-2">
+          <div className="divide-y divide-border">
             {legend.map((l) => (
-              <div key={l.tag} className="flex items-baseline gap-4 py-1 text-[14px] leading-relaxed text-muted-foreground">
-                <span className="display-font text-gold tracking-[0.25em] min-w-[44px] flex-shrink-0">{l.tag}</span>
-                <span>{l.text}</span>
+              <div
+                key={l.tag}
+                className="group flex items-center gap-6 py-5 px-3 -mx-3 rounded-sm cursor-default transition-all duration-200"
+                style={{ transition: "background 0.2s ease" }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.background = "rgba(194,155,79,0.06)";
+                  (e.currentTarget as HTMLDivElement).style.paddingLeft = "20px";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.background = "transparent";
+                  (e.currentTarget as HTMLDivElement).style.paddingLeft = "12px";
+                }}
+              >
+                <span
+                  className="display-font flex-shrink-0 transition-colors duration-200"
+                  style={{ fontSize: "clamp(28px, 3vw, 38px)", letterSpacing: "0.1em", color: "hsl(var(--gold))", opacity: 0.5, lineHeight: 1 }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLSpanElement).style.opacity = "1"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLSpanElement).style.opacity = "0.5"; }}
+                >
+                  {l.tag}
+                </span>
+                <span className="text-[15px] leading-snug text-muted-foreground group-hover:text-cream transition-colors duration-200">
+                  {l.text}
+                </span>
               </div>
             ))}
           </div>
