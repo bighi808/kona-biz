@@ -75,7 +75,7 @@ export default function Hero() {
           }}
         >
           <span className="block" style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #E8E1D4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>One Firm.</span>
-          <span className="block text-gold">Per State.</span>
+          <span className="block" style={{ background: "linear-gradient(to left, #DCA251 0%, #FFF9D8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Per State.</span>
         </h1>
 
         <div
