@@ -1,7 +1,6 @@
 /**
- * Hero — full viewport. Text left, video right.
- * Parallax via GSAP ScrollTrigger (scrub:1 = 1s smoothing lag).
- * Smooth scroll handled globally in index.css.
+ * Hero — full viewport split layout. Video left, text right.
+ * Parallax via GSAP ScrollTrigger on the video (clipped within left column).
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -27,7 +26,7 @@ export default function Hero() {
     if (!video || !section) return;
 
     gsap.to(video, {
-      y: () => -(window.innerHeight * 0.18),
+      y: () => -(window.innerHeight * 0.12),
       ease: "none",
       scrollTrigger: {
         trigger: section,
@@ -40,23 +39,28 @@ export default function Hero() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative h-screen flex flex-col justify-center items-end overflow-hidden px-10 md:px-20">
+    <section ref={sectionRef} className="relative h-screen overflow-hidden" style={{ background: "#080807" }}>
 
-      {/* 1. Instant dark background */}
-      <div className="absolute inset-0" style={{ background: "#080807" }} />
+      {/* ── Left column: video ── */}
+      <div className="absolute inset-y-0 left-0 overflow-hidden" style={{ width: "52%" }}>
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          autoPlay muted loop playsInline preload="auto" aria-hidden="true"
+          style={{ objectPosition: "center center", willChange: "transform" }}
+        >
+          <source src={`${import.meta.env.BASE_URL}Hero-Sq-1.mp4`} type="video/mp4" />
+        </video>
+        {/* Subtle right-edge fade into dark background */}
+        <div className="absolute inset-y-0 right-0 w-32 pointer-events-none"
+          style={{ background: "linear-gradient(to right, transparent, #080807)" }} />
+      </div>
 
-      {/* 2. Background video */}
-      <video
-        ref={videoRef}
-        className="absolute object-cover pointer-events-none"
-        autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-        style={{ inset: "0 94px", objectPosition: "center 0%", willChange: "transform", scale: "0.68" } as React.CSSProperties}
+      {/* ── Right column: text ── */}
+      <div
+        className="absolute inset-y-0 right-0 flex flex-col justify-center"
+        style={{ width: "52%", paddingLeft: "48px", paddingRight: "80px" }}
       >
-        <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
-      </video>
-
-      {/* 3. Content */}
-      <div className="relative z-10 max-w-2xl" style={{ paddingRight: "85px" }}>
         <p
           className="font-mono text-gold rise-up"
           style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "20px" }}
@@ -67,15 +71,24 @@ export default function Hero() {
         <h1
           className="display-font text-cream rise-up rise-up-delay-1"
           style={{
-            fontSize: "clamp(58px, 7.5vw, 118px)",
+            fontSize: "clamp(52px, 6.5vw, 108px)",
             lineHeight: 0.88,
             letterSpacing: "0.03em",
-            textShadow: "0 4px 40px rgba(0,0,0,0.6)",
             marginBottom: 0,
           }}
         >
-          <span className="block" style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #E8E1D4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>One Firm.</span>
-          <span className="block" style={{ background: "linear-gradient(to left, #DCA251 0%, #FFF9D8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Per State.</span>
+          <span className="block" style={{
+            background: "linear-gradient(90deg, #FFFFFF 0%, #E8E1D4 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>One Firm.</span>
+          <span className="block" style={{
+            background: "linear-gradient(to left, #DCA251 0%, #FFF9D8 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>Per State.</span>
         </h1>
 
         <div
@@ -85,7 +98,7 @@ export default function Hero() {
 
         <p
           className="font-serif italic text-muted-foreground leading-relaxed rise-up rise-up-delay-2"
-          style={{ fontSize: "clamp(16px, 1.8vw, 20px)", maxWidth: "420px", textShadow: "0 2px 20px rgba(0,0,0,0.7)", marginBottom: "36px" }}
+          style={{ fontSize: "clamp(15px, 1.6vw, 19px)", maxWidth: "400px", marginBottom: "36px" }}
         >
           We build full-stack digital authority exclusively for personal injury firms.
           Your competitors cannot be our clients.
@@ -101,11 +114,11 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 4. Glassmorphism ticker */}
+      {/* ── Glassmorphism ticker ── */}
       <div
         className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden"
         style={{
-          background: "rgba(8,8,7,0.35)",
+          background: "rgba(8,8,7,0.45)",
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
           borderTop: "1px solid rgba(232,226,212,0.09)",
