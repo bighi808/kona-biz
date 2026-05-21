@@ -40,7 +40,7 @@ export default function Hero() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative h-screen flex flex-col justify-center overflow-hidden px-10 md:px-20">
+    <section ref={sectionRef} className="relative h-screen flex flex-col justify-center items-end overflow-hidden px-10 md:px-20">
 
       {/* 1. Instant dark background */}
       <div className="absolute inset-0" style={{ background: "#080807" }} />
@@ -56,7 +56,7 @@ export default function Hero() {
       </video>
 
       {/* 3. Content */}
-      <div className="relative z-10 max-w-2xl" style={{ paddingLeft: "85px" }}>
+      <div className="relative z-10 max-w-2xl" style={{ paddingRight: "85px" }}>
         <p
           className="font-mono text-gold rise-up"
           style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "20px" }}
