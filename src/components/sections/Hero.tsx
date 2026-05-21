@@ -74,7 +74,7 @@ export default function Hero() {
             marginBottom: 0,
           }}
         >
-          <span className="block text-white">One Firm.</span>
+          <span className="block" style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #E8E1D4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>One Firm.</span>
           <span className="block text-gold">Per State.</span>
         </h1>
 
