@@ -87,25 +87,11 @@ export default function Methodology() {
           </div>
         </div>
 
-        {/* ── BOTTOM: full-width centered ── */}
-        <div className="mt-20 pt-16 border-t border-border text-center max-w-3xl mx-auto">
-          <h4 className="font-serif text-2xl text-cream leading-snug mb-6">
-            The output is <em className="text-gold-light">compounding authority</em> — not a stack of disconnected line items.
-          </h4>
-          <p className="text-[16px] leading-loose text-muted-foreground mb-4">
-            Your custom site sends signals to Google. The SEO and GEO work makes those
-            signals authoritative. The paid ads pull in high-intent searchers your
-            organic position then converts at a lower cost. Local presence reinforces
-            every channel. AI agents handle intake so nothing leaks. Content keeps the
-            engine fed.
-          </p>
-          <p className="text-[16px] leading-loose text-muted-foreground">
-            Run any one of these alone and you get a marginal lift. Run all six pointed
-            at the same goal in the same market and you build something competitors
-            cannot reach into — a dominant position that defends itself.
-          </p>
+        {/* ── BOTTOM: two columns — legend left, body copy right ── */}
+        <div className="mt-20 pt-16 border-t border-border grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
-          <div className="mt-10 pt-8 border-t border-border text-left inline-block w-full space-y-2">
+          {/* Left — numbered legend */}
+          <div className="space-y-2">
             {legend.map((l) => (
               <div key={l.tag} className="flex items-baseline gap-4 py-1 text-[14px] leading-relaxed text-muted-foreground">
                 <span className="display-font text-gold tracking-[0.25em] min-w-[44px] flex-shrink-0">{l.tag}</span>
@@ -113,6 +99,26 @@ export default function Methodology() {
               </div>
             ))}
           </div>
+
+          {/* Right — body copy */}
+          <div>
+            <h4 className="font-serif text-2xl text-cream leading-snug mb-6">
+              The output is <em className="text-gold-light">compounding authority</em> — not a stack of disconnected line items.
+            </h4>
+            <p className="text-[16px] leading-loose text-muted-foreground mb-4">
+              Your custom site sends signals to Google. The SEO and GEO work makes those
+              signals authoritative. The paid ads pull in high-intent searchers your
+              organic position then converts at a lower cost. Local presence reinforces
+              every channel. AI agents handle intake so nothing leaks. Content keeps the
+              engine fed.
+            </p>
+            <p className="text-[16px] leading-loose text-muted-foreground">
+              Run any one of these alone and you get a marginal lift. Run all six pointed
+              at the same goal in the same market and you build something competitors
+              cannot reach into — a dominant position that defends itself.
+            </p>
+          </div>
+
         </div>
 
       </div>
