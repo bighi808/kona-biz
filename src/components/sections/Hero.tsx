@@ -48,15 +48,15 @@ export default function Hero() {
       {/* 2. Background video */}
       <video
         ref={videoRef}
-        className="absolute w-full h-full object-cover pointer-events-none"
+        className="absolute object-cover pointer-events-none"
         autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-        style={{ top: "75px", right: 0, bottom: 0, left: 0, objectPosition: "center 62%", willChange: "transform" }}
+        style={{ inset: "0 94px", objectPosition: "center 0%", willChange: "transform", scale: "0.68" } as React.CSSProperties}
       >
         <source src={`${import.meta.env.BASE_URL}Hero-Video.mp4`} type="video/mp4" />
       </video>
 
       {/* 3. Content */}
-      <div className="relative z-10 max-w-2xl">
+      <div className="relative z-10 max-w-2xl" style={{ paddingLeft: "85px" }}>
         <p
           className="font-mono text-gold rise-up"
           style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "20px" }}
