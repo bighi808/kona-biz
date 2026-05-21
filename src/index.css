@@ -20,7 +20,7 @@ html {
     --popover: 60 8% 4%;
     --popover-foreground: 39 31% 87%;
 
-    --primary: 39 51% 53%;           /* gold #c29b4f */
+    --primary: 37 77% 67%;           /* gold #ECBA6C */
     --primary-foreground: 60 8% 4%;
 
     --secondary: 50 8% 5%;
@@ -42,8 +42,8 @@ html {
     --radius: 0px;                   /* Sharp corners match the lander aesthetic */
 
     /* Kona.biz brand tokens */
-    --gold: 39 51% 53%;              /* #c29b4f */
-    --gold-light: 36 52% 62%;        /* #d4af6a */
+    --gold: 37 77% 67%;              /* #ECBA6C */
+    --gold-light: 37 70% 76%;        /* lighter #ECBA6C */
     --cream: 39 31% 87%;             /* #e8e2d4 */
   }
 }
@@ -101,6 +101,19 @@ html {
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
+}
+
+/* Shimmering gold — nav logo */
+.shimmering-gold {
+  background: linear-gradient(90deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+}
+@keyframes shine {
+  to { background-position: -300% 0; }
 }
 
 /* Gold shimmer text — animated metallic gradient on the hero headline */

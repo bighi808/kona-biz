@@ -37,7 +37,7 @@ export default function Navbar() {
           scrolled ? "bg-background/92 backdrop-blur-md border-b border-border" : "bg-transparent"
         }`}
       >
-        <Link to="/" className="display-font text-2xl tracking-[0.12em] text-gold no-underline">
+        <Link to="/" className="display-font text-2xl tracking-[0.12em] shimmering-gold no-underline">
           PLAINTIFF GROWTH
         </Link>
 
