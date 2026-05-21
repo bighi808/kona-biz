@@ -114,7 +114,7 @@ export default function Methodology() {
                 >
                   {l.tag}
                 </span>
-                <span className="text-[15px] leading-snug text-muted-foreground group-hover:text-cream transition-colors duration-200">
+                <span className="text-[14px] leading-snug text-muted-foreground group-hover:text-cream transition-colors duration-200">
                   {l.text}
                 </span>
               </div>
