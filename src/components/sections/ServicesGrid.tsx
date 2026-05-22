@@ -347,7 +347,7 @@ export default function ServicesGrid() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="bg-background border-t border-b border-border" id="services">
+    <section ref={sectionRef} className="border-t border-b border-border" id="services" style={{ backgroundColor: "#0e0c03" }}>
       <div className="max-w-6xl mx-auto px-12 py-28">
 
         {/* Two-column header — animation left, copy right */}

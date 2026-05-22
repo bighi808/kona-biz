@@ -494,7 +494,7 @@ export default function WhyPillars() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="bg-card border-t border-b border-border overflow-hidden">
+    <section ref={sectionRef} className="border-t border-b border-border overflow-hidden" style={{ backgroundColor: "#080907" }}>
       <div className="max-w-6xl mx-auto px-8 md:px-12 py-28">
 
         {/* Two-column header */}
