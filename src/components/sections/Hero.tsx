@@ -1,8 +1,15 @@
 /**
  * Hero — full viewport, single column.
- * Background: hero-image1.jpg (fixed, cover).
- * Content: centered text block on a semi-transparent dark backdrop.
+ * Background image slowly zooms in and fades to black on scroll.
+ * GSAP ScrollTrigger scales the image layer and fades a dark overlay.
  */
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const tickerItems = [
   "One PI Firm Per State","SEO + GEO Optimization","Custom Web Development",
   "AI Practice Consulting","Paid Ads Management","Google Business Profile",
@@ -10,20 +17,58 @@ const tickerItems = [
 ];
 
 export default function Hero() {
+  const sectionRef  = useRef<HTMLElement>(null);
+  const imgRef      = useRef<HTMLDivElement>(null);
+  const overlayRef  = useRef<HTMLDivElement>(null);
   const loop = [...tickerItems, ...tickerItems];
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+    const img     = imgRef.current;
+    const overlay = overlayRef.current;
+    if (!section || !img || !overlay) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.8,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    tl.to(img,     { scale: 1.14, ease: "none" }, 0)
+      .to(overlay,  { opacity: 1,  ease: "none" }, 0);
+
+  }, { scope: sectionRef });
 
   return (
     <section
+      ref={sectionRef}
       className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
-        backgroundSize: "cover",
-        backgroundPosition: "center 30%",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-      }}
     >
-      {/* Centered text block */}
+      {/* ── Background image (scale target) ── */}
+      <div
+        ref={imgRef}
+        className="absolute inset-0 will-change-transform"
+        style={{
+          backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 30%",
+          backgroundRepeat: "no-repeat",
+          transformOrigin: "center center",
+        }}
+      />
+
+      {/* ── Fade-to-black overlay (opacity target) ── */}
+      <div
+        ref={overlayRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "#080807", opacity: 0 }}
+      />
+
+      {/* ── Centered text block ── */}
       <div
         className="relative z-10 flex flex-col items-center text-center px-10"
         style={{
@@ -46,24 +91,15 @@ export default function Hero() {
 
         <h1
           className="display-font text-cream rise-up rise-up-delay-1"
-          style={{
-            fontSize: "clamp(58px, 8vw, 118px)",
-            lineHeight: 0.88,
-            letterSpacing: "0.03em",
-            marginBottom: 0,
-          }}
+          style={{ fontSize: "clamp(58px, 8vw, 118px)", lineHeight: 0.88, letterSpacing: "0.03em", marginBottom: 0 }}
         >
           <span className="block" style={{
             background: "linear-gradient(90deg, #FFFFFF 0%, #E8E1D4 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
           }}>One Firm.</span>
           <span className="block" style={{
             background: "linear-gradient(to left, #DCA251 0%, #FFF9D8 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
           }}>Per State.</span>
         </h1>
 
@@ -87,7 +123,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Glassmorphism ticker */}
+      {/* ── Glassmorphism ticker ── */}
       <div
         className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden"
         style={{
