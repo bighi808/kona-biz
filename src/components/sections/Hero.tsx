@@ -80,7 +80,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 pointer-events-none hero-breathe"
         style={{
-          background: "rgba(255,220,150,1)",
+          background: "rgba(255,220,150,0.09)",
         }}
       />
 
