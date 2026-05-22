@@ -41,7 +41,7 @@ export default function Navbar() {
           borderBottom: scrolled ? "1px solid rgba(232,226,212,0.08)" : "none",
         }}
       >
-        <Link to="/" className="display-font text-[2rem] tracking-[0.12em] shimmering-gold no-underline">
+        <Link to="/" className="display-font text-[1.7rem] tracking-[0.12em] shimmering-gold no-underline">
           PLAINTIFF GROWTH
         </Link>
 

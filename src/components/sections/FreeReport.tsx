@@ -59,20 +59,23 @@ export default function FreeReport() {
       />
 
       <div className="relative max-w-6xl mx-auto px-12 py-28">
-        <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
-          Free Report
-          <span className="h-px w-10 bg-gold opacity-40" />
-        </p>
-        <h2 className="font-serif text-cream leading-tight mb-3" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
-          Get the PI Market<br />
-          <em className="text-gold-light not-italic font-normal italic">Domination Report.</em>
-        </h2>
-        <p className="font-serif italic text-muted-foreground max-w-2xl mt-1 mb-0"
-           style={{ fontSize: "clamp(16px, 2vw, 22px)" }}>
-          What It Takes to Dominate Google and AI Search as a Personal Injury Firm
-        </p>
+        <div className="text-center mb-16">
+          <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center justify-center gap-4">
+            <span className="h-px w-10 bg-gold opacity-40" />
+            Free Report
+            <span className="h-px w-10 bg-gold opacity-40" />
+          </p>
+          <h2 className="font-serif text-cream leading-tight mb-3" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
+            Get the PI Market<br />
+            <em className="text-gold-light not-italic font-normal italic">Domination Report.</em>
+          </h2>
+          <p className="font-serif italic text-muted-foreground max-w-2xl mx-auto mt-1 mb-0"
+             style={{ fontSize: "clamp(16px, 2vw, 22px)" }}>
+            What It Takes to Dominate Google and AI Search as a Personal Injury Firm
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start mt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
           {/* Left: copy + features */}
           <div>
             <p className="text-[16px] tracking-wide text-muted-foreground leading-loose max-w-lg">

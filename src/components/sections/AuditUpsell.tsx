@@ -51,20 +51,23 @@ export default function AuditUpsell() {
   return (
     <section className="bg-background border-t border-border" id="audit">
       <div className="max-w-6xl mx-auto px-12 py-28">
-        <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
-          Next Step
-          <span className="h-px w-10 bg-gold opacity-40" />
-        </p>
-        <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
-          Your PI Market<br />
-          <em className="text-gold-light not-italic font-normal italic">Domination Audit.</em>
-        </h2>
-        <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
-          The free report gives you the strategic framework. The audit gives you the specific
-          picture for your market — researched by hand, delivered personally.
-        </p>
+        <div className="text-center mb-16">
+          <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center justify-center gap-4">
+            <span className="h-px w-10 bg-gold opacity-40" />
+            Next Step
+            <span className="h-px w-10 bg-gold opacity-40" />
+          </p>
+          <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
+            Your PI Market<br />
+            <em className="text-gold-light not-italic font-normal italic">Domination Audit.</em>
+          </h2>
+          <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg mx-auto leading-loose">
+            The free report gives you the strategic framework. The audit gives you the specific
+            picture for your market — researched by hand, delivered personally.
+          </p>
+        </div>
 
-        <div className="relative bg-card mt-16 p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 items-center overflow-hidden"
+        <div className="relative bg-card p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 items-center overflow-hidden"
              style={{ border: "1px solid rgba(187,147,84,0.25)" }}>
           {/* Decorative $497 watermark */}
           <span className="display-font absolute right-[-20px] top-1/2 -translate-y-1/2 leading-none pointer-events-none whitespace-nowrap hidden lg:block"
