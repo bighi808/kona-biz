@@ -354,3 +354,26 @@ html {
   .pg-protected-ring { stroke-dashoffset: 0; opacity: 0.75; }
   .pg-internal-line  { stroke-dashoffset: 0; opacity: 0.45; }
 }
+
+/* ── Hero: Ken Burns + ambient light animations ───────────────────── */
+@keyframes heroPan {
+  0%    { background-position: 50% 30%; }
+  20%   { background-position: 53% 27%; }
+  45%   { background-position: 51% 33%; }
+  70%   { background-position: 47% 28%; }
+  100%  { background-position: 50% 30%; }
+}
+@keyframes heroBeam {
+  0%,100% { opacity: 0.85; transform: translateX(0)    scaleX(1);    }
+  30%     { opacity: 0.5;  transform: translateX(2.5%) scaleX(1.07); }
+  65%     { opacity: 1;    transform: translateX(-1.5%) scaleX(0.95); }
+}
+@keyframes heroLamp {
+  0%,100% { opacity: 1;    }
+  38%     { opacity: 0.38; }
+  72%     { opacity: 0.82; }
+}
+@keyframes heroBreathe {
+  0%,100% { opacity: 0;    }
+  50%     { opacity: 0.06; }
+}

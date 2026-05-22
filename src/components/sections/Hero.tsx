@@ -1,7 +1,8 @@
 /**
  * Hero — full viewport, single column.
- * Background image slowly zooms in and fades to black on scroll.
- * GSAP ScrollTrigger scales the image layer and fades a dark overlay.
+ * Ken Burns: slow CSS pan via background-position (28s loop).
+ * Ambient light: animated window beam + lamp warmth overlays.
+ * Scroll: GSAP scales image + fades to black.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -17,18 +18,18 @@ const tickerItems = [
 ];
 
 export default function Hero() {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const imgRef      = useRef<HTMLDivElement>(null);
-  const overlayRef  = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const imgRef     = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const loop = [...tickerItems, ...tickerItems];
 
   useGSAP(() => {
-    const section = sectionRef.current;
     const img     = imgRef.current;
     const overlay = overlayRef.current;
-    if (!section || !img || !overlay) return;
+    const section = sectionRef.current;
+    if (!img || !overlay || !section) return;
 
-    const tl = gsap.timeline({
+    gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top top",
@@ -36,10 +37,9 @@ export default function Hero() {
         scrub: 1.8,
         invalidateOnRefresh: true,
       },
-    });
-
-    tl.to(img,     { scale: 1.32, ease: "none" }, 0)
-      .to(overlay,  { opacity: 1,  ease: "none" }, 0);
+    })
+      .to(img,     { scale: 1.32, ease: "none" }, 0)
+      .to(overlay, { opacity: 1,  ease: "none" }, 0);
 
   }, { scope: sectionRef });
 
@@ -48,20 +48,48 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* ── Background image (scale target) ── */}
+      {/* ── Ken Burns image layer ── */}
       <div
         ref={imgRef}
         className="absolute inset-0 will-change-transform"
         style={{
           backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
           backgroundSize: "cover",
-          backgroundPosition: "center 30%",
           backgroundRepeat: "no-repeat",
           transformOrigin: "center center",
+          animation: "heroPan 28s ease-in-out infinite",
         }}
       />
 
-      {/* ── Fade-to-black overlay (opacity target) ── */}
+      {/* ── Window light beam (top-center, warm cream) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 48% 62% at 50% -8%, rgba(255,238,200,0.18) 0%, transparent 68%)",
+          animation: "heroBeam 20s ease-in-out infinite",
+          transformOrigin: "50% 0%",
+        }}
+      />
+
+      {/* ── Lamp warmth (lower right, amber) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 32% 42% at 83% 62%, rgba(255,155,45,0.1) 0%, transparent 58%)",
+          animation: "heroLamp 26s ease-in-out infinite",
+        }}
+      />
+
+      {/* ── Slow ambient breathe (whole scene, warm) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "rgba(255,220,150,1)",
+          animation: "heroBreathe 34s ease-in-out infinite",
+        }}
+      />
+
+      {/* ── Scroll fade-to-black ── */}
       <div
         ref={overlayRef}
         className="absolute inset-0 pointer-events-none"
