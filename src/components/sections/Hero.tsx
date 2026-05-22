@@ -38,7 +38,7 @@ export default function Hero() {
       },
     });
 
-    tl.to(img,     { scale: 1.14, ease: "none" }, 0)
+    tl.to(img,     { scale: 1.32, ease: "none" }, 0)
       .to(overlay,  { opacity: 1,  ease: "none" }, 0);
 
   }, { scope: sectionRef });
@@ -72,7 +72,7 @@ export default function Hero() {
       <div
         className="relative z-10 flex flex-col items-center text-center px-10"
         style={{
-          background: "rgba(8,8,7,0.52)",
+          background: "rgba(8,8,7,0.69)",
           backdropFilter: "blur(2px)",
           WebkitBackdropFilter: "blur(2px)",
           padding: "56px 72px",
@@ -81,10 +81,10 @@ export default function Hero() {
         }}
       >
         <div className="rise-up" style={{ marginBottom: "20px" }}>
-          <p className="font-mono text-gold" style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "6px" }}>
+          <p className="font-mono text-gold" style={{ fontSize: "23px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "6px" }}>
             Exclusive
           </p>
-          <p className="font-mono text-muted-foreground" style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase" }}>
+          <p className="font-mono text-muted-foreground" style={{ fontSize: "15px", letterSpacing: "0.38em", textTransform: "uppercase" }}>
             Personal Injury Law Firm Marketing
           </p>
         </div>
@@ -106,8 +106,8 @@ export default function Hero() {
         <div className="rise-up rise-up-delay-2" style={{ width: "48px", height: "1px", background: "hsl(var(--gold))", margin: "24px auto" }} />
 
         <p
-          className="font-serif italic text-muted-foreground leading-relaxed rise-up rise-up-delay-2"
-          style={{ fontSize: "clamp(15px, 1.6vw, 19px)", marginBottom: "36px" }}
+          className="font-serif rise-up rise-up-delay-2"
+          style={{ fontSize: "30px", color: "#FFFFFF", marginBottom: "36px", lineHeight: 1.4 }}
         >
           We build full-stack digital authority exclusively for personal injury firms.
           Your competitors cannot be our clients.
