@@ -20,6 +20,7 @@ dist-ssg/
 # Small hero video is tracked (944 KB)
 !public/Hero-Video.mp4
 !public/Hero-Sq-1.mp4
+!public/hero-comp.mp4
 
 # ---- OS junk ----
 .DS_Store

@@ -1,8 +1,7 @@
 /**
  * Hero — full viewport, single column.
- * Ken Burns: slow CSS pan via background-position (28s loop).
- * Ambient light: animated window beam + lamp warmth overlays.
- * Scroll: GSAP scales image + fades to black.
+ * Background: looping video (hero-comp.mp4).
+ * Scroll: GSAP fades to black.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -19,15 +18,13 @@ const tickerItems = [
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const imgRef     = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const loop = [...tickerItems, ...tickerItems];
 
   useGSAP(() => {
-    const img     = imgRef.current;
     const overlay = overlayRef.current;
     const section = sectionRef.current;
-    if (!img || !overlay || !section) return;
+    if (!overlay || !section) return;
 
     gsap.timeline({
       scrollTrigger: {
@@ -38,8 +35,7 @@ export default function Hero() {
         invalidateOnRefresh: true,
       },
     })
-      .to(img,     { scale: 1.32, ease: "none" }, 0)
-      .to(overlay, { opacity: 1,  ease: "none" }, 0);
+      .to(overlay, { opacity: 1, ease: "none" }, 0);
 
   }, { scope: sectionRef });
 
@@ -48,42 +44,14 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* ── Ken Burns: outer = GSAP scroll zoom, inner = CSS transform pan ── */}
-      <div ref={imgRef} className="absolute inset-0 will-change-transform" style={{ transformOrigin: "center center" }}>
-        <div
-          className="absolute hero-ken-burns"
-          style={{
-            inset: "-8%",
-            backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-      </div>
-
-      {/* ── Window light beam (top-center, warm cream) ── */}
-      <div
-        className="absolute inset-0 pointer-events-none hero-window-beam"
-        style={{
-          background: "radial-gradient(ellipse 55% 70% at 50% -5%, rgba(255,238,200,0.32) 0%, transparent 70%)",
-        }}
-      />
-
-      {/* ── Lamp warmth (lower right, amber) ── */}
-      <div
-        className="absolute inset-0 pointer-events-none hero-lamp-warm"
-        style={{
-          background: "radial-gradient(ellipse 40% 50% at 82% 64%, rgba(255,155,45,0.22) 0%, transparent 62%)",
-        }}
-      />
-
-      {/* ── Slow ambient breathe (whole scene, warm) ── */}
-      <div
-        className="absolute inset-0 pointer-events-none hero-breathe"
-        style={{
-          background: "rgba(255,220,150,0.09)",
-        }}
+      {/* ── Video background ── */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        src={`${import.meta.env.BASE_URL}hero-comp.mp4`}
       />
 
       {/* ── Scroll fade-to-black ── */}
@@ -143,7 +111,7 @@ export default function Hero() {
             Check Your State
           </a>
           <a href="#free-report" className="inline-block font-mono text-[10px] tracking-[0.22em] uppercase border border-cream/25 text-cream/60 px-8 py-4 hover:border-cream/50 hover:text-cream/90 transition-colors no-underline">
-            Get the Free Report →
+            Get the Free Report &rarr;
           </a>
         </div>
       </div>
