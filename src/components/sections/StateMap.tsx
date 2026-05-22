@@ -12,7 +12,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { states } from "@/data/states";
 import { MARKET_STATUS_LABELS } from "@/data/marketStatus";
-import Globe from "@/components/Globe";
 
 export default function StateMap() {
   const [visibleCount, setVisibleCount] = useState(0);
@@ -42,11 +41,7 @@ export default function StateMap() {
     <section className="bg-background" id="statemap">
       <div className="max-w-7xl mx-auto px-8 md:px-12 py-28">
 
-        {/* Two-column wrapper */}
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-
-          {/* ── Left column: text + state grid ── */}
-          <div className="flex-1 min-w-0">
+        <div>
             <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
               Market Availability
               <span className="h-px w-10 bg-gold opacity-40" />
@@ -107,21 +102,6 @@ export default function StateMap() {
                 Exclusively Managed — Market Locked
               </div>
             </div>
-          </div>
-
-          {/* ── Right column: Globe ── */}
-          <div className="hidden lg:block w-[420px] xl:w-[480px] flex-shrink-0">
-            <div className="sticky top-8">
-              {/* Labelled container so the globe has a defined size */}
-              <div className="relative w-full" style={{ height: "520px" }}>
-                <Globe />
-              </div>
-              <p className="text-center text-[9px] tracking-[0.35em] uppercase text-muted-foreground mt-4 opacity-50">
-                Gold nodes = exclusively managed markets
-              </p>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
