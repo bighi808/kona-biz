@@ -12,7 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const tickerItems = [
-  "One PI Firm Per State","SEO + GEO Optimization","Custom Web Development",
+  "One Personal Injury Firm Per State","SEO + GEO Optimization","Custom Web Development",
   "AI Practice Consulting","Paid Ads Management","Google Business Profile",
   "Legal Directory Management","Review Generation","YouTube Lead Generation","Custom AI Agents",
 ];

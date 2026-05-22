@@ -22,12 +22,12 @@ const BG_HOVER = "rgba(24,24,19,1)";
 const BG_REST  = "rgba(24,24,19,0)";
 
 const pillars = [
-  { num: "01", title: "PI Firms Only", body: "We work exclusively with personal injury firms. No family law. No criminal defense. No generalist clients. We know PI marketing the way your best attorney knows PI law — deeply, specifically, and without distraction." },
+  { num: "01", title: "Personal Injury Firms Only", body: "We work exclusively with personal injury firms. No family law. No criminal defense. No generalist clients. We know personal injury marketing the way your best attorney knows personal injury law — deeply, specifically, and without distraction." },
   { num: "02", title: "One Client Per State", body: "When we take your state, your competitors cannot become our clients. Ever. We are fully invested in making you the dominant firm in every city you serve. That exclusivity is structural — not a promise, a policy." },
-  { num: "03", title: "Competitors Locked Out", body: "Once your state is claimed, the other PI firms in your market are watching from the sidelines. We build their competitor's authority network, their content, their ad campaigns. Not theirs." },
+  { num: "03", title: "Competitors Locked Out", body: "Once your state is claimed, the other personal injury firms in your market are watching from the sidelines. We build their competitor's authority network, their content, their ad campaigns. Not theirs." },
   { num: "04", title: "Custom Built. Never Templates.", body: "Every site, every page, every content piece is built from scratch for your firm and your market. No shared frameworks. No recycled strategies. No other firm gets what you get." },
   { num: "05", title: "No Media Markups", body: "Your ad spend goes 100% to the platforms. We never mark up media. Our fee covers strategy and management only — so every dollar you spend on ads actually buys ads." },
-  { num: "06", title: "The PI Attorney Network", body: "Plaintiff Growth clients join a private, cross-state community of non-competing PI attorneys. Shared strategy, market insights, and referral opportunities. Launching 2027 — Command tier clients get early access." },
+  { num: "06", title: "The Personal Injury Attorney Network", body: "Plaintiff Growth clients join a private, cross-state community of non-competing personal injury attorneys. Shared strategy, market insights, and referral opportunities. Launching 2027 — Command tier clients get early access." },
 ];
 
 function ExclusivityLedgerAnimation() {

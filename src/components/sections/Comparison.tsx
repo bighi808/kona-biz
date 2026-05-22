@@ -1,5 +1,5 @@
 /**
- * Comparison — "Plaintiff Growth versus the standard PI agency."
+ * Comparison — "Plaintiff Growth versus the standard personal injury agency."
  * 6 structural differences in a side-by-side 2-column table.
  * Ported from konabiz-lander.html lines 2378-2459.
  */
@@ -13,11 +13,11 @@ const rows: Row[] = [
   {
     label: "Exclusivity",
     them: "Will sign your three closest competitors next quarter. Your retainer funds the agency that funds their growth.",
-    us:   "One PI firm per state. Once your state is claimed, every other PI firm in your market is structurally locked out — forever.",
+    us:   "One personal injury firm per state. Once your state is claimed, every other personal injury firm in your market is structurally locked out — forever.",
   },
   {
     label: "Specialization",
-    them: "Mixed roster — PI, family, criminal, dental, plumbing. Your strategist learned your industry on the job. Often on your account.",
+    them: "Mixed roster — personal injury, family, criminal, dental, plumbing. Your strategist learned your industry on the job. Often on your account.",
     us:   "Personal injury law only. We know your case types, fee structures, and intake funnel as fluently as your best paralegal.",
   },
   {
@@ -27,7 +27,7 @@ const rows: Row[] = [
   },
   {
     label: "Build",
-    them: "Template site with cosmetic theming. The same WordPress framework powering forty other PI firms across the country — including the one across town.",
+    them: "Template site with cosmetic theming. The same WordPress framework powering forty other personal injury firms across the country — including the one across town.",
     us:   "Custom from the ground up. No two Plaintiff Growth client sites share structure. Every page, every city, every case type built for your market specifically.",
   },
   {
@@ -52,7 +52,7 @@ export default function Comparison() {
         </p>
         <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
           Plaintiff Growth versus<br />
-          <em className="text-gold-light not-italic font-normal italic">the standard PI agency.</em>
+          <em className="text-gold-light not-italic font-normal italic">the standard personal injury agency.</em>
         </h2>
         <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
           Six structural differences — not feature differences. The way the engagement is built,
@@ -64,7 +64,7 @@ export default function Comparison() {
           {/* Header row */}
           <div className="p-8 bg-card md:bg-[hsl(var(--card))]">
             <div className="text-[9px] tracking-[0.4em] uppercase text-muted-foreground mb-3">
-              The Standard PI Agency
+              The Standard Personal Injury Agency
             </div>
             <div className="font-serif text-2xl text-cream leading-tight">What most firms pay for</div>
           </div>

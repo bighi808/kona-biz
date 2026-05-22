@@ -74,8 +74,8 @@ export default function AuditUpsell() {
             <span className="h-px w-10 bg-gold opacity-40" />
           </p>
           <h2 className="font-serif text-cream leading-tight mb-5" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
-            Your PI Market<br />
-            <em className="text-gold-light not-italic font-normal italic">Domination Audit.</em>
+            Your Personal Injury<br />
+            <em className="text-gold-light not-italic font-normal italic">Law Firm Domination Audit.</em>
           </h2>
           <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg mx-auto leading-loose">
             The free report gives you the strategic framework. The audit gives you the specific

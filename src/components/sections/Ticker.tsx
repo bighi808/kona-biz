@@ -6,7 +6,7 @@
  * translates -50% over 30s, creating a seamless infinite loop.
  */
 const items = [
-  "One PI Firm Per State",
+  "One Personal Injury Firm Per State",
   "SEO + GEO Optimization",
   "Custom Web Development",
   "AI Practice Consulting",

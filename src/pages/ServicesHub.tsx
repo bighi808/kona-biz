@@ -7,7 +7,7 @@ export default function ServicesHub() {
   return (
     <Layout>
       <SEOHead
-        title="Services — PI Law Firm Marketing | Plaintiff Growth"
+        title="Services — Personal Injury Law Firm Marketing | Plaintiff Growth"
         description="Six integrated services — custom web, SEO + GEO, paid ads, GBP management, content marketing, AI consulting. One firm per state."
         canonicalPath="/services"
         breadcrumbs={[{ name: "Services", path: "/services" }]}
@@ -18,7 +18,7 @@ export default function ServicesHub() {
           Six disciplines. <em className="text-gold-light">Fifty states each.</em>
         </h1>
         <p className="text-muted-foreground max-w-2xl mb-16 leading-relaxed">
-          Every service is offered exclusively — one PI firm per state. Click into any service for the deep-dive and to check state availability.
+          Every service is offered exclusively — one personal injury firm per state. Click into any service for the deep-dive and to check state availability.
         </p>
 
         <div className="grid gap-px bg-border border border-border">

@@ -32,7 +32,7 @@ const stats: Stat[] = [
     target: 7,
     prefix: "",
     suffix: "%",
-    desc: "Of PI leads set appointments industry-wide. Ours are already searching for you by city and case type.",
+    desc: "Of personal injury leads set appointments industry-wide. Ours are already searching for you by city and case type.",
   },
   {
     label: "Matrix Pages",

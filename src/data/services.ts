@@ -18,7 +18,7 @@ export interface Service {
 export const services: Service[] = [
   {
     slug: "personal-injury-website-design",
-    name: "PI Law Firm Website Design",
+    name: "Personal Injury Law Firm Website Design",
     shortName: "Web",
     navLabel: "Website Design",
     metaTitle: "Personal Injury Law Firm Website Design | Plaintiff Growth",
@@ -89,9 +89,9 @@ export const services: Service[] = [
     navLabel: "Google Business",
     metaTitle: "Google Business Profile Management for Law Firms | Plaintiff Growth",
     metaDescription:
-      "Setup, optimization, active management, and posting for your law firm Google Business Profile. One of the highest-ROI channels in PI marketing.",
+      "Setup, optimization, active management, and posting for your law firm Google Business Profile. One of the highest-ROI channels in personal injury marketing.",
     intro:
-      "Setup, optimization, active management, and posting. The most underutilized tool in PI marketing — and one of the highest ROI.",
+      "Setup, optimization, active management, and posting. The most underutilized tool in personal injury marketing — and one of the highest ROI.",
     body: "TODO: Body content from the report's GBP chapter.",
     whatYouGet: [
       "Profile setup and full optimization",
@@ -109,9 +109,9 @@ export const services: Service[] = [
     navLabel: "Content",
     metaTitle: "Legal Content Marketing for Personal Injury Firms | Plaintiff Growth",
     metaDescription:
-      "PI-specific content strategy, ongoing production, GEO optimization for AI platforms, and press releases for link authority.",
+      "Personal injury-specific content strategy, ongoing production, GEO optimization for AI platforms, and press releases for link authority.",
     intro:
-      "PI-specific content strategy, ongoing content production, GEO optimization for AI platforms, and press releases for link authority.",
+      "Personal injury-specific content strategy, ongoing content production, GEO optimization for AI platforms, and press releases for link authority.",
     body: "TODO: Body content from the report's content chapter.",
     whatYouGet: [
       "Monthly content production calendar",
@@ -134,7 +134,7 @@ export const services: Service[] = [
       "Practice modernization consulting and custom AI agent development for intake, workflows, and client communication. Lowest competition. Highest differentiation.",
     body: "TODO: Body content from the report's AI chapter.",
     whatYouGet: [
-      "Strategic AI consulting for PI practices",
+      "Strategic AI consulting for personal injury practices",
       "Custom AI agent development (intake, scheduling, follow-up)",
       "Internal workflow automation",
       "Client communication agents",

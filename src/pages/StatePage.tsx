@@ -25,7 +25,7 @@ export default function StatePage() {
       />
       <section className="section-padding max-w-5xl mx-auto">
         <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-4">{state.abbr} &middot; {MARKET_STATUS_LABELS[state.status]}</p>
-        <h1 className="font-serif text-5xl md:text-6xl mb-8">PI Law Firm Marketing in <em className="text-gold-light">{state.name}.</em></h1>
+        <h1 className="font-serif text-5xl md:text-6xl mb-8">Personal Injury Law Firm Marketing in <em className="text-gold-light">{state.name}.</em></h1>
         <p className="font-serif italic text-xl text-muted-foreground mb-12 max-w-3xl">{state.intro}</p>
 
         <div className="border-t border-border pt-12">

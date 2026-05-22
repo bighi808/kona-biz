@@ -36,7 +36,7 @@ const items: Item[] = [
       <>
         <p>Yes. That is the point.</p>
         <p>
-          A PI marketing agency that signs every firm in your city has every incentive to keep all
+          A personal injury marketing agency that signs every firm in your city has every incentive to keep all
           of you running on the same playbook — so none of you dominate, all of you keep paying,
           and the agency revenue compounds. We rejected that model because it is structurally
           hostile to the firm paying the invoice.
@@ -73,7 +73,7 @@ const items: Item[] = [
     a: (
       <>
         <p>
-          Twelve months minimum. PI marketing is not a 90-day sprint. Building organic authority,
+          Twelve months minimum. Personal injury marketing is not a 90-day sprint. Building organic authority,
           training intake systems, producing matrix content, and earning Google's trust in a
           competitive market takes time — and shortening the runway is the fastest way to waste
           the spend.
@@ -107,7 +107,7 @@ const items: Item[] = [
     a: (
       <>
         <p>
-          Lead-gen companies sell the same leads to multiple firms. You get the lead. The two PI
+          Lead-gen companies sell the same leads to multiple firms. You get the lead. The two personal injury
           firms across town also got it. The case goes to whoever calls first or pitches hardest.
           Your conversion rate plateaus and the lead-gen company sells you more leads to compensate.
         </p>
@@ -124,7 +124,7 @@ const items: Item[] = [
     a: (
       <>
         <p>
-          For PI marketing in 2026, no. Every relevant tool, dataset, and platform is remote-native.
+          For personal injury marketing in 2026, no. Every relevant tool, dataset, and platform is remote-native.
           We monitor your Google rankings, GBP performance, and ad accounts from the same screen
           your team would, and we are in your time zone for any client communication that needs it.
         </p>
@@ -170,7 +170,7 @@ export default function FAQ() {
           <em className="text-gold-light not-italic font-normal italic">you ask them.</em>
         </h2>
         <p className="text-[16px] tracking-wide text-muted-foreground max-w-lg leading-loose">
-          The questions every PI firm owner asks before signing. No marketing-speak.
+          The questions every personal injury firm owner asks before signing. No marketing-speak.
           Direct answers to direct questions.
         </p>
 

@@ -11,7 +11,7 @@ export default function StatesHub() {
   return (
     <Layout>
       <SEOHead
-        title="State Availability — One PI Firm Per State | Plaintiff Growth"
+        title="State Availability — One Personal Injury Firm Per State | Plaintiff Growth"
         description="50 states. One Plaintiff Growth client per market. Check your state's status — Available, Claimed, or Exclusively Managed."
         canonicalPath="/states"
         breadcrumbs={[{ name: "States", path: "/states" }]}

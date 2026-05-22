@@ -11,9 +11,9 @@ import { states } from "@/data/states";
 const FORMSPREE_URL = "https://formspree.io/f/YOUR_FORM_ID";
 
 const features = [
-  "Why most PI websites are digital brochures, not market weapons",
-  "The local SEO game most PI firms are playing wrong",
-  "GEO — the AI search frontier almost no PI firm has touched",
+  "Why most personal injury websites are digital brochures, not market weapons",
+  "The local SEO game most personal injury firms are playing wrong",
+  "GEO — the AI search frontier almost no personal injury firm has touched",
   "Paid ads — when they work and when they waste money",
   "AI in your practice — the operational edge your competitors are missing",
   "What a fully deployed market domination system looks like",
@@ -66,8 +66,8 @@ export default function FreeReport() {
             <span className="h-px w-10 bg-gold opacity-40" />
           </p>
           <h2 className="font-serif text-cream leading-tight mb-3" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
-            Get the PI Market<br />
-            <em className="text-gold-light not-italic font-normal italic">Domination Report.</em>
+            Get the Personal Injury<br />
+            <em className="text-gold-light not-italic font-normal italic">Law Firm Marketing Report.</em>
           </h2>
           <p className="font-serif italic text-muted-foreground max-w-2xl mx-auto mt-1 mb-0"
              style={{ fontSize: "clamp(16px, 2vw, 22px)" }}>
@@ -96,7 +96,7 @@ export default function FreeReport() {
             <div className="mt-8 p-6 bg-card border" style={{ borderColor: "rgba(187,147,84,0.15)" }}>
               <div className="text-[10px] tracking-[0.3em] uppercase text-gold mb-2">Inside This Report</div>
               <p className="text-[10px] tracking-wide text-muted-foreground leading-loose uppercase">
-                The strategic framework the leading PI firms are using to dominate Google and AI search
+                The strategic framework the leading personal injury firms are using to dominate Google and AI search
                 right now — and the gaps most of their competitors have not closed yet. Read it before
                 your market is claimed.
               </p>

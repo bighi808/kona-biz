@@ -29,7 +29,7 @@ const FIRM_SCHEMA = {
     "Law Firm AI Consulting",
   ],
   serviceType: [
-    "PI Law Firm Website Design",
+    "Personal Injury Law Firm Website Design",
     "Personal Injury SEO",
     "Personal Injury PPC",
     "Google Business Profile Management",
