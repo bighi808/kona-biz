@@ -53,7 +53,7 @@ export default function Navbar() {
         }}
       >
         <Link to="/" className="shimmering-gold no-underline tracking-[0.12em]"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.0rem" }}>
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.1rem, 4.5vw, 2.0rem)" }}>
           PLAINTIFF GROWTH
         </Link>
 
@@ -61,7 +61,7 @@ export default function Navbar() {
           {/* Free Consultation → opens centered modal */}
           <button
             onClick={() => setModalOpen(true)}
-            className="text-[10px] tracking-[0.3em] uppercase font-mono cursor-pointer px-5 py-2.5 border"
+            className="hidden md:block text-[10px] tracking-[0.3em] uppercase font-mono cursor-pointer px-5 py-2.5 border"
             style={{
               background:   "transparent",
               color:        "hsl(var(--gold))",

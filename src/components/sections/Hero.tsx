@@ -70,28 +70,27 @@ export default function Hero() {
 
       {/* ── Centered text block ── */}
       <div
-        className="relative z-10 flex flex-col items-center text-center px-10"
+        className="relative z-10 flex flex-col items-center text-center px-6 py-10 md:px-[72px] md:py-14"
         style={{
           background: "rgba(8,8,7,0.69)",
           backdropFilter: "blur(2px)",
           WebkitBackdropFilter: "blur(2px)",
-          padding: "56px 72px",
           maxWidth: "780px",
-          width: "90%",
+          width: "92%",
         }}
       >
         <div className="rise-up" style={{ marginBottom: "20px" }}>
-          <p className="font-mono text-gold" style={{ fontSize: "23px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "6px" }}>
+          <p className="font-mono text-gold" style={{ fontSize: "clamp(12px, 3.5vw, 23px)", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "6px" }}>
             Exclusive
           </p>
-          <p className="font-mono text-muted-foreground" style={{ fontSize: "15px", letterSpacing: "0.38em", textTransform: "uppercase" }}>
+          <p className="font-mono text-muted-foreground" style={{ fontSize: "clamp(9px, 2.5vw, 15px)", letterSpacing: "0.38em", textTransform: "uppercase" }}>
             Personal Injury Law Firm Marketing
           </p>
         </div>
 
         <h1
           className="display-font text-cream rise-up rise-up-delay-1"
-          style={{ fontSize: "clamp(58px, 8vw, 118px)", lineHeight: 0.88, letterSpacing: "0.03em", marginBottom: 0 }}
+          style={{ fontSize: "clamp(38px, 10vw, 118px)", lineHeight: 0.88, letterSpacing: "0.03em", marginBottom: 0 }}
         >
           <span className="block" style={{
             background: "linear-gradient(90deg, #FFFFFF 0%, #E8E1D4 100%)",
@@ -103,11 +102,11 @@ export default function Hero() {
           }}>Per State.</span>
         </h1>
 
-        <div className="rise-up rise-up-delay-2" style={{ width: "48px", height: "1px", background: "hsl(var(--gold))", margin: "24px auto" }} />
+        <div className="rise-up rise-up-delay-2" style={{ width: "48px", height: "1px", background: "hsl(var(--gold))", margin: "16px auto" }} />
 
         <p
           className="font-serif rise-up rise-up-delay-2"
-          style={{ fontSize: "30px", color: "#FFFFFF", marginBottom: "36px", lineHeight: 1.4 }}
+          style={{ fontSize: "clamp(16px, 4.5vw, 30px)", color: "#FFFFFF", marginBottom: "36px", lineHeight: 1.4 }}
         >
           We build full-stack digital authority exclusively for personal injury firms.
           Your competitors cannot be our clients.
