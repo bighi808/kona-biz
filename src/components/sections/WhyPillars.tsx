@@ -2,7 +2,7 @@
  * WhyPillars — "Why Plaintiff Growth"
  * Editorial full-width row layout. No card boxes.
  * GSAP ScrollTrigger: clip-path wipe reveal per row, rules draw, numbers pulse.
- * GSAP hover: bg, left bar, number opacity/scale, title color — all 2s power2.inOut.
+ * GSAP hover: bg alpha-only tween (no color flash), bar scaleY, number, title.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -10,6 +10,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const BG_HOVER = "rgba(24,24,19,1)";
+const BG_REST  = "rgba(24,24,19,0)";  // same hue, zero alpha — no color-channel flash
 
 const pillars = [
   { num: "01", title: "PI Firms Only", body: "We work exclusively with personal injury firms. No family law. No criminal defense. No generalist clients. We know PI marketing the way your best attorney knows PI law — deeply, specifically, and without distraction." },
@@ -103,9 +106,11 @@ export default function WhyPillars() {
     const bars  = barsRef.current.filter(Boolean)  as HTMLDivElement[];
     if (!listRef.current || !rows.length) return;
 
-    // Set initial state for GSAP-owned elements
+    // Initialize GSAP-owned properties
     gsap.set(bars,  { scaleY: 0, transformOrigin: "top center" });
     gsap.set(nums,  { opacity: 0, scale: 1 });
+    // Use the hover color at alpha=0 so GSAP tweens alpha only — no hue shift = no flash
+    gsap.set(rows,  { backgroundColor: BG_REST });
 
     const tl = gsap.timeline({
       scrollTrigger: { trigger: listRef.current, start: "top 72%" },
@@ -118,38 +123,38 @@ export default function WhyPillars() {
       0
     );
 
-    // Rows: dramatic clip-path wipe — each row reveals upward from nothing
+    // Rows: clip-path wipe — each row reveals upward
     tl.fromTo(rows,
       { clipPath: "inset(100% 0 0 0)", y: 12 },
       { clipPath: "inset(0% 0 0 0)",   y: 0, duration: 1.6, stagger: 0.18, ease: "power3.inOut" },
       0.1
     );
 
-    // Numbers: scale down from big + fade in — GSAP owns opacity from here on
+    // Numbers: scale down from oversized + fade in
     tl.fromTo(nums,
       { opacity: 0, scale: 1.4 },
       { opacity: 0.13, scale: 1, duration: 1.4, stagger: 0.18, ease: "power3.out" },
       0.15
     );
 
-    // GSAP hover — 2s power2.inOut on every property
+    // GSAP hover — snappy bg (0.9s), slower structural elements (1.4s)
     rows.forEach((row, i) => {
-      const bar   = bars[i]             ?? null;
-      const num   = nums[i]             ?? null;
+      const bar   = bars[i]              ?? null;
+      const num   = nums[i]              ?? null;
       const title = titlesRef.current[i] ?? null;
 
       row.addEventListener("mouseenter", () => {
-        gsap.to(row, { backgroundColor: "#181818", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (bar)   gsap.to(bar,   { scaleY: 1,     duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (num)   gsap.to(num,   { opacity: 0.55, scale: 1.18, duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (title) gsap.to(title, { color: "#CCA86F", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(row,   { backgroundColor: BG_HOVER, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        if (bar)   gsap.to(bar,   { scaleY: 1,     duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (num)   gsap.to(num,   { opacity: 0.55, scale: 1.18, duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { color: "#CCA86F", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
       });
 
       row.addEventListener("mouseleave", () => {
-        gsap.to(row, { backgroundColor: "transparent", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (bar)   gsap.to(bar,   { scaleY: 0,     duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (num)   gsap.to(num,   { opacity: 0.13, scale: 1,    duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (title) gsap.to(title, { color: "#e8e2d4", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(row,   { backgroundColor: BG_REST, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        if (bar)   gsap.to(bar,   { scaleY: 0,     duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (num)   gsap.to(num,   { opacity: 0.13, scale: 1,    duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { color: "#e8e2d4", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
       });
     });
 

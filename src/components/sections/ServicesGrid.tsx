@@ -2,10 +2,10 @@
  * Services grid — 6 disciplines, each card a link to the service page.
  *
  * GSAP scroll reveal: stagger-from-center scale (dramatic).
- * GSAP hover: card bg, watermark scale+opacity, shortname label, title color — all 2s.
+ * GSAP hover: card bg, watermark scale+opacity, shortname, title — all snappy.
  *
- * Watermark centering: top-1/2 left-1/2 (CSS) + gsap.set(xPercent:-50, yPercent:-50)
- * so GSAP can animate scale independently without clobbering the translate.
+ * NOTE: gsap.fromTo used (not gsap.set + gsap.to) so cards are never permanently
+ * hidden if ScrollTrigger misfires. The "from" state only applies at animation start.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -16,6 +16,10 @@ import { services } from "@/data/services";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Hover bg — same hue both states so GSAP tweens alpha only
+const CARD_BG_HOVER = "rgba(22,22,19,1)";
+const CARD_BG_REST  = "rgba(22,22,19,0)";
+
 export default function ServicesGrid() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef    = useRef<HTMLDivElement>(null);
@@ -25,44 +29,52 @@ export default function ServicesGrid() {
     const cards = cardsRef.current.filter(Boolean) as HTMLAnchorElement[];
     if (!gridRef.current || !cards.length) return;
 
-    // Set watermark initial state — GSAP owns xPercent/yPercent/scale/color
+    // Init card bg so hover tween has consistent starting color
+    gsap.set(cards, { backgroundColor: CARD_BG_REST });
+
+    // Init watermark — GSAP owns position + scale + color
     cards.forEach(card => {
       const wm = card.querySelector(".svc-watermark") as HTMLElement | null;
       if (wm) gsap.set(wm, { xPercent: -50, yPercent: -50, scale: 0.6, color: "transparent" });
     });
 
-    // Cards start invisible for scroll reveal
-    gsap.set(cards, { opacity: 0, scale: 0.88, y: 40 });
+    // Dramatic scroll reveal — fromTo so cards stay visible if trigger is off-screen
+    // autoAlpha handles both opacity and visibility
+    gsap.fromTo(cards,
+      { autoAlpha: 0, scale: 0.88, y: 40 },
+      {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        duration: 1.2,
+        stagger: { each: 0.12, from: "center", grid: [2, 3] },
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 85%",
+          once: true,
+        },
+      }
+    );
 
-    // Dramatic scroll reveal: stagger from center of grid outward
-    gsap.to(cards, {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      duration: 1.2,
-      stagger: { each: 0.12, from: "center", grid: [2, 3] },
-      ease: "expo.out",
-      scrollTrigger: { trigger: gridRef.current, start: "top 72%" },
-    });
-
-    // GSAP hover — 2s power2.inOut on every property
+    // GSAP hover — snappy bg (0.9s), slower structural elements (1.4s)
     cards.forEach(card => {
       const watermark = card.querySelector(".svc-watermark")  as HTMLElement | null;
       const shortname = card.querySelector(".svc-shortname")  as HTMLElement | null;
       const title     = card.querySelector(".svc-title")      as HTMLElement | null;
 
       card.addEventListener("mouseenter", () => {
-        gsap.to(card, { backgroundColor: "#161613", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (watermark) gsap.to(watermark, { scale: 1, color: "rgba(187,147,84,0.08)", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (shortname) gsap.to(shortname, { opacity: 1, letterSpacing: "1.2em", fontSize: "15px", color: "#e8c97a", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (title)     gsap.to(title,     { color: "#CCA86F", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(card, { backgroundColor: CARD_BG_HOVER, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        if (watermark) gsap.to(watermark, { scale: 1, color: "rgba(187,147,84,0.08)", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (shortname) gsap.to(shortname, { opacity: 1, letterSpacing: "1.2em", fontSize: "15px", color: "#e8c97a", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (title)     gsap.to(title,     { color: "#CCA86F", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
       });
 
       card.addEventListener("mouseleave", () => {
-        gsap.to(card, { backgroundColor: "transparent", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (watermark) gsap.to(watermark, { scale: 0.6, color: "transparent", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (shortname) gsap.to(shortname, { opacity: 0.7, letterSpacing: "0.4em", fontSize: "11px", color: "#BB9354", duration: 2, ease: "power2.inOut", overwrite: "auto" });
-        if (title)     gsap.to(title,     { color: "#BB9354", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(card, { backgroundColor: CARD_BG_REST, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        if (watermark) gsap.to(watermark, { scale: 0.6, color: "transparent", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (shortname) gsap.to(shortname, { opacity: 0.7, letterSpacing: "0.4em", fontSize: "11px", color: "#BB9354", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
+        if (title)     gsap.to(title,     { color: "#BB9354", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
       });
     });
 
@@ -110,7 +122,7 @@ export default function ServicesGrid() {
                   {svc.shortName.toUpperCase()}
                 </span>
 
-                {/* Title — starts gold, brightens on hover */}
+                {/* Title — starts gold, brightens to gold-light on hover */}
                 <h4
                   className="svc-title relative z-10 font-serif text-[2rem] mb-3 leading-snug"
                   style={{ color: "#BB9354" }}
