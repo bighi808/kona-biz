@@ -60,21 +60,21 @@ export default function Comparison() {
           current agency the same questions.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border mt-16">
+        {/* ── Desktop: side-by-side grid ── */}
+        <div className="hidden md:grid grid-cols-2 gap-px bg-border border border-border mt-16">
           {/* Header row */}
-          <div className="p-8 bg-card md:bg-[hsl(var(--card))]">
+          <div className="p-8 bg-card">
             <div className="text-[9px] tracking-[0.4em] uppercase text-muted-foreground mb-3">
               The Standard Personal Injury Agency
             </div>
             <div className="font-serif text-2xl text-cream leading-tight">What most firms pay for</div>
           </div>
-          <div className="p-8 bg-card relative border-t-2 border-t-gold md:border-t-2">
+          <div className="p-8 bg-card relative border-t-2 border-t-gold">
             <div className="text-[9px] tracking-[0.4em] uppercase text-gold mb-3">Plaintiff Growth</div>
             <div className="font-serif text-2xl text-cream leading-tight">
               What we built <em className="text-gold-light not-italic font-normal italic">instead.</em>
             </div>
           </div>
-
           {/* Rows */}
           {rows.flatMap((row) => [
             <div key={`them-${row.label}`} className="p-8 bg-card transition-colors duration-300 hover:bg-[#131310]">
@@ -84,7 +84,7 @@ export default function Comparison() {
                 {row.them}
               </p>
             </div>,
-            <div key={`us-${row.label}`} className="p-8 bg-card transition-colors duration-300 hover:bg-[#1a1a16]" style={{ backgroundColor: "hsl(var(--card))" }}>
+            <div key={`us-${row.label}`} className="p-8 bg-card transition-colors duration-300 hover:bg-[#1a1a16]">
               <div className="text-[9px] tracking-[0.35em] uppercase text-gold mb-2">{row.label}</div>
               <p className="text-[15px] leading-[1.85] tracking-wide text-cream">
                 <span className="display-font text-[11px] tracking-[0.25em] text-gold mr-2">•</span>
@@ -92,6 +92,31 @@ export default function Comparison() {
               </p>
             </div>,
           ])}
+        </div>
+
+        {/* ── Mobile: stacked category cards ── */}
+        <div className="md:hidden mt-12 flex flex-col gap-px border border-border bg-border">
+          {rows.map((row) => (
+            <div key={row.label} className="bg-card">
+              <div className="px-6 py-3 border-b border-border">
+                <span className="text-[9px] tracking-[0.35em] uppercase text-gold">{row.label}</span>
+              </div>
+              <div className="px-6 py-5 border-b border-border/50">
+                <p className="text-[9px] tracking-[0.3em] uppercase text-muted-foreground mb-2">The Standard Agency</p>
+                <p className="text-[14px] leading-[1.8] tracking-wide text-muted-foreground">
+                  <span className="display-font text-[11px] tracking-[0.25em] text-[#6b5e4e] mr-2">&times;</span>
+                  {row.them}
+                </p>
+              </div>
+              <div className="px-6 py-5 border-l-2 border-l-gold">
+                <p className="text-[9px] tracking-[0.3em] uppercase text-gold mb-2">Plaintiff Growth</p>
+                <p className="text-[14px] leading-[1.8] tracking-wide text-cream">
+                  <span className="display-font text-[11px] tracking-[0.25em] text-gold mr-2">•</span>
+                  {row.us}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
