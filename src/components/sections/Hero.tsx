@@ -1,6 +1,7 @@
 /**
- * Hero — full viewport split layout. Video left, text right.
- * Parallax via GSAP ScrollTrigger on the video (clipped within left column).
+ * Hero — full viewport, single column.
+ * Background: hero-image1.jpg (fixed, cover).
+ * Content: centered text block on a semi-transparent dark backdrop.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -17,49 +18,49 @@ const tickerItems = [
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef  = useRef<HTMLVideoElement>(null);
   const loop = [...tickerItems, ...tickerItems];
 
   useGSAP(() => {
-    const video = videoRef.current;
     const section = sectionRef.current;
-    if (!video || !section) return;
+    if (!section) return;
 
-    gsap.to(video, {
-      y: () => -(window.innerHeight * 0.12),
+    gsap.to(section, {
+      backgroundPositionY: "60%",
       ease: "none",
       scrollTrigger: {
         trigger: section,
         start: "top top",
         end: "bottom top",
         scrub: 1.5,
-        invalidateOnRefresh: true,
       },
     });
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative h-screen overflow-hidden" style={{ background: "#080807" }}>
+    <section
+      ref={sectionRef}
+      className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center 30%",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Dark overlay */}
+      <div className="absolute inset-0" style={{ background: "rgba(8,8,7,0.55)" }} />
 
-      {/* ── Left column: video ── */}
-      <div className="absolute inset-y-0 left-0 flex items-center justify-end overflow-hidden" style={{ width: "50%" }}>
-        <video
-          ref={videoRef}
-          className="pointer-events-none object-cover"
-          autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-          style={{ width: "75%", height: "75%", willChange: "transform" }}
-        >
-          <source src={`${import.meta.env.BASE_URL}Hero-Sq-1.mp4`} type="video/mp4" />
-        </video>
-        {/* Subtle right-edge fade into dark background */}
-        <div className="absolute inset-y-0 right-0 w-32 pointer-events-none"
-          style={{ background: "linear-gradient(to right, transparent, #080807)" }} />
-      </div>
-
-      {/* ── Right column: text ── */}
+      {/* Centered text block */}
       <div
-        className="absolute inset-y-0 right-0 flex flex-col justify-center"
-        style={{ width: "50%", paddingLeft: "48px", paddingRight: "80px" }}
+        className="relative z-10 flex flex-col items-center text-center px-10"
+        style={{
+          background: "rgba(8,8,7,0.52)",
+          backdropFilter: "blur(2px)",
+          WebkitBackdropFilter: "blur(2px)",
+          padding: "56px 72px",
+          maxWidth: "780px",
+          width: "90%",
+        }}
       >
         <div className="rise-up" style={{ marginBottom: "20px" }}>
           <p className="font-mono text-gold" style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "6px" }}>
@@ -73,7 +74,7 @@ export default function Hero() {
         <h1
           className="display-font text-cream rise-up rise-up-delay-1"
           style={{
-            fontSize: "clamp(52px, 6.5vw, 108px)",
+            fontSize: "clamp(58px, 8vw, 118px)",
             lineHeight: 0.88,
             letterSpacing: "0.03em",
             marginBottom: 0,
@@ -93,10 +94,7 @@ export default function Hero() {
           }}>Per State.</span>
         </h1>
 
-        <div
-          className="rise-up rise-up-delay-2"
-          style={{ width: "48px", height: "1px", background: "hsl(var(--gold))", margin: "22px 0" }}
-        />
+        <div className="rise-up rise-up-delay-2" style={{ width: "48px", height: "1px", background: "hsl(var(--gold))", margin: "24px auto" }} />
 
         <p
           className="font-serif italic text-muted-foreground leading-relaxed rise-up rise-up-delay-2"
@@ -106,7 +104,7 @@ export default function Hero() {
           Your competitors cannot be our clients.
         </p>
 
-        <div className="flex flex-wrap items-center gap-4 rise-up rise-up-delay-3">
+        <div className="flex flex-wrap items-center justify-center gap-4 rise-up rise-up-delay-3">
           <a href="#statemap" className="inline-block font-mono text-[10px] tracking-[0.22em] uppercase bg-gold text-background px-8 py-4 font-semibold hover:bg-gold-light transition-colors no-underline">
             Check Your State
           </a>
@@ -116,7 +114,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Glassmorphism ticker ── */}
+      {/* Glassmorphism ticker */}
       <div
         className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden"
         style={{
