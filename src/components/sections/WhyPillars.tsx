@@ -175,22 +175,33 @@ export default function WhyPillars() {
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
                 {/* Left gold bar — scales down from top on hover */}
-                <div className="absolute left-0 top-0 w-px h-full bg-gold origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                <div className="absolute left-0 top-0 w-px h-full bg-gold origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
                 {/* Number — faint resting, brightens on group hover */}
                 <div
                   ref={el => { numsRef.current[i] = el; }}
-                  className="display-font leading-none select-none transition-[opacity,text-shadow] duration-500 group-hover:[text-shadow:0_0_48px_rgba(187,147,84,0.6)]"
+                  className="display-font leading-none select-none"
                   style={{
                     fontSize: "clamp(56px, 5.5vw, 88px)",
                     color: "hsl(var(--gold))",
                     opacity: 0.13,
                     paddingLeft: "2px",
-                    /* group-hover opacity handled via inline style fallback below */
+                    transition: "opacity 2s ease, transform 2s ease, text-shadow 2s ease",
+                    transformOrigin: "left center",
                   }}
                   /* Tailwind can't override an inline opacity, so we use onMouseEnter/Leave only for opacity */
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.42"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "0.13"; }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.opacity = "0.55";
+                    el.style.transform = "scale(1.18)";
+                    el.style.textShadow = "0 0 60px rgba(187,147,84,0.65)";
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.opacity = "0.13";
+                    el.style.transform = "scale(1)";
+                    el.style.textShadow = "none";
+                  }}
                 >
                   {p.num}
                 </div>
