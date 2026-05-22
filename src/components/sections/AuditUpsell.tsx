@@ -103,7 +103,7 @@ export default function AuditUpsell() {
               {step === 1 ? (
                 <>
                   <div className="text-[9px] tracking-[0.35em] uppercase text-gold mb-2">Step 1 of 2</div>
-                  <div className="font-serif text-xl text-cream mb-6 leading-tight">Request Your<br />State Audit</div>
+                  <div className="font-serif text-cream text-center" style={{ fontSize: "3.0rem", lineHeight: "3rem", paddingBottom: "27px" }}>Request Your<br />State Audit</div>
 
                   <div className="text-center py-4 mb-5 border-b border-border">
                     <span className="display-font text-gold leading-none block" style={{ fontSize: "56px", letterSpacing: "0.02em" }}>$497</span>
