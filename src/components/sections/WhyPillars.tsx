@@ -171,7 +171,7 @@ export default function WhyPillars() {
               {/* Row — group enables all child hover states */}
               <div
                 ref={el => { rowsRef.current[i] = el; }}
-                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default"
+                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default transition-colors duration-[800ms] hover:bg-[#181818]"
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
                 {/* Left gold bar — scales down from top on hover */}
