@@ -34,16 +34,13 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 px-6 py-5 md:px-12 flex items-center justify-between transition-all duration-400 ${
-          scrolled ? "bg-background/92 backdrop-blur-md border-b border-border" : "bg-background/50"
+          scrolled ? "bg-background/92 backdrop-blur-md border-b border-border" : "bg-background/69"
         }`}
       >
         <Link to="/" className="display-font text-2xl tracking-[0.12em] shimmering-gold no-underline">
           PLAINTIFF GROWTH
         </Link>
 
-        <span className="hidden md:inline text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
-          Personal Injury Law Firm Marketing
-        </span>
 
         {/* CTA button — gold by default, transparent on hover */}
         <button
