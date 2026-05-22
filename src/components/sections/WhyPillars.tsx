@@ -1,7 +1,8 @@
 /**
  * WhyPillars — "Why Plaintiff Growth"
  * Editorial full-width row layout. No card boxes.
- * GSAP ScrollTrigger: rows stagger up, rules draw left-to-right, numbers pulse gold.
+ * GSAP ScrollTrigger: rows stagger up, rules draw, numbers pulse.
+ * Hover: Tailwind group-hover (left bar, number brightens, title shifts).
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -22,29 +23,14 @@ const pillars = [
 function ClaimedMarketAnimation() {
   return (
     <div className="pg-claimed-node-wrap">
-      <svg
-        className="pg-claimed-node"
-        viewBox="0 0 560 560"
-        role="img"
-        aria-labelledby="claimedNodeTitle claimedNodeDesc"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg className="pg-claimed-node" viewBox="0 0 560 560" role="img" aria-labelledby="claimedNodeTitle claimedNodeDesc" xmlns="http://www.w3.org/2000/svg">
         <title id="claimedNodeTitle">Claimed Market Animation</title>
-        <desc id="claimedNodeDesc">
-          A single selected authority node is protected by an animated perimeter ring while outside competitor signals are denied entry.
-        </desc>
+        <desc id="claimedNodeDesc">A single selected authority node is protected by an animated perimeter ring while outside competitor signals are denied entry.</desc>
         <defs>
           <filter id="pgGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4" result="blur" />
-            <feColorMatrix
-              in="blur" type="matrix"
-              values="1 0 0 0 0.925  0 1 0 0 0.729  0 0 1 0 0.424  0 0 0 0.55 0"
-              result="goldBlur"
-            />
-            <feMerge>
-              <feMergeNode in="goldBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.925  0 1 0 0 0.729  0 0 1 0 0.424  0 0 0 0.55 0" result="goldBlur" />
+            <feMerge><feMergeNode in="goldBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
           <radialGradient id="pgCoreGradient" cx="50%" cy="50%" r="50%">
             <stop offset="0%"   stopColor="#ECBA6C" stopOpacity="0.95" />
@@ -61,14 +47,10 @@ function ClaimedMarketAnimation() {
           <circle className="pg-ring pg-soft-line" cx="280" cy="280" r="142" />
         </g>
         <g className="pg-corner-mark">
-          <path className="pg-line pg-mid-line" d="M122 114H164" />
-          <path className="pg-line pg-mid-line" d="M114 122V164" />
-          <path className="pg-line pg-mid-line" d="M396 114H438" />
-          <path className="pg-line pg-mid-line" d="M446 122V164" />
-          <path className="pg-line pg-mid-line" d="M122 446H164" />
-          <path className="pg-line pg-mid-line" d="M114 396V438" />
-          <path className="pg-line pg-mid-line" d="M396 446H438" />
-          <path className="pg-line pg-mid-line" d="M446 396V438" />
+          <path className="pg-line pg-mid-line" d="M122 114H164" /><path className="pg-line pg-mid-line" d="M114 122V164" />
+          <path className="pg-line pg-mid-line" d="M396 114H438" /><path className="pg-line pg-mid-line" d="M446 122V164" />
+          <path className="pg-line pg-mid-line" d="M122 446H164" /><path className="pg-line pg-mid-line" d="M114 396V438" />
+          <path className="pg-line pg-mid-line" d="M396 446H438" /><path className="pg-line pg-mid-line" d="M446 396V438" />
         </g>
         <g>
           <circle className="pg-exterior-node pg-exterior-node-a pg-faint-fill" cx="68"  cy="260" r="4.5" />
@@ -92,12 +74,8 @@ function ClaimedMarketAnimation() {
           <circle className="pg-support-node pg-gold-fill" cx="198" cy="342" r="3.6" />
           <circle className="pg-support-node pg-gold-fill" cx="366" cy="356" r="3.6" />
         </g>
-        <g className="pg-orbit-dot-a">
-          <circle className="pg-gold-fill pg-glow" cx="280" cy="114" r="2.9" />
-        </g>
-        <g className="pg-orbit-dot-b">
-          <circle className="pg-gold-fill pg-glow" cx="280" cy="168" r="2.4" />
-        </g>
+        <g className="pg-orbit-dot-a"><circle className="pg-gold-fill pg-glow" cx="280" cy="114" r="2.9" /></g>
+        <g className="pg-orbit-dot-b"><circle className="pg-gold-fill pg-glow" cx="280" cy="168" r="2.4" /></g>
         <g>
           <circle className="pg-core-halo" cx="280" cy="280" r="54" fill="url(#pgCoreGradient)" />
           <circle className="pg-ring pg-mid-line"          cx="280" cy="280" r="34" />
@@ -110,58 +88,48 @@ function ClaimedMarketAnimation() {
 }
 
 export default function WhyPillars() {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const listRef     = useRef<HTMLDivElement>(null);
-  const rowsRef     = useRef<(HTMLDivElement | null)[]>([]);
-  const rulesRef    = useRef<(HTMLDivElement | null)[]>([]);
-  const numsRef     = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const listRef    = useRef<HTMLDivElement>(null);
+  const rowsRef    = useRef<(HTMLDivElement | null)[]>([]);
+  const rulesRef   = useRef<(HTMLDivElement | null)[]>([]);
+  const numsRef    = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
     const rows  = rowsRef.current.filter(Boolean)  as HTMLDivElement[];
     const rules = rulesRef.current.filter(Boolean) as HTMLDivElement[];
     const nums  = numsRef.current.filter(Boolean)  as HTMLDivElement[];
-    const list  = listRef.current;
-    if (!list || !rows.length) return;
+    if (!listRef.current || !rows.length) return;
 
     const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: list,
-        start: "top 72%",
-      },
+      scrollTrigger: { trigger: listRef.current, start: "top 72%" },
     });
 
-    // Rules draw in from left — staggered
-    tl.fromTo(
-      rules,
+    // Rules draw left-to-right — slow, deliberate
+    tl.fromTo(rules,
       { scaleX: 0 },
-      { scaleX: 1, transformOrigin: "left center", duration: 1.4, stagger: 0.09, ease: "expo.out" },
+      { scaleX: 1, transformOrigin: "left center", duration: 2.0, stagger: 0.12, ease: "expo.out" },
       0
     );
 
-    // Rows emerge upward — staggered
-    tl.fromTo(
-      rows,
-      { opacity: 0, y: 52 },
-      { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: "expo.out" },
-      0.05
+    // Rows rise up — slow stagger
+    tl.fromTo(rows,
+      { opacity: 0, y: 60 },
+      { opacity: 1, y: 0, duration: 1.4, stagger: 0.14, ease: "expo.out" },
+      0.08
     );
 
-    // Numbers pulse gold then settle back to faint — creates a "stamp" moment per row
-    nums.forEach((num, i) => {
-      tl.fromTo(
-        num,
-        { opacity: 0 },
-        {
-          keyframes: [
-            { opacity: 0,    duration: 0   },
-            { opacity: 0.75, duration: 0.18 },
-            { opacity: 0.13, duration: 0.55 },
-          ],
-          ease: "none",
-        },
-        0.08 + i * 0.1
-      );
-    });
+    // Numbers: flash in bright then settle to faint — clearProps so CSS hover takes over
+    tl.fromTo(nums,
+      { opacity: 0 },
+      {
+        opacity: 0.13,
+        duration: 1.1,
+        stagger: 0.14,
+        ease: "power3.out",
+        clearProps: "opacity",   // ← hand control back to CSS after animation
+      },
+      0.1
+    );
 
   }, { scope: sectionRef });
 
@@ -195,55 +163,34 @@ export default function WhyPillars() {
           <div
             ref={el => { rulesRef.current[0] = el; }}
             className="h-px"
-            style={{ background: "rgba(194,155,79,0.22)", transformOrigin: "left center" }}
+            style={{ background: "rgba(194,155,79,0.22)" }}
           />
 
           {pillars.map((p, i) => (
             <div key={p.num}>
+              {/* Row — group enables all child hover states */}
               <div
                 ref={el => { rowsRef.current[i] = el; }}
-                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-10 lg:py-12 cursor-default"
+                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default"
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
-                {/* Hover: left gold bar */}
-                <div
-                  className="absolute left-0 top-0 w-px h-full bg-gold"
-                  style={{
-                    transform: "scaleY(0)",
-                    transformOrigin: "top center",
-                    transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
-                  }}
-                  onMouseEnter={undefined}
-                  ref={el => {
-                    if (el) {
-                      const row = rowsRef.current[i];
-                      if (row) {
-                        row.addEventListener("mouseenter", () => { el.style.transform = "scaleY(1)"; });
-                        row.addEventListener("mouseleave", () => { el.style.transform = "scaleY(0)"; });
-                      }
-                    }
-                  }}
-                />
+                {/* Left gold bar — scales down from top on hover */}
+                <div className="absolute left-0 top-0 w-px h-full bg-gold origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
-                {/* Number — faint display, pulses gold on scroll entry */}
+                {/* Number — faint resting, brightens on group hover */}
                 <div
                   ref={el => { numsRef.current[i] = el; }}
-                  className="display-font leading-none select-none"
+                  className="display-font leading-none select-none transition-[opacity,text-shadow] duration-500 group-hover:[text-shadow:0_0_48px_rgba(194,155,79,0.6)]"
                   style={{
                     fontSize: "clamp(56px, 5.5vw, 88px)",
                     color: "hsl(var(--gold))",
                     opacity: 0.13,
-                    transition: "opacity 0.4s ease, text-shadow 0.4s ease",
                     paddingLeft: "2px",
+                    /* group-hover opacity handled via inline style fallback below */
                   }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLDivElement).style.opacity = "0.38";
-                    (e.currentTarget as HTMLDivElement).style.textShadow = "0 0 48px rgba(194,155,79,0.55)";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLDivElement).style.opacity = "0.13";
-                    (e.currentTarget as HTMLDivElement).style.textShadow = "none";
-                  }}
+                  /* Tailwind can't override an inline opacity, so we use onMouseEnter/Leave only for opacity */
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.42"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "0.13"; }}
                 >
                   {p.num}
                 </div>
@@ -251,31 +198,26 @@ export default function WhyPillars() {
                 {/* Title */}
                 <div className="flex items-start pt-1 lg:pt-2">
                   <h3
-                    className="font-serif text-cream leading-snug"
-                    style={{
-                      fontSize: "clamp(18px, 1.8vw, 26px)",
-                      transition: "color 0.3s ease",
-                    }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLHeadingElement).style.color = "hsl(var(--gold-light))"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLHeadingElement).style.color = ""; }}
+                    className="font-serif text-cream leading-snug transition-colors duration-300 group-hover:text-gold-light"
+                    style={{ fontSize: "clamp(20px, 1.9vw, 28px)" }}
                   >
                     {p.title}
                   </h3>
                 </div>
 
-                {/* Body */}
+                {/* Body — larger text */}
                 <div className="flex items-start pt-0 lg:pt-2 lg:pl-4">
-                  <p className="font-serif text-[15px] leading-[1.95] text-muted-foreground" style={{ letterSpacing: "0.01em" }}>
+                  <p className="font-serif leading-[1.9] text-muted-foreground" style={{ fontSize: "clamp(16px, 1.2vw, 18px)", letterSpacing: "0.01em" }}>
                     {p.body}
                   </p>
                 </div>
               </div>
 
-              {/* Rule between rows */}
+              {/* Rule */}
               <div
                 ref={el => { rulesRef.current[i + 1] = el; }}
                 className="h-px"
-                style={{ background: "rgba(194,155,79,0.22)", transformOrigin: "left center" }}
+                style={{ background: "rgba(194,155,79,0.22)" }}
               />
             </div>
           ))}
