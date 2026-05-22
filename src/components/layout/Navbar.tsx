@@ -41,28 +41,20 @@ export default function Navbar() {
           borderBottom: scrolled ? "1px solid rgba(232,226,212,0.08)" : "none",
         }}
       >
-        <Link to="/" className="display-font text-2xl tracking-[0.12em] shimmering-gold no-underline">
+        <Link to="/" className="display-font text-[2rem] tracking-[0.12em] shimmering-gold no-underline">
           PLAINTIFF GROWTH
         </Link>
 
 
-        {/* CTA button — gold by default, transparent on hover */}
+        {/* CTA button — transparent with gold border, no hover effect */}
         <button
           onClick={() => setDrawerOpen(true)}
-          className="text-[10px] tracking-[0.3em] uppercase font-mono cursor-pointer transition-all duration-200 px-5 py-2.5 border"
+          className="text-[10px] tracking-[0.3em] uppercase font-mono cursor-pointer px-5 py-2.5 border"
           style={{
-            background: "hsl(var(--gold))",
-            color: "#080807",
+            background: "transparent",
+            color: "hsl(var(--gold))",
             borderColor: "hsl(var(--gold))",
             fontWeight: 600,
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-            (e.currentTarget as HTMLButtonElement).style.color = "hsl(var(--gold))";
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--gold))";
-            (e.currentTarget as HTMLButtonElement).style.color = "#080807";
           }}
         >
           Free Consultation
