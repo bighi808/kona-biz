@@ -1,18 +1,16 @@
 /**
- * Methodology — "The Stack" hub-and-spoke SVG diagram.
+ * Methodology — "The Stack"
+ *
+ * Pure editorial. No diagram — the StackEngine animation in ServicesGrid
+ * already made the visual argument. This section delivers the intellectual
+ * argument: why six integrated disciplines compound into something
+ * competitors can't replicate.
  *
  * Layout:
- *   TOP — two equal columns: intro text left, SVG diagram right
- *   BOTTOM — full-width centered: body copy + legend
+ *   TOP  — full-width header: eyebrow + h2 + intro
+ *   LINE — gold divider
+ *   BODY — two columns: numbered sequence left, compounding authority right
  */
-const nodes = [
-  { id: "WEB",  num: "01", x: 260, y: 80  },
-  { id: "SEO",  num: "02", x: 416, y: 170 },
-  { id: "ADS",  num: "03", x: 416, y: 350 },
-  { id: "AI",   num: "04", x: 260, y: 440 },
-  { id: "GBP",  num: "05", x: 104, y: 350 },
-  { id: "SOC",  num: "06", x: 104, y: 170 },
-];
 
 const legend = [
   { tag: "01", text: "Custom Web — the foundation every other channel points to" },
@@ -28,75 +26,35 @@ export default function Methodology() {
     <section className="bg-card border-t border-b border-border" id="methodology">
       <div className="max-w-6xl mx-auto px-12 py-28">
 
-        {/* ── TOP: two equal columns ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-          {/* Left — intro text */}
-          <div>
-            <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
-              The Stack
-              <span className="h-px w-10 bg-gold opacity-40" />
-            </p>
-            <h2 className="font-serif text-cream leading-tight mb-6" style={{ fontSize: "clamp(32px, 4.5vw, 58px)" }}>
-              Six disciplines.<br />
-              <em className="text-gold-light not-italic font-normal italic">One system.</em>
-            </h2>
-            <p className="text-[16px] tracking-wide text-muted-foreground leading-loose">
-              Most agencies sell these services in isolation. We run them as one integrated
-              authority engine — each channel feeding the others, all of them pointing back to your firm.
-            </p>
-          </div>
-
-          {/* Right — SVG diagram */}
-          <div className="w-full max-w-[420px] aspect-square mx-auto">
-            <svg viewBox="0 0 520 520" className="w-full h-full block" aria-hidden>
-              <line x1="260" y1="204" x2="260" y2="122" className="method-spoke" />
-              <line x1="309" y1="232" x2="380" y2="191" className="method-spoke" />
-              <line x1="309" y1="288" x2="380" y2="329" className="method-spoke" />
-              <line x1="260" y1="316" x2="260" y2="398" className="method-spoke" />
-              <line x1="211" y1="288" x2="140" y2="329" className="method-spoke" />
-              <line x1="211" y1="232" x2="140" y2="191" className="method-spoke" />
-
-              <circle cx="260" cy="260" r="180" fill="none" stroke="rgba(187,147,84,0.07)" strokeWidth="0.8" strokeDasharray="1 4" />
-
-              <g>
-                <circle cx="260" cy="260" r="56" className="method-hub-pulse" />
-                <circle cx="260" cy="260" r="56" fill="hsl(var(--card))" stroke="hsl(var(--gold))" strokeWidth="1.5" />
-                <text x="260" y="254" textAnchor="middle" dominantBaseline="middle"
-                      className="display-font" fill="hsl(var(--gold))" fontSize="13" letterSpacing="0.25em">AUTHORITY</text>
-                <text x="260" y="276" textAnchor="middle" dominantBaseline="middle"
-                      fill="hsl(var(--muted-foreground))" fontSize="8" letterSpacing="0.3em" fontFamily="DM Mono, monospace">
-                  01 &mdash; 06
-                </text>
-              </g>
-
-              {nodes.map((n) => (
-                <g key={n.id} className="method-node">
-                  <circle cx={n.x} cy={n.y} r="42" />
-                  <text x={n.x} y={n.y - 6} textAnchor="middle" dominantBaseline="middle"
-                        className="display-font" fontSize="12" letterSpacing="0.25em">
-                    {n.id}
-                  </text>
-                  <text x={n.x} y={n.y + 12} textAnchor="middle" dominantBaseline="middle"
-                        fill="hsl(var(--muted-foreground))" fontSize="8" letterSpacing="0.3em">
-                    {n.num}
-                  </text>
-                </g>
-              ))}
-            </svg>
-          </div>
+        {/* Full-width header */}
+        <div className="max-w-2xl mb-16">
+          <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
+            The Stack
+            <span className="h-px w-10 bg-gold opacity-40" />
+          </p>
+          <h2 className="font-serif text-cream leading-tight mb-6" style={{ fontSize: "clamp(32px, 4.5vw, 58px)" }}>
+            Six disciplines.<br />
+            <em className="text-gold-light not-italic font-normal italic">One system.</em>
+          </h2>
+          <p className="text-[16px] tracking-wide text-muted-foreground leading-loose">
+            Most agencies sell these services in isolation. We run them as one integrated
+            authority engine — each channel feeding the others, all of them pointing back to your firm.
+          </p>
         </div>
 
-        {/* ── BOTTOM: two columns — legend left, body copy right ── */}
-        <div className="mt-20 pt-16 border-t border-border grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        {/* Divider */}
+        <div className="h-px mb-16" style={{ background: "rgba(187,147,84,0.22)" }} />
 
-          {/* Left — numbered legend */}
+        {/* Two columns — numbered sequence left, compounding authority right */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+          {/* Left — numbered sequence */}
           <div className="divide-y divide-border">
             {legend.map((l) => (
               <div
                 key={l.tag}
-                className="group flex items-center gap-6 py-5 px-3 -mx-3 rounded-sm cursor-default transition-all duration-200"
-                style={{ transition: "background 0.2s ease" }}
+                className="group flex items-center gap-6 py-5 px-3 -mx-3 cursor-default"
+                style={{ transition: "background 0.2s ease, padding-left 0.2s ease" }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLDivElement).style.background = "rgba(187,147,84,0.06)";
                   (e.currentTarget as HTMLDivElement).style.paddingLeft = "20px";
@@ -107,8 +65,8 @@ export default function Methodology() {
                 }}
               >
                 <span
-                  className="display-font flex-shrink-0 transition-colors duration-200"
-                  style={{ fontSize: "clamp(28px, 3vw, 38px)", letterSpacing: "0.1em", color: "hsl(var(--gold))", opacity: 0.5, lineHeight: 1 }}
+                  className="display-font flex-shrink-0"
+                  style={{ fontSize: "clamp(28px, 3vw, 38px)", letterSpacing: "0.1em", color: "hsl(var(--gold))", opacity: 0.5, lineHeight: 1, transition: "opacity 0.2s ease" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLSpanElement).style.opacity = "1"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLSpanElement).style.opacity = "0.5"; }}
                 >
@@ -121,7 +79,7 @@ export default function Methodology() {
             ))}
           </div>
 
-          {/* Right — body copy */}
+          {/* Right — compounding authority argument */}
           <div>
             <h4 className="font-serif text-2xl text-cream leading-snug mb-6">
               The output is <em className="text-gold-light">compounding authority</em> — not a stack of disconnected line items.
@@ -141,7 +99,6 @@ export default function Methodology() {
           </div>
 
         </div>
-
       </div>
     </section>
   );
