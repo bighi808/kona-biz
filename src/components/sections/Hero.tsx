@@ -42,7 +42,7 @@ export default function Hero() {
     <section ref={sectionRef} className="relative h-screen overflow-hidden" style={{ background: "#080807" }}>
 
       {/* ── Left column: video ── */}
-      <div className="absolute inset-y-0 left-0 flex items-center justify-center overflow-hidden" style={{ width: "52%" }}>
+      <div className="absolute inset-y-0 left-0 flex items-center justify-center overflow-hidden" style={{ width: "50%" }}>
         <video
           ref={videoRef}
           className="pointer-events-none object-cover"
@@ -59,7 +59,7 @@ export default function Hero() {
       {/* ── Right column: text ── */}
       <div
         className="absolute inset-y-0 right-0 flex flex-col justify-center"
-        style={{ width: "52%", paddingLeft: "48px", paddingRight: "80px" }}
+        style={{ width: "50%", paddingLeft: "48px", paddingRight: "80px" }}
       >
         <p
           className="font-mono text-gold rise-up"
