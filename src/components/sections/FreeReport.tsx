@@ -120,7 +120,7 @@ export default function FreeReport() {
               </div>
             ) : (
               <>
-                <div className="font-serif text-2xl text-cream mb-2 leading-tight">Claim Your<br />Free Report</div>
+                <div className="font-serif text-cream text-center" style={{ fontSize: "3.0rem", lineHeight: "3rem", paddingBottom: "27px" }}>Claim Your<br />Free Report</div>
                 <p className="text-[15px] tracking-wider uppercase text-muted-foreground mb-8 leading-relaxed">
                   Enter your details below. Select your state. We will send the report immediately.
                 </p>
