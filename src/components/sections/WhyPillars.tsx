@@ -144,17 +144,17 @@ export default function WhyPillars() {
       const title = titlesRef.current[i] ?? null;
 
       row.addEventListener("mouseenter", () => {
-        gsap.to(row,   { backgroundColor: BG_HOVER, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
-        if (bar)   gsap.to(bar,   { scaleY: 1,     duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (num)   gsap.to(num,   { opacity: 0.55, scale: 1.18, duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (title) gsap.to(title, { color: "#CCA86F", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(row,   { backgroundColor: BG_HOVER, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (bar)   gsap.to(bar,   { scaleY: 1,     duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (num)   gsap.to(num,   { opacity: 0.55, scale: 1.18, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { color: "#CCA86F", duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
       });
 
       row.addEventListener("mouseleave", () => {
-        gsap.to(row,   { backgroundColor: BG_REST, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
-        if (bar)   gsap.to(bar,   { scaleY: 0,     duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (num)   gsap.to(num,   { opacity: 0.13, scale: 1,    duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (title) gsap.to(title, { color: "#e8e2d4", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(row,   { backgroundColor: BG_REST, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (bar)   gsap.to(bar,   { scaleY: 0,     duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (num)   gsap.to(num,   { opacity: 0.13, scale: 1,    duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { color: "#e8e2d4", duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
       });
     });
 

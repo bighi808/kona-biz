@@ -1,11 +1,10 @@
 /**
  * Services grid — 6 disciplines, each card a link to the service page.
  *
- * GSAP scroll reveal: stagger-from-center scale (dramatic).
- * GSAP hover: card bg, watermark scale+opacity, shortname, title — all snappy.
- *
- * NOTE: gsap.fromTo used (not gsap.set + gsap.to) so cards are never permanently
- * hidden if ScrollTrigger misfires. The "from" state only applies at animation start.
+ * Layout: gap-3 grid, each card has its own 1px gold-tinted border.
+ * GSAP scroll reveal: stagger-from-center scale.
+ * GSAP hover: lighter bg, gold edge glow (box-shadow), watermark reveal,
+ *             shortname + title color — all 0.65s, no layout-shifting animations.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -16,9 +15,13 @@ import { services } from "@/data/services";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Hover bg — same hue both states so GSAP tweens alpha only
-const CARD_BG_HOVER = "rgba(22,22,19,1)";
-const CARD_BG_REST  = "rgba(22,22,19,0)";
+// Card bg: dark rest → lighter warm on hover (same hue family, alpha-only would require rgba)
+const CARD_REST  = "#111009";
+const CARD_HOVER = "#1e1c13";
+
+// Box-shadow: no glow at rest → gold edge glow on hover
+const SHADOW_REST  = "0 0 0px 0px rgba(187,147,84,0), 0 0 0px rgba(187,147,84,0)";
+const SHADOW_HOVER = "0 0 0px 1px rgba(187,147,84,0.55), 0 0 28px rgba(187,147,84,0.18)";
 
 export default function ServicesGrid() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -29,52 +32,45 @@ export default function ServicesGrid() {
     const cards = cardsRef.current.filter(Boolean) as HTMLAnchorElement[];
     if (!gridRef.current || !cards.length) return;
 
-    // Init card bg so hover tween has consistent starting color
-    gsap.set(cards, { backgroundColor: CARD_BG_REST });
-
-    // Init watermark — GSAP owns position + scale + color
+    // Init: GSAP owns bg, shadow, watermark
+    gsap.set(cards, { backgroundColor: CARD_REST, boxShadow: SHADOW_REST });
     cards.forEach(card => {
       const wm = card.querySelector(".svc-watermark") as HTMLElement | null;
-      if (wm) gsap.set(wm, { xPercent: -50, yPercent: -50, scale: 0.6, color: "transparent" });
+      if (wm) gsap.set(wm, { xPercent: -50, yPercent: -50, scale: 0.65, color: "transparent" });
     });
 
-    // Dramatic scroll reveal — fromTo so cards stay visible if trigger is off-screen
-    // autoAlpha handles both opacity and visibility
+    // Scroll reveal — fromTo + autoAlpha so cards are never permanently hidden
     gsap.fromTo(cards,
-      { autoAlpha: 0, scale: 0.88, y: 40 },
+      { autoAlpha: 0, scale: 0.9, y: 36 },
       {
         autoAlpha: 1,
         scale: 1,
         y: 0,
-        duration: 1.2,
-        stagger: { each: 0.12, from: "center", grid: [2, 3] },
+        duration: 1.1,
+        stagger: { each: 0.11, from: "center", grid: [2, 3] },
         ease: "expo.out",
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: "top 85%",
-          once: true,
-        },
+        scrollTrigger: { trigger: gridRef.current, start: "top 85%", once: true },
       }
     );
 
-    // GSAP hover — snappy bg (0.9s), slower structural elements (1.4s)
+    // Hover — 0.65s, no letterSpacing/fontSize (causes layout jank)
     cards.forEach(card => {
-      const watermark = card.querySelector(".svc-watermark")  as HTMLElement | null;
-      const shortname = card.querySelector(".svc-shortname")  as HTMLElement | null;
-      const title     = card.querySelector(".svc-title")      as HTMLElement | null;
+      const watermark = card.querySelector(".svc-watermark") as HTMLElement | null;
+      const shortname = card.querySelector(".svc-shortname") as HTMLElement | null;
+      const title     = card.querySelector(".svc-title")     as HTMLElement | null;
 
       card.addEventListener("mouseenter", () => {
-        gsap.to(card, { backgroundColor: CARD_BG_HOVER, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
-        if (watermark) gsap.to(watermark, { scale: 1, color: "rgba(187,147,84,0.08)", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (shortname) gsap.to(shortname, { opacity: 1, letterSpacing: "1.2em", fontSize: "15px", color: "#e8c97a", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (title)     gsap.to(title,     { color: "#CCA86F", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(card, { backgroundColor: CARD_HOVER, boxShadow: SHADOW_HOVER, duration: 0.65, ease: "power2.out", overwrite: "auto" });
+        if (watermark) gsap.to(watermark, { scale: 1,    color: "rgba(187,147,84,0.09)", duration: 1.2, ease: "power2.out", overwrite: "auto" });
+        if (shortname) gsap.to(shortname, { opacity: 1,  color: "#e8c97a",               duration: 0.65, ease: "power2.out", overwrite: "auto" });
+        if (title)     gsap.to(title,     { color: "#CCA86F",                             duration: 0.65, ease: "power2.out", overwrite: "auto" });
       });
 
       card.addEventListener("mouseleave", () => {
-        gsap.to(card, { backgroundColor: CARD_BG_REST, duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
-        if (watermark) gsap.to(watermark, { scale: 0.6, color: "transparent", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (shortname) gsap.to(shortname, { opacity: 0.7, letterSpacing: "0.4em", fontSize: "11px", color: "#BB9354", duration: 1.4, ease: "power2.inOut", overwrite: "auto" });
-        if (title)     gsap.to(title,     { color: "#BB9354", duration: 0.9, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(card, { backgroundColor: CARD_REST, boxShadow: SHADOW_REST, duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
+        if (watermark) gsap.to(watermark, { scale: 0.65, color: "transparent",             duration: 1.2, ease: "power2.inOut", overwrite: "auto" });
+        if (shortname) gsap.to(shortname, { opacity: 0.7, color: "#BB9354",                duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
+        if (title)     gsap.to(title,     { color: "#BB9354",                              duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
 
@@ -95,7 +91,8 @@ export default function ServicesGrid() {
           Six integrated disciplines. Every one managed exclusively for your firm in your state.
         </p>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border mt-16">
+        {/* gap-3 spacing + each card has its own border (no shared bg trick) */}
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-16">
           {services.map((svc, i) => {
             const cardDesc = SHORT_DESC[svc.slug] || svc.intro;
             return (
@@ -103,9 +100,12 @@ export default function ServicesGrid() {
                 key={svc.slug}
                 to={`/services/${svc.slug}`}
                 ref={el => { cardsRef.current[i] = el as HTMLAnchorElement; }}
-                className="relative bg-card p-11 overflow-hidden no-underline block"
+                className="relative p-11 overflow-hidden no-underline block"
+                style={{
+                  border: "1px solid rgba(187,147,84,0.18)",
+                }}
               >
-                {/* Watermark — top-1/2 left-1/2 for CSS position; GSAP sets xPercent/yPercent/scale/color */}
+                {/* Watermark — GSAP owns xPercent/yPercent/scale/color */}
                 <span
                   className="svc-watermark display-font absolute top-1/2 left-1/2 leading-none whitespace-nowrap pointer-events-none"
                   style={{ fontSize: "180px", letterSpacing: "0.08em" }}
@@ -122,7 +122,7 @@ export default function ServicesGrid() {
                   {svc.shortName.toUpperCase()}
                 </span>
 
-                {/* Title — starts gold, brightens to gold-light on hover */}
+                {/* Title */}
                 <h4
                   className="svc-title relative z-10 font-serif text-[2rem] mb-3 leading-snug"
                   style={{ color: "#BB9354" }}
