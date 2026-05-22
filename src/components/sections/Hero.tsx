@@ -48,23 +48,25 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* ── Ken Burns image layer ── */}
-      <div
-        ref={imgRef}
-        className="absolute inset-0 will-change-transform hero-ken-burns"
-        style={{
-          backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          transformOrigin: "center center",
-        }}
-      />
+      {/* ── Ken Burns: outer = GSAP scroll zoom, inner = CSS transform pan ── */}
+      <div ref={imgRef} className="absolute inset-0 will-change-transform" style={{ transformOrigin: "center center" }}>
+        <div
+          className="absolute hero-ken-burns"
+          style={{
+            inset: "-8%",
+            backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+      </div>
 
       {/* ── Window light beam (top-center, warm cream) ── */}
       <div
         className="absolute inset-0 pointer-events-none hero-window-beam"
         style={{
-          background: "radial-gradient(ellipse 48% 62% at 50% -8%, rgba(255,238,200,0.18) 0%, transparent 68%)",
+          background: "radial-gradient(ellipse 55% 70% at 50% -5%, rgba(255,238,200,0.32) 0%, transparent 70%)",
         }}
       />
 
@@ -72,7 +74,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 pointer-events-none hero-lamp-warm"
         style={{
-          background: "radial-gradient(ellipse 32% 42% at 83% 62%, rgba(255,155,45,0.1) 0%, transparent 58%)",
+          background: "radial-gradient(ellipse 40% 50% at 82% 64%, rgba(255,155,45,0.22) 0%, transparent 62%)",
         }}
       />
 

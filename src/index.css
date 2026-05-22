@@ -371,21 +371,21 @@ html {
 }
 
 @keyframes heroPan {
-  0%    { background-position: 50% 30%; }
-  20%   { background-position: 54% 26%; }
-  45%   { background-position: 51% 34%; }
-  70%   { background-position: 46% 28%; }
-  100%  { background-position: 50% 30%; }
+  0%    { transform: scale(1.0)  translate(0%,    0%);   }
+  20%   { transform: scale(1.04) translate(2%,   -2%);   }
+  45%   { transform: scale(1.07) translate(-1.5%, 1.5%); }
+  70%   { transform: scale(1.04) translate(1%,    2.5%); }
+  100%  { transform: scale(1.0)  translate(0%,    0%);   }
 }
 @keyframes heroBeam {
-  0%,100% { opacity: 0.9;  transform: translateX(0)    scaleX(1);    }
-  30%     { opacity: 0.45; transform: translateX(3%)   scaleX(1.1);  }
-  65%     { opacity: 1;    transform: translateX(-2%)  scaleX(0.93); }
+  0%,100% { opacity: 1;    transform: translateX(0)    scaleX(1);    }
+  30%     { opacity: 0.5;  transform: translateX(4%)   scaleX(1.15); }
+  65%     { opacity: 1;    transform: translateX(-3%)  scaleX(0.9);  }
 }
 @keyframes heroLamp {
   0%,100% { opacity: 1;   }
-  38%     { opacity: 0.3; }
-  72%     { opacity: 0.8; }
+  38%     { opacity: 0.2; }
+  72%     { opacity: 0.9; }
 }
 @keyframes heroBreathe {
   0%,100% { opacity: 0.3; }
