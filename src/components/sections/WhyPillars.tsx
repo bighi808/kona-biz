@@ -199,7 +199,7 @@ export default function WhyPillars() {
                 <div className="flex items-start pt-1 lg:pt-2">
                   <h3
                     className="font-serif text-cream leading-snug transition-colors duration-300 group-hover:text-gold-light"
-                    style={{ fontSize: "clamp(20px, 1.9vw, 28px)" }}
+                    style={{ fontSize: "35px" }}
                   >
                     {p.title}
                   </h3>
@@ -207,7 +207,7 @@ export default function WhyPillars() {
 
                 {/* Body — larger text */}
                 <div className="flex items-start pt-0 lg:pt-2 lg:pl-4">
-                  <p className="font-serif leading-[1.9] text-muted-foreground" style={{ fontSize: "clamp(16px, 1.2vw, 18px)", letterSpacing: "0.01em" }}>
+                  <p className="font-serif leading-[1.9] text-muted-foreground" style={{ fontSize: "23px", letterSpacing: "0.01em" }}>
                     {p.body}
                   </p>
                 </div>
