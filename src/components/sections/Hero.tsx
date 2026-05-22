@@ -51,41 +51,36 @@ export default function Hero() {
       {/* ── Ken Burns image layer ── */}
       <div
         ref={imgRef}
-        className="absolute inset-0 will-change-transform"
+        className="absolute inset-0 will-change-transform hero-ken-burns"
         style={{
           backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           transformOrigin: "center center",
-          animation: "heroPan 28s ease-in-out infinite",
         }}
       />
 
       {/* ── Window light beam (top-center, warm cream) ── */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none hero-window-beam"
         style={{
           background: "radial-gradient(ellipse 48% 62% at 50% -8%, rgba(255,238,200,0.18) 0%, transparent 68%)",
-          animation: "heroBeam 20s ease-in-out infinite",
-          transformOrigin: "50% 0%",
         }}
       />
 
       {/* ── Lamp warmth (lower right, amber) ── */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none hero-lamp-warm"
         style={{
           background: "radial-gradient(ellipse 32% 42% at 83% 62%, rgba(255,155,45,0.1) 0%, transparent 58%)",
-          animation: "heroLamp 26s ease-in-out infinite",
         }}
       />
 
       {/* ── Slow ambient breathe (whole scene, warm) ── */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none hero-breathe"
         style={{
           background: "rgba(255,220,150,1)",
-          animation: "heroBreathe 34s ease-in-out infinite",
         }}
       />
 
