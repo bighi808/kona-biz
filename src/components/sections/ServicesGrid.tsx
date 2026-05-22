@@ -324,6 +324,7 @@ export default function ServicesGrid() {
       }
     );
 
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     cards.forEach(card => {
       const watermark = card.querySelector(".svc-watermark") as HTMLElement | null;
       const shortname = card.querySelector(".svc-shortname") as HTMLElement | null;
@@ -343,6 +344,7 @@ export default function ServicesGrid() {
         if (title)     gsap.to(title,     { color: "#BB9354",                              duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
+    } // end hover: hover guard
 
   }, { scope: sectionRef });
 

@@ -455,7 +455,8 @@ export default function WhyPillars() {
       0.15
     );
 
-    // ── Inverted-shift hover ───────────────────────────────────────────────
+    // ── Inverted-shift hover (pointer devices only — skip touch/mobile) ────
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     rows.forEach((row, i) => {
       const bar   = bars[i]              ?? null;
       const num   = nums[i]              ?? null;
@@ -490,6 +491,7 @@ export default function WhyPillars() {
         if (body)  gsap.to(body,  { x: 0,                   duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
+    } // end hover: hover guard
 
   }, { scope: sectionRef });
 
