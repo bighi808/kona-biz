@@ -33,9 +33,13 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 px-6 py-5 md:px-12 flex items-center justify-between transition-all duration-400 ${
-          scrolled ? "bg-background/92 backdrop-blur-md border-b border-border" : "bg-background/69"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 px-6 py-5 md:px-12 flex items-center justify-between transition-all duration-400"
+        style={{
+          background: scrolled ? "rgba(8,8,7,0.92)" : "rgba(8,8,7,0.69)",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(232,226,212,0.08)" : "none",
+        }}
       >
         <Link to="/" className="display-font text-2xl tracking-[0.12em] shimmering-gold no-underline">
           PLAINTIFF GROWTH
