@@ -144,12 +144,12 @@ export default function AuditUpsell() {
             ) : (
               <>
                 <div className="text-[9px] tracking-[0.35em] uppercase text-gold mb-3">Step 1 of 2</div>
-                <div className="font-serif text-cream text-center" style={{ fontSize: "3.0rem", lineHeight: "3rem", paddingBottom: "14px" }}>
+                <div className="shimmering-gold font-serif text-center" style={{ fontSize: "4rem", lineHeight: "4rem", paddingBottom: "14px" }}>
                   Request Your<br />State Audit
                 </div>
 
                 <div className="text-center py-2 mb-4 border-b border-border">
-                  <span className="display-font text-gold leading-none block" style={{ fontSize: "56px", letterSpacing: "0.02em" }}>$497</span>
+                  <span className="display-font text-gold leading-none block" style={{ fontSize: "56px", letterSpacing: "0.02em", paddingBottom: "20px" }}>$497</span>
                   <span className="text-[9px] tracking-wider uppercase text-muted-foreground mt-1 block">
                     Invoice sent within 24 hours &nbsp;•&nbsp; One per state
                   </span>
