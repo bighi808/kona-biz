@@ -34,13 +34,13 @@ export default function ServicesGrid() {
                 key={svc.slug}
                 to={`/services/${svc.slug}`}
                 className="group relative bg-card p-11 overflow-hidden no-underline block
-                           transition-colors duration-400 hover:bg-[#161613]"
+                           transition-colors duration-[2000ms] hover:bg-[#161613]"
               >
                 {/* Oversized watermark — scales + fades in on hover */}
                 <span
                   className="display-font absolute top-1/2 left-1/2 leading-none whitespace-nowrap pointer-events-none
                              text-transparent
-                             transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                             transition-all duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
                              [transform:translate(-50%,-50%)_scale(0.6)]
                              group-hover:[transform:translate(-50%,-50%)_scale(1)]
                              group-hover:text-[rgba(187,147,84,0.08)]"
@@ -52,18 +52,18 @@ export default function ServicesGrid() {
 
                 {/* Card content sits above watermark */}
                 <span className="relative z-10 display-font text-[11px] tracking-[0.4em] text-gold opacity-70 mb-5 block
-                                 transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                                 transition-all duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
                                  group-hover:opacity-100 group-hover:tracking-[1.2em] group-hover:text-[15px] group-hover:text-[#e8c97a]">
                   {svc.shortName.toUpperCase()}
                 </span>
 
-                <h4 className="relative z-10 font-serif text-2xl text-cream mb-3 leading-snug
-                               transition-colors duration-400 group-hover:text-gold-light">
+                <h4 className="relative z-10 font-serif text-[2rem] text-gold mb-3 leading-snug
+                               transition-colors duration-[2000ms] group-hover:text-gold-light">
                   {svc.name}
                 </h4>
 
                 <p className="relative z-10 text-[14px] leading-loose tracking-wide text-muted-foreground
-                              transition-colors duration-300 group-hover:text-[#b8b0a4]">
+                              transition-colors duration-[2000ms] group-hover:text-[#b8b0a4]">
                   {cardDesc}
                 </p>
               </Link>
