@@ -118,6 +118,7 @@ export default function WhyPillars() {
     gsap.set(bars, { scaleY: 0, transformOrigin: "top center" });
     gsap.set(nums, { opacity: 0, scale: 1, x: 0 });
     gsap.set(rows, { backgroundColor: BG_REST });
+    gsap.set(titlesRef.current.filter(Boolean) as HTMLHeadingElement[], { transformOrigin: "left center" });
 
     // ── Scroll reveal ──────────────────────────────────────────────────────
     const tl = gsap.timeline({
@@ -158,7 +159,7 @@ export default function WhyPillars() {
         if (num) gsap.to(num, { x: -44, opacity: 0, duration: 0.55, ease: "power3.in", overwrite: "auto" });
 
         // Title chases left into the vacated space, brightens to gold
-        if (title) gsap.to(title, { x: -92, color: "#CCA86F", duration: 0.65, ease: "power3.out", overwrite: "auto" });
+        if (title) gsap.to(title, { x: -92, scale: 1.12, color: "#CCA86F", duration: 0.65, ease: "power3.out", overwrite: "auto" });
 
         // Body drifts left to follow
         if (body) gsap.to(body, { x: -30, duration: 0.65, ease: "power3.out", overwrite: "auto" });
@@ -173,7 +174,7 @@ export default function WhyPillars() {
         if (num) gsap.to(num, { x: 0, opacity: 0.13, duration: 0.6, ease: "power3.out", overwrite: "auto" });
 
         // Title and body return to origin
-        if (title) gsap.to(title, { x: 0, color: "#e8e2d4", duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { x: 0, scale: 1, color: "#BB9354", duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
         if (body)  gsap.to(body,  { x: 0,                   duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
@@ -243,8 +244,8 @@ export default function WhyPillars() {
                 <div className="flex items-start pt-1 lg:pt-2">
                   <h3
                     ref={el => { titlesRef.current[i] = el; }}
-                    className="font-serif text-cream leading-snug"
-                    style={{ fontSize: "35px" }}
+                    className="font-serif leading-snug"
+                    style={{ fontSize: "35px", color: "#BB9354" }}
                   >
                     {p.title}
                   </h3>
