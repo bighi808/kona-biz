@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-border px-6 md:px-12 py-12 max-w-7xl mx-auto w-full">
       <div className="flex flex-wrap items-start justify-between gap-8">
         <div>
-          <p className="display-font text-2xl tracking-[0.1em] text-muted-foreground">PLAINTIFF GROWTH</p>
+          <p className="shimmering-gold tracking-[0.1em]" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem" }}>Plaintiff Growth</p>
           <p className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground mt-3 leading-relaxed">
             Personal Injury Marketing Specialists
             <br />
