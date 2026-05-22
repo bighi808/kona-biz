@@ -430,7 +430,8 @@ export default function WhyPillars() {
     gsap.set(bars, { scaleY: 0, transformOrigin: "top center" });
     gsap.set(nums, { opacity: 0, scale: 1, x: 0 });
     gsap.set(rows, { backgroundColor: BG_REST });
-    gsap.set(titlesRef.current.filter(Boolean) as HTMLHeadingElement[], { transformOrigin: "left center" });
+    gsap.set(titlesRef.current.filter(Boolean) as HTMLHeadingElement[], { x: 0, scale: 1, color: "#BB9354", transformOrigin: "left center" });
+    gsap.set(bodiesRef.current.filter(Boolean) as HTMLParagraphElement[], { x: 0 });
 
     // ── Scroll reveal ──────────────────────────────────────────────────────
     const tl = gsap.timeline({
@@ -454,6 +455,24 @@ export default function WhyPillars() {
       { opacity: 0.13, scale: 1,       duration: 1.4, stagger: 0.18, ease: "power3.out" },
       0.15
     );
+
+    // ── Touch safety: reset any stuck GSAP state on first touch ─────────
+    const resetAll = () => {
+      rows.forEach((row, i) => {
+        gsap.to(row, { backgroundColor: BG_REST, duration: 0.3, overwrite: "auto" });
+        const bar   = bars[i]              ?? null;
+        const num   = nums[i]              ?? null;
+        const title = titlesRef.current[i] ?? null;
+        const body  = bodiesRef.current[i] ?? null;
+        if (bar)   gsap.to(bar,   { scaleY: 0, duration: 0.3, overwrite: "auto" });
+        if (num)   gsap.to(num,   { x: 0, opacity: 0.13, duration: 0.3, overwrite: "auto" });
+        if (title) gsap.to(title, { x: 0, scale: 1, color: "#BB9354", duration: 0.3, overwrite: "auto" });
+        if (body)  gsap.to(body,  { x: 0, duration: 0.3, overwrite: "auto" });
+      });
+    };
+    if (listRef.current) {
+      listRef.current.addEventListener("touchstart", resetAll, { passive: true });
+    }
 
     // ── Inverted-shift hover (mouse only — pointerType check blocks touch) ──
     rows.forEach((row, i) => {
