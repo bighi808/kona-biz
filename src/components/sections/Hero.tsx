@@ -3,13 +3,6 @@
  * Background: hero-image1.jpg (fixed, cover).
  * Content: centered text block on a semi-transparent dark backdrop.
  */
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 const tickerItems = [
   "One PI Firm Per State","SEO + GEO Optimization","Custom Web Development",
   "AI Practice Consulting","Paid Ads Management","Google Business Profile",
@@ -17,34 +10,17 @@ const tickerItems = [
 ];
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
   const loop = [...tickerItems, ...tickerItems];
-
-  useGSAP(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    gsap.to(section, {
-      backgroundPositionY: "60%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1.5,
-      },
-    });
-  }, { scope: sectionRef });
 
   return (
     <section
-      ref={sectionRef}
       className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{
         backgroundImage: `url(${import.meta.env.BASE_URL}hero-image1.jpg)`,
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
       }}
     >
       {/* Centered text block */}
