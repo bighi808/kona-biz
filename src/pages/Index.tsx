@@ -28,12 +28,12 @@ export default function Index() {
       <div ref={scope}>
         <Hero />
         <WhyPillars />
-        <ValueStats />
         <ServicesGrid />
         <Methodology />
         <Comparison />
         <StateMap />
         <FreeReport />
+        <ValueStats />
         <AuditUpsell />
         <FAQ />
         <Booking />
