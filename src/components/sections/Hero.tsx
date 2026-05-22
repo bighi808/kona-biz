@@ -61,12 +61,14 @@ export default function Hero() {
         className="absolute inset-y-0 right-0 flex flex-col justify-center"
         style={{ width: "50%", paddingLeft: "48px", paddingRight: "80px" }}
       >
-        <p
-          className="font-mono text-gold rise-up"
-          style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "20px" }}
-        >
-          Exclusive Personal Injury Law Firm Marketing
-        </p>
+        <div className="rise-up" style={{ marginBottom: "20px" }}>
+          <p className="font-mono text-gold" style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "6px" }}>
+            Exclusive
+          </p>
+          <p className="font-mono text-muted-foreground" style={{ fontSize: "10px", letterSpacing: "0.38em", textTransform: "uppercase" }}>
+            Personal Injury Law Firm Marketing
+          </p>
+        </div>
 
         <h1
           className="display-font text-cream rise-up rise-up-delay-1"
@@ -98,7 +100,7 @@ export default function Hero() {
 
         <p
           className="font-serif italic text-muted-foreground leading-relaxed rise-up rise-up-delay-2"
-          style={{ fontSize: "clamp(15px, 1.6vw, 19px)", maxWidth: "400px", marginBottom: "36px" }}
+          style={{ fontSize: "clamp(15px, 1.6vw, 19px)", marginBottom: "36px" }}
         >
           We build full-stack digital authority exclusively for personal injury firms.
           Your competitors cannot be our clients.
