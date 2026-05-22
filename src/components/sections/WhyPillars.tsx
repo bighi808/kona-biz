@@ -483,6 +483,7 @@ export default function WhyPillars() {
 
       row.addEventListener("pointerenter", (evt) => {
         if ((evt as PointerEvent).pointerType !== "mouse") return;
+        if (window.innerWidth < 1024) return;
         // Row bg + bar
         gsap.to(row, { backgroundColor: BG_HOVER, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
         if (bar) gsap.to(bar, { scaleY: 1, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
@@ -499,6 +500,7 @@ export default function WhyPillars() {
 
       row.addEventListener("pointerleave", (evt) => {
         if ((evt as PointerEvent).pointerType !== "mouse") return;
+        if (window.innerWidth < 1024) return;
         // Row bg + bar reverse
         gsap.to(row, { backgroundColor: BG_REST, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
         if (bar) gsap.to(bar, { scaleY: 0, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
