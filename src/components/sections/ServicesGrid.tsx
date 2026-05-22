@@ -1,16 +1,75 @@
 /**
  * Services grid — 6 disciplines, each card a link to the service page.
- * Ported from konabiz-lander.html lines 1658-1698.
  *
- * Visual signature: oversized watermark text (the shortName, e.g. "WEB")
- * expands and fades in on hover, behind the card content.
+ * GSAP scroll reveal: stagger-from-center scale (dramatic).
+ * GSAP hover: card bg, watermark scale+opacity, shortname label, title color — all 2s.
+ *
+ * Watermark centering: top-1/2 left-1/2 (CSS) + gsap.set(xPercent:-50, yPercent:-50)
+ * so GSAP can animate scale independently without clobbering the translate.
  */
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
 import { services } from "@/data/services";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function ServicesGrid() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const gridRef    = useRef<HTMLDivElement>(null);
+  const cardsRef   = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  useGSAP(() => {
+    const cards = cardsRef.current.filter(Boolean) as HTMLAnchorElement[];
+    if (!gridRef.current || !cards.length) return;
+
+    // Set watermark initial state — GSAP owns xPercent/yPercent/scale/color
+    cards.forEach(card => {
+      const wm = card.querySelector(".svc-watermark") as HTMLElement | null;
+      if (wm) gsap.set(wm, { xPercent: -50, yPercent: -50, scale: 0.6, color: "transparent" });
+    });
+
+    // Cards start invisible for scroll reveal
+    gsap.set(cards, { opacity: 0, scale: 0.88, y: 40 });
+
+    // Dramatic scroll reveal: stagger from center of grid outward
+    gsap.to(cards, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 1.2,
+      stagger: { each: 0.12, from: "center", grid: [2, 3] },
+      ease: "expo.out",
+      scrollTrigger: { trigger: gridRef.current, start: "top 72%" },
+    });
+
+    // GSAP hover — 2s power2.inOut on every property
+    cards.forEach(card => {
+      const watermark = card.querySelector(".svc-watermark")  as HTMLElement | null;
+      const shortname = card.querySelector(".svc-shortname")  as HTMLElement | null;
+      const title     = card.querySelector(".svc-title")      as HTMLElement | null;
+
+      card.addEventListener("mouseenter", () => {
+        gsap.to(card, { backgroundColor: "#161613", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (watermark) gsap.to(watermark, { scale: 1, color: "rgba(187,147,84,0.08)", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (shortname) gsap.to(shortname, { opacity: 1, letterSpacing: "1.2em", fontSize: "15px", color: "#e8c97a", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (title)     gsap.to(title,     { color: "#CCA86F", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, { backgroundColor: "transparent", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (watermark) gsap.to(watermark, { scale: 0.6, color: "transparent", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (shortname) gsap.to(shortname, { opacity: 0.7, letterSpacing: "0.4em", fontSize: "11px", color: "#BB9354", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (title)     gsap.to(title,     { color: "#BB9354", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+      });
+    });
+
+  }, { scope: sectionRef });
+
   return (
-    <section className="bg-background border-t border-b border-border" id="services">
+    <section ref={sectionRef} className="bg-background border-t border-b border-border" id="services">
       <div className="max-w-6xl mx-auto px-12 py-28">
         <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
           What We Do
@@ -24,46 +83,42 @@ export default function ServicesGrid() {
           Six integrated disciplines. Every one managed exclusively for your firm in your state.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border mt-16">
-          {services.map((svc) => {
-            // Hardcoded short-card descriptions from the original lander
-            // (tighter than the long-form ones in services.ts that feed the service pages)
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border mt-16">
+          {services.map((svc, i) => {
             const cardDesc = SHORT_DESC[svc.slug] || svc.intro;
             return (
               <Link
                 key={svc.slug}
                 to={`/services/${svc.slug}`}
-                className="group relative bg-card p-11 overflow-hidden no-underline block
-                           transition-colors duration-[2000ms] hover:bg-[#161613]"
+                ref={el => { cardsRef.current[i] = el as HTMLAnchorElement; }}
+                className="relative bg-card p-11 overflow-hidden no-underline block"
               >
-                {/* Oversized watermark — scales + fades in on hover */}
+                {/* Watermark — top-1/2 left-1/2 for CSS position; GSAP sets xPercent/yPercent/scale/color */}
                 <span
-                  className="display-font absolute top-1/2 left-1/2 leading-none whitespace-nowrap pointer-events-none
-                             text-transparent
-                             transition-all duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
-                             [transform:translate(-50%,-50%)_scale(0.6)]
-                             group-hover:[transform:translate(-50%,-50%)_scale(1)]
-                             group-hover:text-[rgba(187,147,84,0.08)]"
+                  className="svc-watermark display-font absolute top-1/2 left-1/2 leading-none whitespace-nowrap pointer-events-none"
                   style={{ fontSize: "180px", letterSpacing: "0.08em" }}
                   aria-hidden
                 >
                   {svc.shortName.toUpperCase()}
                 </span>
 
-                {/* Card content sits above watermark */}
-                <span className="relative z-10 display-font text-[11px] tracking-[0.4em] text-gold opacity-70 mb-5 block
-                                 transition-all duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)]
-                                 group-hover:opacity-100 group-hover:tracking-[1.2em] group-hover:text-[15px] group-hover:text-[#e8c97a]">
+                {/* Short label */}
+                <span
+                  className="svc-shortname relative z-10 display-font text-[11px] mb-5 block"
+                  style={{ letterSpacing: "0.4em", color: "#BB9354", opacity: 0.7 }}
+                >
                   {svc.shortName.toUpperCase()}
                 </span>
 
-                <h4 className="relative z-10 font-serif text-[2rem] text-gold mb-3 leading-snug
-                               transition-colors duration-[2000ms] group-hover:text-gold-light">
+                {/* Title — starts gold, brightens on hover */}
+                <h4
+                  className="svc-title relative z-10 font-serif text-[2rem] mb-3 leading-snug"
+                  style={{ color: "#BB9354" }}
+                >
                   {svc.name}
                 </h4>
 
-                <p className="relative z-10 text-[14px] leading-loose tracking-wide text-muted-foreground
-                              transition-colors duration-[2000ms] group-hover:text-[#b8b0a4]">
+                <p className="relative z-10 text-[14px] leading-loose tracking-wide text-muted-foreground">
                   {cardDesc}
                 </p>
               </Link>

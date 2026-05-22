@@ -1,8 +1,8 @@
 /**
  * WhyPillars — "Why Plaintiff Growth"
  * Editorial full-width row layout. No card boxes.
- * GSAP ScrollTrigger: rows stagger up, rules draw, numbers pulse.
- * Hover: Tailwind group-hover (left bar, number brightens, title shifts).
+ * GSAP ScrollTrigger: clip-path wipe reveal per row, rules draw, numbers pulse.
+ * GSAP hover: bg, left bar, number opacity/scale, title color — all 2s power2.inOut.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -93,43 +93,65 @@ export default function WhyPillars() {
   const rowsRef    = useRef<(HTMLDivElement | null)[]>([]);
   const rulesRef   = useRef<(HTMLDivElement | null)[]>([]);
   const numsRef    = useRef<(HTMLDivElement | null)[]>([]);
+  const barsRef    = useRef<(HTMLDivElement | null)[]>([]);
+  const titlesRef  = useRef<(HTMLHeadingElement | null)[]>([]);
 
   useGSAP(() => {
     const rows  = rowsRef.current.filter(Boolean)  as HTMLDivElement[];
     const rules = rulesRef.current.filter(Boolean) as HTMLDivElement[];
     const nums  = numsRef.current.filter(Boolean)  as HTMLDivElement[];
+    const bars  = barsRef.current.filter(Boolean)  as HTMLDivElement[];
     if (!listRef.current || !rows.length) return;
+
+    // Set initial state for GSAP-owned elements
+    gsap.set(bars,  { scaleY: 0, transformOrigin: "top center" });
+    gsap.set(nums,  { opacity: 0, scale: 1 });
 
     const tl = gsap.timeline({
       scrollTrigger: { trigger: listRef.current, start: "top 72%" },
     });
 
-    // Rules draw left-to-right — slow, deliberate
+    // Rules draw left-to-right
     tl.fromTo(rules,
       { scaleX: 0 },
       { scaleX: 1, transformOrigin: "left center", duration: 2.0, stagger: 0.12, ease: "expo.out" },
       0
     );
 
-    // Rows rise up — slow stagger
+    // Rows: dramatic clip-path wipe — each row reveals upward from nothing
     tl.fromTo(rows,
-      { opacity: 0, y: 60 },
-      { opacity: 1, y: 0, duration: 1.4, stagger: 0.14, ease: "expo.out" },
-      0.08
-    );
-
-    // Numbers: flash in bright then settle to faint — clearProps so CSS hover takes over
-    tl.fromTo(nums,
-      { opacity: 0 },
-      {
-        opacity: 0.13,
-        duration: 1.1,
-        stagger: 0.14,
-        ease: "power3.out",
-        clearProps: "opacity",   // ← hand control back to CSS after animation
-      },
+      { clipPath: "inset(100% 0 0 0)", y: 12 },
+      { clipPath: "inset(0% 0 0 0)",   y: 0, duration: 1.6, stagger: 0.18, ease: "power3.inOut" },
       0.1
     );
+
+    // Numbers: scale down from big + fade in — GSAP owns opacity from here on
+    tl.fromTo(nums,
+      { opacity: 0, scale: 1.4 },
+      { opacity: 0.13, scale: 1, duration: 1.4, stagger: 0.18, ease: "power3.out" },
+      0.15
+    );
+
+    // GSAP hover — 2s power2.inOut on every property
+    rows.forEach((row, i) => {
+      const bar   = bars[i]             ?? null;
+      const num   = nums[i]             ?? null;
+      const title = titlesRef.current[i] ?? null;
+
+      row.addEventListener("mouseenter", () => {
+        gsap.to(row, { backgroundColor: "#181818", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (bar)   gsap.to(bar,   { scaleY: 1,     duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (num)   gsap.to(num,   { opacity: 0.55, scale: 1.18, duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { color: "#CCA86F", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+      });
+
+      row.addEventListener("mouseleave", () => {
+        gsap.to(row, { backgroundColor: "transparent", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (bar)   gsap.to(bar,   { scaleY: 0,     duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (num)   gsap.to(num,   { opacity: 0.13, scale: 1,    duration: 2, ease: "power2.inOut", overwrite: "auto" });
+        if (title) gsap.to(title, { color: "#e8e2d4", duration: 2, ease: "power2.inOut", overwrite: "auto" });
+      });
+    });
 
   }, { scope: sectionRef });
 
@@ -156,7 +178,7 @@ export default function WhyPillars() {
           <ClaimedMarketAnimation />
         </div>
 
-        {/* ── Editorial pillar rows ── */}
+        {/* Editorial pillar rows */}
         <div ref={listRef}>
 
           {/* Top rule */}
@@ -168,55 +190,43 @@ export default function WhyPillars() {
 
           {pillars.map((p, i) => (
             <div key={p.num}>
-              {/* Row — group enables all child hover states */}
               <div
                 ref={el => { rowsRef.current[i] = el; }}
-                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default transition-colors duration-[2000ms] hover:bg-[#181818]"
+                className="relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default"
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
-                {/* Left gold bar — scales down from top on hover */}
-                <div className="absolute left-0 top-0 w-px h-full bg-gold origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                {/* Left gold bar — GSAP scaleY */}
+                <div
+                  ref={el => { barsRef.current[i] = el; }}
+                  className="absolute left-0 top-0 w-px h-full bg-gold"
+                  style={{ transformOrigin: "top center" }}
+                />
 
-                {/* Number — faint resting, brightens on group hover */}
+                {/* Number — GSAP opacity + scale */}
                 <div
                   ref={el => { numsRef.current[i] = el; }}
                   className="display-font leading-none select-none"
                   style={{
                     fontSize: "clamp(56px, 5.5vw, 88px)",
                     color: "hsl(var(--gold))",
-                    opacity: 0.13,
                     paddingLeft: "2px",
-                    transition: "opacity 2s ease, transform 2s ease, text-shadow 2s ease",
-                    transformOrigin: "left center",
-                  }}
-                  /* Tailwind can't override an inline opacity, so we use onMouseEnter/Leave only for opacity */
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.opacity = "0.55";
-                    el.style.transform = "scale(1.18)";
-                    el.style.textShadow = "0 0 60px rgba(187,147,84,0.65)";
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.opacity = "0.13";
-                    el.style.transform = "scale(1)";
-                    el.style.textShadow = "none";
                   }}
                 >
                   {p.num}
                 </div>
 
-                {/* Title */}
+                {/* Title — GSAP color on hover */}
                 <div className="flex items-start pt-1 lg:pt-2">
                   <h3
-                    className="font-serif text-cream leading-snug transition-colors duration-[2000ms] group-hover:text-gold-light"
+                    ref={el => { titlesRef.current[i] = el; }}
+                    className="font-serif text-cream leading-snug"
                     style={{ fontSize: "35px" }}
                   >
                     {p.title}
                   </h3>
                 </div>
 
-                {/* Body — larger text */}
+                {/* Body */}
                 <div className="flex items-start pt-0 lg:pt-2 lg:pl-4">
                   <p className="font-serif leading-[1.9] text-muted-foreground" style={{ fontSize: "23px", letterSpacing: "0.01em" }}>
                     {p.body}
