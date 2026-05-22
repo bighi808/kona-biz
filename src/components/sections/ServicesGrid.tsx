@@ -324,27 +324,27 @@ export default function ServicesGrid() {
       }
     );
 
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     cards.forEach(card => {
       const watermark = card.querySelector(".svc-watermark") as HTMLElement | null;
       const shortname = card.querySelector(".svc-shortname") as HTMLElement | null;
       const title     = card.querySelector(".svc-title")     as HTMLElement | null;
 
-      card.addEventListener("mouseenter", () => {
+      card.addEventListener("pointerenter", (evt) => {
+        if ((evt as PointerEvent).pointerType !== "mouse") return;
         gsap.to(card,      { backgroundColor: CARD_HOVER, boxShadow: SHADOW_HOVER, duration: 0.65, ease: "power2.out",   overwrite: "auto" });
         if (watermark) gsap.to(watermark, { scale: 1,    color: "rgba(187,147,84,0.09)", duration: 1.2,  ease: "power2.out",   overwrite: "auto" });
         if (shortname) gsap.to(shortname, { opacity: 1,  color: "#e8c97a",               duration: 0.65, ease: "power2.out",   overwrite: "auto" });
         if (title)     gsap.to(title,     { color: "#CCA86F",                             duration: 0.65, ease: "power2.out",   overwrite: "auto" });
       });
 
-      card.addEventListener("mouseleave", () => {
+      card.addEventListener("pointerleave", (evt) => {
+        if ((evt as PointerEvent).pointerType !== "mouse") return;
         gsap.to(card,      { backgroundColor: CARD_REST,  boxShadow: SHADOW_REST,  duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
         if (watermark) gsap.to(watermark, { scale: 0.65, color: "transparent",             duration: 1.2,  ease: "power2.inOut", overwrite: "auto" });
         if (shortname) gsap.to(shortname, { opacity: 0.7, color: "#BB9354",                duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
         if (title)     gsap.to(title,     { color: "#BB9354",                              duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
-    } // end hover: hover guard
 
   }, { scope: sectionRef });
 

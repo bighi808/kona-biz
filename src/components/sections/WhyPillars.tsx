@@ -455,15 +455,15 @@ export default function WhyPillars() {
       0.15
     );
 
-    // ── Inverted-shift hover (pointer devices only — skip touch/mobile) ────
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    // ── Inverted-shift hover (mouse only — pointerType check blocks touch) ──
     rows.forEach((row, i) => {
       const bar   = bars[i]              ?? null;
       const num   = nums[i]              ?? null;
       const title = titlesRef.current[i] ?? null;
       const body  = bodiesRef.current[i] ?? null;
 
-      row.addEventListener("mouseenter", () => {
+      row.addEventListener("pointerenter", (evt) => {
+        if ((evt as PointerEvent).pointerType !== "mouse") return;
         // Row bg + bar
         gsap.to(row, { backgroundColor: BG_HOVER, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
         if (bar) gsap.to(bar, { scaleY: 1, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
@@ -478,7 +478,8 @@ export default function WhyPillars() {
         if (body) gsap.to(body, { x: -30, duration: 0.65, ease: "power3.out", overwrite: "auto" });
       });
 
-      row.addEventListener("mouseleave", () => {
+      row.addEventListener("pointerleave", (evt) => {
+        if ((evt as PointerEvent).pointerType !== "mouse") return;
         // Row bg + bar reverse
         gsap.to(row, { backgroundColor: BG_REST, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
         if (bar) gsap.to(bar, { scaleY: 0, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
@@ -491,7 +492,6 @@ export default function WhyPillars() {
         if (body)  gsap.to(body,  { x: 0,                   duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
-    } // end hover: hover guard
 
   }, { scope: sectionRef });
 
