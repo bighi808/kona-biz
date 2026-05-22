@@ -47,7 +47,7 @@ export default function Hero() {
           ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-          style={{ objectPosition: "center center", willChange: "transform" }}
+          style={{ objectPosition: "center center", willChange: "transform", scale: "0.75" } as React.CSSProperties}
         >
           <source src={`${import.meta.env.BASE_URL}Hero-Sq-1.mp4`} type="video/mp4" />
         </video>
