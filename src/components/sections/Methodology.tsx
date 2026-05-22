@@ -24,7 +24,7 @@ const legend = [
 export default function Methodology() {
   return (
     <section className="bg-card border-t border-b border-border" id="methodology">
-      <div className="max-w-6xl mx-auto px-12 py-28">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-28">
 
         {/* Full-width header */}
         <div className="max-w-2xl mb-16">

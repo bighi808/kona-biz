@@ -64,7 +64,7 @@ export default function AuditUpsell() {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-12 py-28">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-28">
 
         {/* ── Section header ── */}
         <div className="text-center mb-16">

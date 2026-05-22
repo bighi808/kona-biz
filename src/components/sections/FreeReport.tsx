@@ -58,7 +58,7 @@ export default function FreeReport() {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-12 py-28">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-28">
         <div className="text-center mb-16">
           <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center justify-center gap-4">
             <span className="h-px w-10 bg-gold opacity-40" />

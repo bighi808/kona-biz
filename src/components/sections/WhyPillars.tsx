@@ -495,10 +495,10 @@ export default function WhyPillars() {
 
   return (
     <section ref={sectionRef} className="border-t border-b border-border overflow-hidden" style={{ backgroundColor: "#080907" }}>
-      <div className="max-w-6xl mx-auto px-8 md:px-12 py-28">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-28">
 
         {/* Two-column header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20 lg:mb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-12 lg:mb-20">
           <div>
             <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
               Why Plaintiff Growth
@@ -513,7 +513,9 @@ export default function WhyPillars() {
               Here is exactly how we work — and why no other agency can make the same offer.
             </p>
           </div>
-          <ExclusivityLedgerAnimation />
+          <div className="hidden lg:block">
+            <ExclusivityLedgerAnimation />
+          </div>
         </div>
 
         {/* Editorial pillar rows */}
@@ -529,7 +531,7 @@ export default function WhyPillars() {
             <div key={p.num}>
               <div
                 ref={el => { rowsRef.current[i] = el; }}
-                className="relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default"
+                className="relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-6 lg:py-11 cursor-default"
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
                 {/* Left gold bar */}

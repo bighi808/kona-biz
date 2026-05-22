@@ -88,7 +88,7 @@ function StatCard({ stat }: { stat: Stat }) {
 export default function ValueStats() {
   return (
     <section className="bg-background">
-      <div className="max-w-6xl mx-auto px-12 py-28">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-28">
         <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
           The Math
           <span className="h-px w-10 bg-gold opacity-40" />

@@ -348,11 +348,13 @@ export default function ServicesGrid() {
 
   return (
     <section ref={sectionRef} className="border-t border-b border-border" id="services" style={{ backgroundColor: "#0e0c03" }}>
-      <div className="max-w-6xl mx-auto px-12 py-28">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-28">
 
         {/* Two-column header — animation left, copy right */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20 lg:mb-28">
-          <StackEngineAnimation />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-12 lg:mb-20">
+          <div className="hidden lg:block">
+            <StackEngineAnimation />
+          </div>
           <div>
             <p className="text-[10px] tracking-[0.45em] uppercase text-gold mb-6 flex items-center gap-4">
               What We Do

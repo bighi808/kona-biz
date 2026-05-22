@@ -28,7 +28,7 @@ export default function FooterContact() {
 
   return (
     <section className="border-t border-border" id="contact">
-      <div className="max-w-6xl mx-auto px-12 py-20 grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
         <div>
           <h3 className="font-serif text-3xl text-cream leading-tight mb-3">
             Have a question<br />
