@@ -1,8 +1,15 @@
 /**
  * WhyPillars — "Why Plaintiff Growth"
- * Editorial full-width row layout. No card boxes.
- * GSAP ScrollTrigger: clip-path wipe reveal per row, rules draw, numbers pulse.
- * GSAP hover: bg alpha-only tween (no color flash), bar scaleY, number, title.
+ * Editorial full-width row layout.
+ *
+ * Scroll reveal: clip-path wipe per row, rules draw, numbers scale-in.
+ *
+ * Hover — "inverted shift":
+ *   • Number slides left + fades out
+ *   • Title chases left into the number's vacated space + turns gold
+ *   • Body drifts left to fill the title's old column
+ *   • Left bar scales up, row bg deepens
+ *   All reverse on mouseleave.
  */
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -12,7 +19,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const BG_HOVER = "rgba(24,24,19,1)";
-const BG_REST  = "rgba(24,24,19,0)";  // same hue, zero alpha — no color-channel flash
+const BG_REST  = "rgba(24,24,19,0)";
 
 const pillars = [
   { num: "01", title: "PI Firms Only", body: "We work exclusively with personal injury firms. No family law. No criminal defense. No generalist clients. We know PI marketing the way your best attorney knows PI law — deeply, specifically, and without distraction." },
@@ -98,6 +105,7 @@ export default function WhyPillars() {
   const numsRef    = useRef<(HTMLDivElement | null)[]>([]);
   const barsRef    = useRef<(HTMLDivElement | null)[]>([]);
   const titlesRef  = useRef<(HTMLHeadingElement | null)[]>([]);
+  const bodiesRef  = useRef<(HTMLParagraphElement | null)[]>([]);
 
   useGSAP(() => {
     const rows  = rowsRef.current.filter(Boolean)  as HTMLDivElement[];
@@ -106,62 +114,74 @@ export default function WhyPillars() {
     const bars  = barsRef.current.filter(Boolean)  as HTMLDivElement[];
     if (!listRef.current || !rows.length) return;
 
-    // Initialize GSAP-owned properties
-    gsap.set(bars,  { scaleY: 0, transformOrigin: "top center" });
-    gsap.set(nums,  { opacity: 0, scale: 1 });
-    // Use the hover color at alpha=0 so GSAP tweens alpha only — no hue shift = no flash
-    gsap.set(rows,  { backgroundColor: BG_REST });
+    // Initialise GSAP-owned properties
+    gsap.set(bars, { scaleY: 0, transformOrigin: "top center" });
+    gsap.set(nums, { opacity: 0, scale: 1, x: 0 });
+    gsap.set(rows, { backgroundColor: BG_REST });
 
+    // ── Scroll reveal ──────────────────────────────────────────────────────
     const tl = gsap.timeline({
       scrollTrigger: { trigger: listRef.current, start: "top 72%" },
     });
 
-    // Rules draw left-to-right
     tl.fromTo(rules,
       { scaleX: 0 },
       { scaleX: 1, transformOrigin: "left center", duration: 2.0, stagger: 0.12, ease: "expo.out" },
       0
     );
 
-    // Rows: clip-path wipe — each row reveals upward
     tl.fromTo(rows,
       { clipPath: "inset(100% 0 0 0)", y: 12 },
-      { clipPath: "inset(0% 0 0 0)",   y: 0, duration: 1.6, stagger: 0.18, ease: "power3.inOut" },
+      { clipPath: "inset(0% 0 0 0)",   y: 0,  duration: 1.6, stagger: 0.18, ease: "power3.inOut" },
       0.1
     );
 
-    // Numbers: scale down from oversized + fade in
     tl.fromTo(nums,
       { opacity: 0, scale: 1.4 },
-      { opacity: 0.13, scale: 1, duration: 1.4, stagger: 0.18, ease: "power3.out" },
+      { opacity: 0.13, scale: 1,       duration: 1.4, stagger: 0.18, ease: "power3.out" },
       0.15
     );
 
-    // GSAP hover — snappy bg (0.9s), slower structural elements (1.4s)
+    // ── Inverted-shift hover ───────────────────────────────────────────────
     rows.forEach((row, i) => {
       const bar   = bars[i]              ?? null;
       const num   = nums[i]              ?? null;
       const title = titlesRef.current[i] ?? null;
+      const body  = bodiesRef.current[i] ?? null;
 
       row.addEventListener("mouseenter", () => {
-        gsap.to(row,   { backgroundColor: BG_HOVER, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
-        if (bar)   gsap.to(bar,   { scaleY: 1,     duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
-        if (num)   gsap.to(num,   { opacity: 0.55, scale: 1.18, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
-        if (title) gsap.to(title, { color: "#CCA86F", duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        // Row bg + bar
+        gsap.to(row, { backgroundColor: BG_HOVER, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (bar) gsap.to(bar, { scaleY: 1, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+
+        // Number exits left
+        if (num) gsap.to(num, { x: -44, opacity: 0, duration: 0.55, ease: "power3.in", overwrite: "auto" });
+
+        // Title chases left into the vacated space, brightens to gold
+        if (title) gsap.to(title, { x: -92, color: "#CCA86F", duration: 0.65, ease: "power3.out", overwrite: "auto" });
+
+        // Body drifts left to follow
+        if (body) gsap.to(body, { x: -30, duration: 0.65, ease: "power3.out", overwrite: "auto" });
       });
 
       row.addEventListener("mouseleave", () => {
-        gsap.to(row,   { backgroundColor: BG_REST, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
-        if (bar)   gsap.to(bar,   { scaleY: 0,     duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
-        if (num)   gsap.to(num,   { opacity: 0.13, scale: 1,    duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
-        if (title) gsap.to(title, { color: "#e8e2d4", duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        // Row bg + bar reverse
+        gsap.to(row, { backgroundColor: BG_REST, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+        if (bar) gsap.to(bar, { scaleY: 0, duration: 1.0, ease: "power2.inOut", overwrite: "auto" });
+
+        // Number slides back in from the left
+        if (num) gsap.to(num, { x: 0, opacity: 0.13, duration: 0.6, ease: "power3.out", overwrite: "auto" });
+
+        // Title and body return to origin
+        if (title) gsap.to(title, { x: 0, color: "#e8e2d4", duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
+        if (body)  gsap.to(body,  { x: 0,                   duration: 0.65, ease: "power2.inOut", overwrite: "auto" });
       });
     });
 
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="bg-card border-t border-b border-border">
+    <section ref={sectionRef} className="bg-card border-t border-b border-border overflow-hidden">
       <div className="max-w-6xl mx-auto px-8 md:px-12 py-28">
 
         {/* Two-column header */}
@@ -186,7 +206,6 @@ export default function WhyPillars() {
         {/* Editorial pillar rows */}
         <div ref={listRef}>
 
-          {/* Top rule */}
           <div
             ref={el => { rulesRef.current[0] = el; }}
             className="h-px"
@@ -200,14 +219,14 @@ export default function WhyPillars() {
                 className="relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default"
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
-                {/* Left gold bar — GSAP scaleY */}
+                {/* Left gold bar */}
                 <div
                   ref={el => { barsRef.current[i] = el; }}
                   className="absolute left-0 top-0 w-px h-full bg-gold"
                   style={{ transformOrigin: "top center" }}
                 />
 
-                {/* Number — GSAP opacity + scale */}
+                {/* Number — exits left on hover */}
                 <div
                   ref={el => { numsRef.current[i] = el; }}
                   className="display-font leading-none select-none"
@@ -220,7 +239,7 @@ export default function WhyPillars() {
                   {p.num}
                 </div>
 
-                {/* Title — GSAP color on hover */}
+                {/* Title — chases left into number's space */}
                 <div className="flex items-start pt-1 lg:pt-2">
                   <h3
                     ref={el => { titlesRef.current[i] = el; }}
@@ -231,15 +250,18 @@ export default function WhyPillars() {
                   </h3>
                 </div>
 
-                {/* Body */}
+                {/* Body — drifts left */}
                 <div className="flex items-start pt-0 lg:pt-2 lg:pl-4">
-                  <p className="font-serif leading-[1.9] text-muted-foreground" style={{ fontSize: "23px", letterSpacing: "0.01em" }}>
+                  <p
+                    ref={el => { bodiesRef.current[i] = el; }}
+                    className="font-serif leading-[1.9] text-muted-foreground"
+                    style={{ fontSize: "23px", letterSpacing: "0.01em" }}
+                  >
                     {p.body}
                   </p>
                 </div>
               </div>
 
-              {/* Rule */}
               <div
                 ref={el => { rulesRef.current[i + 1] = el; }}
                 className="h-px"
