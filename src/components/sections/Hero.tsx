@@ -47,9 +47,6 @@ export default function Hero() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0" style={{ background: "rgba(8,8,7,0.55)" }} />
-
       {/* Centered text block */}
       <div
         className="relative z-10 flex flex-col items-center text-center px-10"
