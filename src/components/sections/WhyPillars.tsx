@@ -171,7 +171,7 @@ export default function WhyPillars() {
               {/* Row — group enables all child hover states */}
               <div
                 ref={el => { rowsRef.current[i] = el; }}
-                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default transition-colors duration-[800ms] hover:bg-[#181818]"
+                className="group relative flex flex-col lg:grid lg:items-start gap-4 lg:gap-10 py-11 lg:py-13 cursor-default transition-colors duration-[2000ms] hover:bg-[#181818]"
                 style={{ gridTemplateColumns: "6rem 1fr 1.9fr" }}
               >
                 {/* Left gold bar — scales down from top on hover */}
@@ -209,7 +209,7 @@ export default function WhyPillars() {
                 {/* Title */}
                 <div className="flex items-start pt-1 lg:pt-2">
                   <h3
-                    className="font-serif text-cream leading-snug transition-colors duration-300 group-hover:text-gold-light"
+                    className="font-serif text-cream leading-snug transition-colors duration-[2000ms] group-hover:text-gold-light"
                     style={{ fontSize: "35px" }}
                   >
                     {p.title}
