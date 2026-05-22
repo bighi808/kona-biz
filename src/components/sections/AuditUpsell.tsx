@@ -65,10 +65,10 @@ export default function AuditUpsell() {
         </p>
 
         <div className="relative bg-card mt-16 p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 items-center overflow-hidden"
-             style={{ border: "1px solid rgba(194,155,79,0.25)" }}>
+             style={{ border: "1px solid rgba(187,147,84,0.25)" }}>
           {/* Decorative $497 watermark */}
           <span className="display-font absolute right-[-20px] top-1/2 -translate-y-1/2 leading-none pointer-events-none whitespace-nowrap hidden lg:block"
-                style={{ fontSize: "200px", color: "rgba(194,155,79,0.04)", letterSpacing: "-0.05em" }}
+                style={{ fontSize: "200px", color: "rgba(187,147,84,0.04)", letterSpacing: "-0.05em" }}
                 aria-hidden>
             $497
           </span>
@@ -96,7 +96,7 @@ export default function AuditUpsell() {
 
           {/* Right: 2-step form */}
           <div className="relative z-10 w-full lg:w-[340px]">
-            <div className="bg-card p-8" style={{ border: "1px solid rgba(194,155,79,0.2)", backgroundColor: "hsl(var(--background))" }}>
+            <div className="bg-card p-8" style={{ border: "1px solid rgba(187,147,84,0.2)", backgroundColor: "hsl(var(--background))" }}>
               {step === 1 ? (
                 <>
                   <div className="text-[9px] tracking-[0.35em] uppercase text-gold mb-2">Step 1 of 2</div>

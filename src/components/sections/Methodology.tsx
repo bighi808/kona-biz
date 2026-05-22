@@ -57,7 +57,7 @@ export default function Methodology() {
               <line x1="211" y1="288" x2="140" y2="329" className="method-spoke" />
               <line x1="211" y1="232" x2="140" y2="191" className="method-spoke" />
 
-              <circle cx="260" cy="260" r="180" fill="none" stroke="rgba(194,155,79,0.07)" strokeWidth="0.8" strokeDasharray="1 4" />
+              <circle cx="260" cy="260" r="180" fill="none" stroke="rgba(187,147,84,0.07)" strokeWidth="0.8" strokeDasharray="1 4" />
 
               <g>
                 <circle cx="260" cy="260" r="56" className="method-hub-pulse" />
@@ -98,7 +98,7 @@ export default function Methodology() {
                 className="group flex items-center gap-6 py-5 px-3 -mx-3 rounded-sm cursor-default transition-all duration-200"
                 style={{ transition: "background 0.2s ease" }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLDivElement).style.background = "rgba(194,155,79,0.06)";
+                  (e.currentTarget as HTMLDivElement).style.background = "rgba(187,147,84,0.06)";
                   (e.currentTarget as HTMLDivElement).style.paddingLeft = "20px";
                 }}
                 onMouseLeave={e => {

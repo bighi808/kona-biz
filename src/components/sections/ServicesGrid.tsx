@@ -43,7 +43,7 @@ export default function ServicesGrid() {
                              transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]
                              [transform:translate(-50%,-50%)_scale(0.6)]
                              group-hover:[transform:translate(-50%,-50%)_scale(1)]
-                             group-hover:text-[rgba(194,155,79,0.08)]"
+                             group-hover:text-[rgba(187,147,84,0.08)]"
                   style={{ fontSize: "180px", letterSpacing: "0.08em" }}
                   aria-hidden
                 >

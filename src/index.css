@@ -20,7 +20,7 @@ html {
     --popover: 60 8% 4%;
     --popover-foreground: 39 31% 87%;
 
-    --primary: 37 77% 67%;           /* gold #ECBA6C */
+    --primary: 37 43% 53%;           /* gold #BB9354 */
     --primary-foreground: 60 8% 4%;
 
     --secondary: 50 8% 5%;
@@ -42,8 +42,8 @@ html {
     --radius: 0px;                   /* Sharp corners match the lander aesthetic */
 
     /* Kona.biz brand tokens */
-    --gold: 37 77% 67%;              /* #ECBA6C */
-    --gold-light: 37 70% 76%;        /* lighter #ECBA6C */
+    --gold: 37 43% 53%;              /* #BB9354 */
+    --gold-light: 37 48% 62%;        /* #CCA86F */
     --cream: 39 31% 87%;             /* #e8e2d4 */
   }
 }
@@ -105,7 +105,7 @@ html {
 
 /* Shimmering gold — nav logo */
 .shimmering-gold {
-  background: linear-gradient(90deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  background: linear-gradient(90deg, #BB9354, #FCF6BA, #9A7840, #FBF5B7, #8A6830);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -119,8 +119,8 @@ html {
 /* Gold shimmer text — animated metallic gradient on the hero headline */
 .gold-shimmer {
   background: linear-gradient(120deg,
-    #b8a882 0%, #e8e2d4 18%, #d4af6a 32%, #f5d98a 44%,
-    #c29b4f 56%, #e8e2d4 70%, #b8a882 84%, #d4af6a 100%
+    #b8a882 0%, #e8e2d4 18%, #bb9354 32%, #f5d98a 44%,
+    #9a7840 56%, #e8e2d4 70%, #b8a882 84%, #bb9354 100%
   );
   background-size: 300% 100%;
   background-position: 0% 50%;
@@ -217,11 +217,11 @@ html {
   display: block;
   background: transparent;
 }
-.pg-gold         { stroke: #ECBA6C; }
-.pg-gold-fill    { fill: #ECBA6C; }
-.pg-soft-line    { stroke: rgba(236,186,108,0.18); }
-.pg-mid-line     { stroke: rgba(236,186,108,0.38); }
-.pg-faint-fill   { fill: rgba(236,186,108,0.14); }
+.pg-gold         { stroke: #BB9354; }
+.pg-gold-fill    { fill: #BB9354; }
+.pg-soft-line    { stroke: rgba(187,147,84,0.18); }
+.pg-mid-line     { stroke: rgba(187,147,84,0.38); }
+.pg-faint-fill   { fill: rgba(187,147,84,0.14); }
 .pg-line         { fill: none; stroke-width: 1; vector-effect: non-scaling-stroke; }
 .pg-thin         { stroke-width: 0.75; }
 .pg-ring         { fill: none; stroke-width: 1.15; vector-effect: non-scaling-stroke; }

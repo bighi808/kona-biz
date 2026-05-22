@@ -98,7 +98,7 @@ export default function Hero() {
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
           }}>One Firm.</span>
           <span className="block" style={{
-            background: "linear-gradient(to left, #DCA251 0%, #FFF9D8 100%)",
+            background: "linear-gradient(to left, #BB9354 0%, #FFF9D8 100%)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
           }}>Per State.</span>
         </h1>

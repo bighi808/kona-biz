@@ -33,9 +33,9 @@ function ClaimedMarketAnimation() {
             <feMerge><feMergeNode in="goldBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
           <radialGradient id="pgCoreGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stopColor="#ECBA6C" stopOpacity="0.95" />
-            <stop offset="58%"  stopColor="#ECBA6C" stopOpacity="0.28" />
-            <stop offset="100%" stopColor="#ECBA6C" stopOpacity="0"    />
+            <stop offset="0%"   stopColor="#BB9354" stopOpacity="0.95" />
+            <stop offset="58%"  stopColor="#BB9354" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="#BB9354" stopOpacity="0"    />
           </radialGradient>
         </defs>
         <g className="pg-grid">
@@ -163,7 +163,7 @@ export default function WhyPillars() {
           <div
             ref={el => { rulesRef.current[0] = el; }}
             className="h-px"
-            style={{ background: "rgba(194,155,79,0.22)" }}
+            style={{ background: "rgba(187,147,84,0.22)" }}
           />
 
           {pillars.map((p, i) => (
@@ -180,7 +180,7 @@ export default function WhyPillars() {
                 {/* Number — faint resting, brightens on group hover */}
                 <div
                   ref={el => { numsRef.current[i] = el; }}
-                  className="display-font leading-none select-none transition-[opacity,text-shadow] duration-500 group-hover:[text-shadow:0_0_48px_rgba(194,155,79,0.6)]"
+                  className="display-font leading-none select-none transition-[opacity,text-shadow] duration-500 group-hover:[text-shadow:0_0_48px_rgba(187,147,84,0.6)]"
                   style={{
                     fontSize: "clamp(56px, 5.5vw, 88px)",
                     color: "hsl(var(--gold))",
@@ -217,7 +217,7 @@ export default function WhyPillars() {
               <div
                 ref={el => { rulesRef.current[i + 1] = el; }}
                 className="h-px"
-                style={{ background: "rgba(194,155,79,0.22)" }}
+                style={{ background: "rgba(187,147,84,0.22)" }}
               />
             </div>
           ))}

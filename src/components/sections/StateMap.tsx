@@ -74,7 +74,7 @@ export default function StateMap() {
                       block p-3 no-underline relative cursor-pointer
                       transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
                       ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}
-                      ${isManaged ? "bg-[rgba(194,155,79,0.04)] border-l-2 border-l-[rgba(194,155,79,0.4)]" : "bg-card hover:bg-[#1a1a16]"}
+                      ${isManaged ? "bg-[rgba(187,147,84,0.04)] border-l-2 border-l-[rgba(187,147,84,0.4)]" : "bg-card hover:bg-[#1a1a16]"}
                       ${isAvailable ? "border-l-2 border-l-[rgba(74,124,89,0.4)] hover:border-l-[#6abf80]" : ""}
                     `}
                   >

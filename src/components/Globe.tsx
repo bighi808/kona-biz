@@ -115,11 +115,11 @@ export default function Globe() {
       let countryGeo: any, stateGeo: any, countryMat: any, stateMat: any;
       if (bordersRes) {
         countryGeo = linesToSegments(bordersRes.countries, R * 1.001);
-        countryMat = new THREE.LineBasicMaterial({ color: 0xc29b4f, transparent: true, opacity: 0.16 });
+        countryMat = new THREE.LineBasicMaterial({ color: 0xBB9354, transparent: true, opacity: 0.16 });
         world.add(new THREE.LineSegments(countryGeo, countryMat));
 
         stateGeo = linesToSegments(bordersRes.states, R * 1.0016);
-        stateMat = new THREE.LineBasicMaterial({ color: 0xd4af6a, transparent: true, opacity: 0.5 });
+        stateMat = new THREE.LineBasicMaterial({ color: 0xBB9354, transparent: true, opacity: 0.5 });
         world.add(new THREE.LineSegments(stateGeo, stateMat));
       }
 

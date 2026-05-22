@@ -185,7 +185,7 @@ export default function FAQ() {
                 <button
                   type="button"
                   onClick={() => setOpenIdx(open ? null : i)}
-                  className={`w-full text-left px-7 py-7 font-serif flex justify-between items-center gap-6 transition-colors duration-300 hover:bg-[rgba(194,155,79,0.02)] ${
+                  className={`w-full text-left px-7 py-7 font-serif flex justify-between items-center gap-6 transition-colors duration-300 hover:bg-[rgba(187,147,84,0.02)] ${
                     open ? "text-gold-light" : "text-cream hover:text-gold-light"
                   }`}
                   style={{ fontSize: "clamp(18px, 1.6vw, 22px)" }}

@@ -80,7 +80,7 @@ export default function Navbar() {
         style={{
           width: "min(480px, 100vw)",
           background: "#0e0d0b",
-          borderLeft: "1px solid rgba(194,155,79,0.18)",
+          borderLeft: "1px solid rgba(187,147,84,0.18)",
           transform: drawerOpen ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.38s cubic-bezier(0.16,1,0.3,1)",
           overflowY: "auto",

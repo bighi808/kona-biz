@@ -47,14 +47,14 @@ export default function FreeReport() {
     <section
       className="relative overflow-hidden bg-card border-t-2 border-t-gold border-b border-border"
       id="claim"
-      style={{ boxShadow: "0 -1px 40px rgba(194,155,79,0.12), 0 -1px 80px rgba(194,155,79,0.06)" }}
+      style={{ boxShadow: "0 -1px 40px rgba(187,147,84,0.12), 0 -1px 80px rgba(187,147,84,0.06)" }}
     >
       {/* Spotlight radial bloom */}
       <span
         className="absolute -top-32 -right-20 w-[700px] h-[700px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(194,155,79,0.07) 0%, rgba(194,155,79,0.03) 35%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(187,147,84,0.07) 0%, rgba(187,147,84,0.03) 35%, transparent 70%)",
         }}
       />
 
@@ -90,7 +90,7 @@ export default function FreeReport() {
               ))}
             </ul>
 
-            <div className="mt-8 p-6 bg-card border" style={{ borderColor: "rgba(194,155,79,0.15)" }}>
+            <div className="mt-8 p-6 bg-card border" style={{ borderColor: "rgba(187,147,84,0.15)" }}>
               <div className="text-[10px] tracking-[0.3em] uppercase text-gold mb-2">Inside This Report</div>
               <p className="text-[10px] tracking-wide text-muted-foreground leading-loose uppercase">
                 The strategic framework the leading PI firms are using to dominate Google and AI search
@@ -103,8 +103,8 @@ export default function FreeReport() {
           {/* Right: form box */}
           <div className="bg-card p-10 lg:p-12 lg:sticky lg:top-24"
                style={{
-                 border: "1px solid rgba(194,155,79,0.5)",
-                 boxShadow: "0 0 60px rgba(194,155,79,0.12), 0 0 120px rgba(194,155,79,0.06)",
+                 border: "1px solid rgba(187,147,84,0.5)",
+                 boxShadow: "0 0 60px rgba(187,147,84,0.12), 0 0 120px rgba(187,147,84,0.06)",
                }}>
             {submitted ? (
               <div className="text-center py-10">
