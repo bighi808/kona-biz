@@ -205,3 +205,152 @@ html {
   0%   { transform: scale(1);   opacity: 0.5; }
   100% { transform: scale(2.2); opacity: 0;   }
 }
+
+/* ── WhyPillars: Claimed Market animation ─────────────────────────── */
+.pg-claimed-node-wrap {
+  width: min(100%, 520px);
+  margin-inline: auto;
+}
+.pg-claimed-node {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+}
+.pg-gold         { stroke: #ECBA6C; }
+.pg-gold-fill    { fill: #ECBA6C; }
+.pg-soft-line    { stroke: rgba(236,186,108,0.18); }
+.pg-mid-line     { stroke: rgba(236,186,108,0.38); }
+.pg-faint-fill   { fill: rgba(236,186,108,0.14); }
+.pg-line         { fill: none; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.pg-thin         { stroke-width: 0.75; }
+.pg-ring         { fill: none; stroke-width: 1.15; vector-effect: non-scaling-stroke; }
+.pg-glow         { filter: url(#pgGlow); }
+
+.pg-grid { opacity: 0.75; animation: pgGridBreath 12s ease-in-out infinite; }
+.pg-protected-ring {
+  stroke-dasharray: 860;
+  stroke-dashoffset: 860;
+  animation: pgSealRing 12s ease-in-out infinite;
+}
+.pg-outer-ring  { opacity: 0.24; animation: pgOuterRing 12s ease-in-out infinite; }
+.pg-inner-ring  { opacity: 0.36; animation: pgInnerRing 12s ease-in-out infinite; }
+.pg-core-halo   { transform-origin: 280px 280px; animation: pgCoreHalo 12s ease-in-out infinite; }
+.pg-core        { transform-origin: 280px 280px; animation: pgCorePulse 12s ease-in-out infinite; }
+.pg-internal-line {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: pgInternalDraw 12s ease-in-out infinite;
+}
+.pg-support-node { opacity: 0.35; animation: pgSupportPulse 12s ease-in-out infinite; }
+.pg-support-node:nth-of-type(1) { animation-delay: 0.2s; }
+.pg-support-node:nth-of-type(2) { animation-delay: 0.7s; }
+.pg-support-node:nth-of-type(3) { animation-delay: 1.1s; }
+.pg-support-node:nth-of-type(4) { animation-delay: 1.5s; }
+.pg-orbit-dot-a { transform-origin: 280px 280px; animation: pgOrbitA 12s linear infinite; }
+.pg-orbit-dot-b { transform-origin: 280px 280px; animation: pgOrbitB 12s linear infinite; }
+.pg-denied-line { stroke-dasharray: 90; stroke-dashoffset: 90; opacity: 0; }
+.pg-denied-line-a { animation: pgDeniedLineA 12s ease-in-out infinite; }
+.pg-denied-line-b { animation: pgDeniedLineB 12s ease-in-out infinite; }
+.pg-denied-line-c { animation: pgDeniedLineC 12s ease-in-out infinite; }
+.pg-exterior-node   { opacity: 0.2; }
+.pg-exterior-node-a { animation: pgExteriorNodeA 12s ease-in-out infinite; }
+.pg-exterior-node-b { animation: pgExteriorNodeB 12s ease-in-out infinite; }
+.pg-exterior-node-c { animation: pgExteriorNodeC 12s ease-in-out infinite; }
+.pg-barrier-flash {
+  opacity: 0;
+  transform-origin: 280px 280px;
+  animation: pgBarrierFlash 12s ease-in-out infinite;
+}
+.pg-corner-mark { opacity: 0.32; animation: pgCornerMarks 12s ease-in-out infinite; }
+
+@keyframes pgGridBreath {
+  0%,100% { opacity: 0.38; } 38% { opacity: 0.72; } 70% { opacity: 0.48; }
+}
+@keyframes pgSealRing {
+  0%   { stroke-dashoffset: 860;  opacity: 0.15; }
+  16%  { stroke-dashoffset: 0;    opacity: 0.9;  }
+  70%  { stroke-dashoffset: 0;    opacity: 0.9;  }
+  100% { stroke-dashoffset: -860; opacity: 0.15; }
+}
+@keyframes pgOuterRing {
+  0%,100%  { opacity: 0.12; transform: scale(0.985); transform-origin: 280px 280px; }
+  24%,72%  { opacity: 0.34; transform: scale(1);     transform-origin: 280px 280px; }
+}
+@keyframes pgInnerRing {
+  0%,100% { opacity: 0.18; transform: scale(1);     transform-origin: 280px 280px; }
+  45%     { opacity: 0.46; transform: scale(1.018); transform-origin: 280px 280px; }
+}
+@keyframes pgCoreHalo {
+  0%,100% { opacity: 0.18; transform: scale(0.85); }
+  22%     { opacity: 0.58; transform: scale(1.08);  }
+  64%     { opacity: 0.32; transform: scale(1);     }
+}
+@keyframes pgCorePulse {
+  0%,100% { opacity: 0.72; transform: scale(1);    }
+  18%     { opacity: 1;    transform: scale(1.08); }
+  55%     { opacity: 0.88; transform: scale(1.02); }
+}
+@keyframes pgInternalDraw {
+  0%   { stroke-dashoffset: 120;  opacity: 0.05; }
+  22%  { stroke-dashoffset: 0;    opacity: 0.55; }
+  72%  { stroke-dashoffset: 0;    opacity: 0.42; }
+  100% { stroke-dashoffset: -120; opacity: 0.05; }
+}
+@keyframes pgSupportPulse {
+  0%,100% { opacity: 0.22; transform: scale(1);    }
+  28%     { opacity: 0.92; transform: scale(1.12); }
+  62%     { opacity: 0.44; transform: scale(1);    }
+}
+@keyframes pgOrbitA {
+  0%   { transform: rotate(0deg);   opacity: 0.32; }
+  30%  { opacity: 0.86; }
+  72%  { opacity: 0.44; }
+  100% { transform: rotate(360deg); opacity: 0.32; }
+}
+@keyframes pgOrbitB {
+  0%   { transform: rotate(220deg);  opacity: 0.18; }
+  42%  { opacity: 0.74; }
+  100% { transform: rotate(-140deg); opacity: 0.18; }
+}
+@keyframes pgDeniedLineA {
+  0%,34% { stroke-dashoffset: 90; opacity: 0;    }
+  43%    { stroke-dashoffset: 22; opacity: 0.52; }
+  49%    { stroke-dashoffset: 18; opacity: 0.08; }
+  100%   { stroke-dashoffset: 90; opacity: 0;    }
+}
+@keyframes pgDeniedLineB {
+  0%,46% { stroke-dashoffset: 90; opacity: 0;    }
+  55%    { stroke-dashoffset: 26; opacity: 0.48; }
+  61%    { stroke-dashoffset: 22; opacity: 0.06; }
+  100%   { stroke-dashoffset: 90; opacity: 0;    }
+}
+@keyframes pgDeniedLineC {
+  0%,57% { stroke-dashoffset: 90; opacity: 0;   }
+  66%    { stroke-dashoffset: 28; opacity: 0.4;  }
+  72%    { stroke-dashoffset: 24; opacity: 0.05; }
+  100%   { stroke-dashoffset: 90; opacity: 0;    }
+}
+@keyframes pgExteriorNodeA {
+  0%,38%,100% { opacity: 0.16; } 44% { opacity: 0.52; } 51% { opacity: 0.1;  }
+}
+@keyframes pgExteriorNodeB {
+  0%,50%,100% { opacity: 0.14; } 56% { opacity: 0.48; } 63% { opacity: 0.08; }
+}
+@keyframes pgExteriorNodeC {
+  0%,61%,100% { opacity: 0.12; } 67% { opacity: 0.4;  } 74% { opacity: 0.07; }
+}
+@keyframes pgBarrierFlash {
+  0%,39%,52%,60%,73%,100% { opacity: 0;    transform: scale(1);     }
+  45%                      { opacity: 0.48; transform: scale(1.012); }
+  57%                      { opacity: 0.42; transform: scale(1.012); }
+  69%                      { opacity: 0.32; transform: scale(1.012); }
+}
+@keyframes pgCornerMarks {
+  0%,100% { opacity: 0.18; } 24%,70% { opacity: 0.38; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg-claimed-node * { animation: none !important; }
+  .pg-protected-ring { stroke-dashoffset: 0; opacity: 0.75; }
+  .pg-internal-line  { stroke-dashoffset: 0; opacity: 0.45; }
+}
