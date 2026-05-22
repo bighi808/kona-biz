@@ -42,12 +42,12 @@ export default function Hero() {
     <section ref={sectionRef} className="relative h-screen overflow-hidden" style={{ background: "#080807" }}>
 
       {/* ── Left column: video ── */}
-      <div className="absolute inset-y-0 left-0 overflow-hidden" style={{ width: "52%" }}>
+      <div className="absolute inset-y-0 left-0 flex items-center justify-center overflow-hidden" style={{ width: "52%" }}>
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          className="pointer-events-none object-cover"
           autoPlay muted loop playsInline preload="auto" aria-hidden="true"
-          style={{ objectPosition: "center center", willChange: "transform", scale: "0.75" } as React.CSSProperties}
+          style={{ width: "82%", height: "82%", willChange: "transform" }}
         >
           <source src={`${import.meta.env.BASE_URL}Hero-Sq-1.mp4`} type="video/mp4" />
         </video>
